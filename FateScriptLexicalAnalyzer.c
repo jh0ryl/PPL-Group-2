@@ -170,6 +170,30 @@ void lexicalAnalyzer(const char *input, FILE *file)
             currentToken.value[j] = '\0';
             printToken(currentToken, file);
         }
+        // Handle multi-line comments (starting with "" and ending with "")
+        else if (input[i] == '"' && input[i + 1] == '"')
+        {
+            currentToken.type = COMMENT;
+            j = 0;
+            currentToken.value[j++] = input[i++];
+            currentToken.value[j++] = input[i++];
+
+            // Collect all characters until the closing double quotes
+            while (!(input[i] == '"' && input[i + 1] == '"') && input[i] != '\0')
+            {
+                currentToken.value[j++] = input[i++];
+            }
+
+            // Add closing double quotes if found
+            if (input[i] == '"' && input[i + 1] == '"')
+            {
+                currentToken.value[j++] = input[i++];
+                currentToken.value[j++] = input[i++];
+            }
+
+            currentToken.value[j] = '\0';
+            printToken(currentToken, file);
+        }
         // Handle identifiers, reserved words, and keywords
         else if (isalpha(currentChar))
         {
