@@ -10,3 +10,4 @@ Keyword: const
 Keyword: def
 Keyword: print
 Keyword: input
+Comment: #code
