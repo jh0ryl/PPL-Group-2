@@ -27,14 +27,14 @@ typedef struct
 {
     TokenType type;
     char value[MAX_TOKEN_SIZE];
-    int line_number;
+    size_t line_number; 
 } Token;
 
-int line_number = 2;
-
+size_t line_number = 1;
 // Function to classify and print token
 void printToken(Token token, FILE *file)
 {
+    printf("Line Number: %d ", line_number); 
     // Print to console
     switch (token.type)
     {
@@ -137,11 +137,15 @@ void lexicalAnalyzer(const char *input, FILE *file)
     {
         //  Actual Whitespace
         if (isspace(currentChar))
-        {
+        {   
+            if (currentChar == '\n')
+            {
+            line_number++;
+            }
             i++;
             continue;
         }
-
+        
         // Check for \n
         if (input[i] == '\\' && input[i + 1] == 'n')
         {
@@ -149,6 +153,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
             currentToken.value[1] = 'n';
             currentToken.value[2] = '\0';
             currentToken.type = WHITESPACE;
+            currentToken.line_number = line_number;
             printToken(currentToken, file);
             i += 2;
         }
@@ -157,6 +162,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
         if (currentChar == '#')
         {
             currentToken.type = COMMENT;
+            currentToken.line_number = line_number;
             j = 0;
             currentToken.value[j++] = currentChar;
 
@@ -173,6 +179,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
         else if (input[i] == '"' && input[i + 1] == '"' && input[i + 2] == '"')
         {
             currentToken.type = COMMENT;
+            currentToken.line_number = line_number;
             j = 0;
             currentToken.value[j++] = input[i++];
             currentToken.value[j++] = input[i++];
@@ -198,6 +205,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
         else if (currentChar == '"')
         {
             currentToken.type = STRING_LITERALS;
+            currentToken.line_number = line_number;
             j = 0;
             currentToken.value[j++] = currentChar;
 
@@ -229,6 +237,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
         else if (currentChar == '\'')
         {
             currentToken.type = CHARACTER;
+            currentToken.line_number = line_number;
             j = 0;
             currentToken.value[j++] = currentChar;
 
@@ -274,6 +283,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
                 {
                     currentToken.type = KEYWORD; // if
                     // currentToken.value[0] = strdup('if');
+                    currentToken.line_number = line_number;
                 }
                 else if (currentToken.value[start_index + 1] == 'n')
                 {
@@ -281,6 +291,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
                         currentToken.value[start_index + 3] == '\0')
                     {
                         currentToken.type = DATA_TYPE; // int
+                        currentToken.line_number = line_number;
                     }
                     else if (currentToken.value[start_index + 2] == 'p' &&
                              currentToken.value[start_index + 3] == 'u' &&
@@ -288,15 +299,18 @@ void lexicalAnalyzer(const char *input, FILE *file)
                              currentToken.value[start_index + 5] == '\0')
                     {
                         currentToken.type = KEYWORD; // input
+                        currentToken.line_number = line_number;
                     }
                     else
                     {
                         currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
                     }
                 }
                 else
                 {
                     currentToken.type = IDENTIFIER;
+                    currentToken.line_number = line_number;
                 }
                 break;
             case 'a':
@@ -306,10 +320,12 @@ void lexicalAnalyzer(const char *input, FILE *file)
                     currentToken.value[start_index + 4] == '\0')
                 {
                     currentToken.type = NOISE_WORDS; // auto
+                    currentToken.line_number = line_number;
                 }
                 else
                 {
                     currentToken.type = IDENTIFIER;
+                    currentToken.line_number = line_number;
                 }
                 break;
             case 'b':
@@ -319,6 +335,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
                     currentToken.value[start_index + 4] == '\0')
                 {
                     currentToken.type = DATA_TYPE; // bool
+                    currentToken.line_number = line_number;
                 }
                 else if (currentToken.value[start_index + 1] == 'r' &&
                          currentToken.value[start_index + 2] == 'e' &&
@@ -327,10 +344,12 @@ void lexicalAnalyzer(const char *input, FILE *file)
                          currentToken.value[start_index + 5] == '\0')
                 {
                     currentToken.type = KEYWORD; // break
+                    currentToken.line_number = line_number;
                 }
                 else
                 {
                     currentToken.type = IDENTIFIER;
+                    currentToken.line_number = line_number;
                 }
                 break;
             case 'c':
@@ -342,6 +361,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
                             currentToken.value[start_index + 4] == '\0')
                         {
                             currentToken.type = DATA_TYPE; // char
+                            currentToken.line_number = line_number;
                         }
                         else if (currentToken.value[start_index + 3] == 'n' &&
                                  currentToken.value[start_index + 4] == 'c' &&
@@ -349,10 +369,12 @@ void lexicalAnalyzer(const char *input, FILE *file)
                                  currentToken.value[start_index + 6] == '\0')
                         {
                             currentToken.type = KEYWORD; // chance
+                            currentToken.line_number = line_number;
                         }
                         else
                         {
                             currentToken.type = IDENTIFIER;
+                            currentToken.line_number = line_number;
                         }
                     }
                 }
@@ -365,6 +387,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
                             currentToken.value[start_index + 5] == '\0')
                         {
                             currentToken.type = KEYWORD; // const
+                            currentToken.line_number = line_number;
                         }
                         else if (currentToken.value[start_index + 3] == 't' &&
                                  currentToken.value[start_index + 4] == 'i' &&
@@ -374,16 +397,19 @@ void lexicalAnalyzer(const char *input, FILE *file)
                                  currentToken.value[start_index + 8] == '\0')
                         {
                             currentToken.type = KEYWORD; // continue
+                            currentToken.line_number = line_number;
                         }
                         else
                         {
                             currentToken.type = IDENTIFIER;
+                            currentToken.line_number = line_number;
                         }
                     }
                 }
                 else
                 {
                     currentToken.type = IDENTIFIER;
+                    currentToken.line_number = line_number;
                 }
                 break;
             case 'd':
@@ -392,10 +418,12 @@ void lexicalAnalyzer(const char *input, FILE *file)
                     currentToken.value[start_index + 3] == '\0')
                 {
                     currentToken.type = KEYWORD; // def
+                    currentToken.line_number = line_number;
                 }
                 else
                 {
                     currentToken.type = IDENTIFIER;
+                    currentToken.line_number = line_number;
                 }
                 break;
             case 'e':
@@ -406,16 +434,19 @@ void lexicalAnalyzer(const char *input, FILE *file)
                         currentToken.value[start_index + 4] == '\0')
                     {
                         currentToken.type = KEYWORD; // elif
+                        currentToken.line_number = line_number;
                     }
                     else if (currentToken.value[start_index + 2] == 's' &&
                              currentToken.value[start_index + 3] == 'e' &&
                              currentToken.value[start_index + 4] == '\0')
                     {
                         currentToken.type = KEYWORD; // else
+                        currentToken.line_number = line_number;
                     }
                     else
                     {
                         currentToken.type = IDENTIFIER; // else
+                        currentToken.line_number = line_number;
                     }
                 }
                 else if (currentToken.value[start_index + 1] == 'x')
@@ -432,16 +463,19 @@ void lexicalAnalyzer(const char *input, FILE *file)
                                 currentToken.value[start_index + 9] == '\0')
                             {
                                 currentToken.type = RESERVED_WORDS; // extension
+                                currentToken.line_number = line_number;
                             }
                             else if (currentToken.value[start_index + 4] == 'r' &&
                                      currentToken.value[start_index + 5] == 'n' &&
                                      currentToken.value[start_index + 6] == '\0')
                             {
                                 currentToken.type = NOISE_WORDS; // extern
+                                currentToken.line_number = line_number;
                             }
                             else
                             {
                                 currentToken.type = IDENTIFIER; // extern
+                                currentToken.line_number = line_number;
                             }
                         }
                     }
@@ -455,6 +489,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
                     currentToken.value[start_index + 5] == '\0')
                 {
                     currentToken.type = RESERVED_WORDS; // false
+                    currentToken.line_number = line_number;
                 }
                 else if (currentToken.value[start_index + 1] == 'l' &&
                          currentToken.value[start_index + 2] == 'o' &&
@@ -463,16 +498,19 @@ void lexicalAnalyzer(const char *input, FILE *file)
                          currentToken.value[start_index + 5] == '\0')
                 {
                     currentToken.type = DATA_TYPE; // float
+                    currentToken.line_number = line_number;
                 }
                 else if (currentToken.value[start_index + 1] == 'o' &&
                          currentToken.value[start_index + 2] == 'r' &&
                          currentToken.value[start_index + 3] == '\0')
                 {
                     currentToken.type = KEYWORD; // for
+                    currentToken.line_number = line_number;
                 }
                 else
                 {
                     currentToken.type = IDENTIFIER;
+                    currentToken.line_number = line_number;
                 }
                 break;
             case 'm':
@@ -484,10 +522,12 @@ void lexicalAnalyzer(const char *input, FILE *file)
                     currentToken.value[start_index + 6] == '\0')
                 {
                     currentToken.type = RESERVED_WORDS; // module
+                    currentToken.line_number = line_number;
                 }
                 else
                 {
                     currentToken.type = IDENTIFIER;
+                    currentToken.line_number = line_number;
                 }
                 break;
             case 'p':
@@ -498,6 +538,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
                     currentToken.value[start_index + 5] == '\0')
                 {
                     currentToken.type = KEYWORD; // print
+                    currentToken.line_number = line_number;
                 }
                 break;
             case 'r':
@@ -509,10 +550,12 @@ void lexicalAnalyzer(const char *input, FILE *file)
                     currentToken.value[start_index + 6] == '\0')
                 {
                     currentToken.type = KEYWORD; // return
+                    currentToken.line_number = line_number;
                 }
                 else
                 {
                     currentToken.type = IDENTIFIER;
+                    currentToken.line_number = line_number;
                 }
                 break;
             case 's':
@@ -521,10 +564,12 @@ void lexicalAnalyzer(const char *input, FILE *file)
                     currentToken.value[start_index + 3] == '\0')
                 {
                     currentToken.type = DATA_TYPE; // str
+                    currentToken.line_number = line_number;
                 }
                 else
                 {
                     currentToken.type = IDENTIFIER;
+                    currentToken.line_number = line_number;
                 }
                 break;
             case 't':
@@ -534,10 +579,12 @@ void lexicalAnalyzer(const char *input, FILE *file)
                     currentToken.value[start_index + 4] == '\0')
                 {
                     currentToken.type = RESERVED_WORDS; // true
+                    currentToken.line_number = line_number;
                 }
                 else
                 {
                     currentToken.type = IDENTIFIER;
+                    currentToken.line_number = line_number;
                 }
                 break;
             case 'u':
@@ -548,10 +595,12 @@ void lexicalAnalyzer(const char *input, FILE *file)
                     currentToken.value[start_index + 5] == '\0')
                 {
                     currentToken.type = RESERVED_WORDS; // using
+                    currentToken.line_number = line_number;
                 }
                 else
                 {
                     currentToken.type = IDENTIFIER;
+                    currentToken.line_number = line_number;
                 }
                 break;
             case 'v':
@@ -562,10 +611,12 @@ void lexicalAnalyzer(const char *input, FILE *file)
                     currentToken.value[start_index + 5] == '\0')
                 {
                     currentToken.type = KEYWORD; // value
+                    currentToken.line_number = line_number;
                 }
                 else
                 {
                     currentToken.type = IDENTIFIER;
+                    currentToken.line_number = line_number;
                 }
                 break;
             case 'w':
@@ -576,6 +627,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
                     currentToken.value[start_index + 5] == '\0')
                 {
                     currentToken.type = KEYWORD; // while
+                    currentToken.line_number = line_number;
                 }
                 else if (currentToken.value[start_index + 1] == 'i' &&
                          currentToken.value[start_index + 2] == 't' &&
@@ -583,11 +635,13 @@ void lexicalAnalyzer(const char *input, FILE *file)
                          currentToken.value[start_index + 4] == '\0')
                 {
                     currentToken.type = KEYWORD; // with
+                    currentToken.line_number = line_number;
                 }
 
                 break;
             default:
                 currentToken.type = IDENTIFIER;
+                currentToken.line_number = line_number;
                 break;
             }
             printToken(currentToken, file);
@@ -603,6 +657,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
             }
             currentToken.value[j] = '\0';
             currentToken.type = NUMBER;
+            currentToken.line_number = line_number;
             printToken(currentToken, file);
         }
 
@@ -614,6 +669,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
             currentToken.value[1] = input[i + 1];
             currentToken.value[2] = '\0';
             currentToken.type = OPERATOR;
+            currentToken.line_number = line_number;
             printToken(currentToken, file);
             i += 2;
         }
@@ -627,6 +683,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
             currentToken.value[1] = input[i + 1];
             currentToken.value[2] = '\0';
             currentToken.type = OPERATOR;
+            currentToken.line_number = line_number;
             printToken(currentToken, file);
             i += 2;
         }
@@ -637,6 +694,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
             currentToken.value[1] = input[i + 1];
             currentToken.value[2] = '\0';
             currentToken.type = OPERATOR;
+            currentToken.line_number = line_number;
             printToken(currentToken, file);
             i += 2;
         }
@@ -646,6 +704,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
             currentToken.value[0] = input[i];
             currentToken.value[1] = '\0';
             currentToken.type = OPERATOR;
+            currentToken.line_number = line_number;
             printToken(currentToken, file);
             i++;
         }
@@ -660,6 +719,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
             currentToken.value[0] = input[i];
             currentToken.value[1] = input[i + 1];
             currentToken.value[2] = '\0';
+            currentToken.line_number = line_number;
             currentToken.type = OPERATOR;
             printToken(currentToken, file);
             i += 2;
@@ -674,6 +734,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
             currentToken.value[1] = input[i + 1];
             currentToken.value[2] = '\0';
             currentToken.type = OPERATOR;
+            currentToken.line_number = line_number;
             printToken(currentToken, file);
             i += 2;
         }
@@ -682,6 +743,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
             currentToken.value[0] = input[i];
             currentToken.value[1] = '\0';
             currentToken.type = OPERATOR;
+            currentToken.line_number = line_number;
             printToken(currentToken, file);
             i++;
         }
@@ -693,6 +755,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
             currentToken.value[1] = input[i + 1];
             currentToken.value[2] = '\0';
             currentToken.type = OPERATOR;
+            currentToken.line_number = line_number;
             printToken(currentToken, file);
             i += 2;
         }
@@ -704,6 +767,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
             currentToken.value[0] = input[i];
             currentToken.value[1] = '\0';
             currentToken.type = OPERATOR;
+            currentToken.line_number = line_number;
             printToken(currentToken, file);
             i++;
         }
@@ -721,25 +785,17 @@ void lexicalAnalyzer(const char *input, FILE *file)
             currentToken.value[0] = input[i];
             currentToken.value[1] = '\0';
             currentToken.type = OPERATOR;
+            currentToken.line_number = line_number;
             printToken(currentToken, file);
-            i++;
-        }
-        // Handle next line
-        else if (strchr(";{}", currentChar))
-        {
-            currentToken.value[0] = currentChar;
-            currentToken.value[1] = '\0';
-            currentToken.type = DELIMITER;
-            printToken(currentToken, file);
-            line_number++;
             i++;
         }
         // Handle delimiters
-        else if (strchr(";,()[].'\"'", currentChar))
-        {
+        else if (strchr("{};,()[].'\"'", currentChar))
+        {   
             currentToken.value[0] = currentChar;
             currentToken.value[1] = '\0';
             currentToken.type = DELIMITER;
+            currentToken.line_number = line_number;
             printToken(currentToken, file);
             i++;
         }
@@ -749,11 +805,11 @@ void lexicalAnalyzer(const char *input, FILE *file)
             currentToken.value[0] = currentChar;
             currentToken.value[1] = '\0';
             currentToken.type = ERROR;
+            currentToken.line_number = line_number;
             printToken(currentToken, file);
             i++;
         }
-        currentToken.line_number = line_number;
-        printf("Line Number: %d ", line_number);
+        
     }
 }
 
