@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 int cost;
 int age, height;
 cost = 89;
@@ -6,3 +7,10 @@ total = tax + price + 5;
 print("Hello, World!");
 print("Value is: %d", result);
 print("Name: %s, Age: %d", name, age);
+=======
+int height = 171;
+int price = 191;
+if (height > 21) { 
+    print("thats pretty tall!"); 
+}
+>>>>>>> c7066d85ca4e12579d5eb9d4b132ffe5b1116d8a

@@ -1,123 +1,37 @@
-Lexeme               Token               
-----------------------------------------
-#------------------------- | Comment
-#Arithmetic Operators | Comment
-+                    | Operator
--                    | Operator
-*                    | Operator
-/                    | Operator
-~                    | Operator
-%                    | Operator
-^                    | Operator
-#------------------------- | Comment
-#Assignment Operators | Comment
-=                    | Operator
-+=                   | Operator
--=                   | Operator
-*                    | Operator
--                    | Operator
-/=                   | Operator
-~=                   | Operator
-%=                   | Operator
-#------------------------- | Comment
-#Unary Operators     | Comment
-+                    | Operator
--                    | Operator
-++                   | Operator
---                   | Operator
-#------------------------- | Comment
-#Logical Operators   | Comment
-!                    | Operator
-||                   | Operator
-&&                   | Operator
-#------------------------- | Comment
-#Relational Operators | Comment
-==                   | Operator
-!=                   | Operator
-<                    | Operator
->                    | Operator
-<=                   | Operator
->=                   | Operator
-#------------------------- | Comment
-==                   | Operator
-==                   | Operator
-==                   | Operator
-=                    | Operator
-# Keywords, Reserved Words and Noise Words | Comment
-if                   | Keyword
-elif                 | Keyword
-else                 | Keyword
-while                | Keyword
-for                  | Keyword
-continue             | Keyword
-break                | Keyword
-return               | Keyword
-int                  | Keyword
-float                | Keyword
-bool                 | Keyword
-str                  | Keyword
-char                 | Keyword
-const                | Keyword
-def                  | Keyword
-with                 | Keyword
-value                | Keyword
-chance               | Keyword
-print                | Keyword
-input                | Keyword
-output               | Identifier
-# Reserved Words     | Comment
-using                | Reserved Word
-extension            | Reserved Word
-module               | Reserved Word
-true                 | Reserved Word
-false                | Reserved Word
-# Noise Words        | Comment
-extern               | Noise Word
-auto                 | Noise Word
-# Delimiters and Comments | Comment
-;                    | Delimiter
-,                    | Delimiter
-.                    | Delimiter
-(                    | Delimiter
-)                    | Delimiter
-{                    | Delimiter
-}                    | Delimiter
-[                    | Delimiter
-]                    | Delimiter
-#                    | Comment
-"""
-
-"""             | Comment
-\n                   | Whitespace
-\                    | Error
-#------------------------- | Comment
-# Sample variables   | Comment
-int                  | Keyword
-age                  | Identifier
-=                    | Operator
-21                   | Number
-;                    | Delimiter
-bool                 | Keyword
-isOpen               | Identifier
-=                    | Operator
-true                 | Reserved Word
-;                    | Delimiter
-char                 | Keyword
-middleInitial        | Identifier
-=                    | Operator
-'                    | Delimiter
-P                    | Identifier
-'                    | Delimiter
-;                    | Delimiter
-float                | Keyword
-maxSalary            | Identifier
-=                    | Operator
-10                   | Number
-.                    | Delimiter
-98                   | Number
-;                    | Delimiter
-str                  | Keyword
-firstName            | Identifier
-=                    | Operator
-"Mark"               | String Literal
-;                    | Delimiter
+Lexeme               Token                Line Number         
+-----------------------------------------------------
+TITLE                | Identifier      | 0         
+int                  | Data Type       | 2         
+height               | Identifier      | 2         
+=                    | Operator        | 2         
+171                  | Number          | 2         
+;                    | Delimiter       | 2         
+int                  | Data Type       | 3         
+price                | Data Type       | 3         
+=                    | Operator        | 3         
+191                  | Number          | 3         
+;                    | Delimiter       | 3         
+if                   | Keyword         | 4         
+(                    | Delimiter       | 4         
+height               | Identifier      | 4         
+>                    | Operator        | 4         
+21                   | Number          | 4         
+)                    | Delimiter       | 4         
+{                    | Delimiter       | 4         
+print                | Keyword         | 5         
+(                    | Delimiter       | 5         
+"thats pretty tall!" | String Literal  | 5         
+)                    | Delimiter       | 5         
+;                    | Delimiter       | 5         
+}                    | Delimiter       | 6         
+for                  | Keyword         | 7         
+(                    | Delimiter       | 7         
+height               | Identifier      | 7         
+>                    | Operator        | 7         
+175                  | Number          | 7         
+)                    | Delimiter       | 7         
+{                    | Delimiter       | 7         
+height               | Identifier      | 8         
+++                   | Operator        | 8         
+;                    | Delimiter       | 8         
+}                    | Delimiter       | 9         
