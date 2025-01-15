@@ -340,6 +340,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
                  (input[i] == '/' && input[i + 1] == '=') ||
                  (input[i] == '%' && input[i + 1] == '=') ||
                  (input[i] == '^' && input[i + 1] == '='))
+                 
         {
             // Handle other assignment operators (+=, -=, *=, /=, %=, ^=)
             currentToken.value[0] = input[i];
