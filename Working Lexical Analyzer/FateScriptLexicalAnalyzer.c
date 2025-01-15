@@ -17,50 +17,12 @@ typedef enum
     COMMENT,
     WHITESPACE,
     STRING_LITERALS,
-    ERROR
-} TokenType;
+    CHARACTER,
+    ERROR,
+    DATA_TYPE
+} TokenType; 
 
-// Keywords list
-const char *keywords[] = {"int", "float", "bool", "str", "char", "if", "else", "return", "while", "elif", "for", "continue", "break", "const", "def", "print", "input", "with", "chance", "value"};
-int isKeyword(const char *str)
-{
-    for (int i = 0; i < 20; i++)
-    {
-        if (strcmp(str, keywords[i]) == 0)
-        {
-            return 1;
-        }
-    }
-    return 0;
-}
-
-// Reserved words
-const char *reservedWords[] = {"using", "extension", "module", "true", "false"};
-int isReservedWord(const char *str)
-{
-    for (int i = 0; i < 5; i++)
-    {
-        if (strcmp(str, reservedWords[i]) == 0)
-        {
-            return 1;
-        }
-    }
-    return 0;
-}
-
-// Noise words
-const char *noiseWords[] = {"extern", "auto"};
-int isNoiseWord(const char *str)
-{
-    for (int i = 0; i < 2; i++)
-    {
-        if (strcmp(str, noiseWords[i]) == 0)
-        {
-            return 1;
-        }
-    }
-    return 0;
-}
+  
 
 // Token structure
 typedef struct
@@ -105,8 +67,15 @@ void printToken(Token token, FILE *file)
     case STRING_LITERALS:
         printf("String Literal: %s\n", token.value);
         break;
+    case CHARACTER:
+        printf("Character: %s\n", token.value);
+        break;
+    case DATA_TYPE:
+        printf("Data Type: %s\n", token.value);
+        break;
     default:
         printf("Error: Unknown token %s\n", token.value);
+        break;
     }
 
     // Write to the file
@@ -143,12 +112,20 @@ void printToken(Token token, FILE *file)
     case STRING_LITERALS:
         tokenTypeStr = "String Literal";
         break;
+    case CHARACTER:
+        tokenTypeStr = "Character";
+        break;
+    case DATA_TYPE:
+        tokenTypeStr = "Data Type";
+        break;
     default:
         tokenTypeStr = "Error";
     }
 
     fprintf(file, "%-20s | %s\n", token.value, tokenTypeStr);
-}
+} 
+
+
 
 // Lexical analyzer function
 void lexicalAnalyzer(const char *input, FILE *file)
@@ -247,6 +224,37 @@ void lexicalAnalyzer(const char *input, FILE *file)
 
             currentToken.value[j] = '\0';
             printToken(currentToken, file);
+        } 
+
+        // Handle string literals (single quoted strings)
+        else if (currentChar == '\'')
+        {
+            currentToken.type = CHARACTER;
+            j = 0;
+            currentToken.value[j++] = currentChar;
+
+            i++;
+            while (input[i] != '\'' && input[i] != '\0')
+            {
+                // Handle escape sequences inside string literals
+                if (input[i] == '\\' && (input[i + 1] == '\'' || input[i + 1] == '\\'))
+                {
+                    currentToken.value[j++] = input[i++];
+                    currentToken.value[j++] = input[i++];
+                }
+                else
+                {
+                    currentToken.value[j++] = input[i++];
+                }
+            }
+
+            if (input[i] == '\'')
+            {
+                currentToken.value[j++] = input[i++];
+            }
+
+            currentToken.value[j] = '\0';
+            printToken(currentToken, file);
         }
 
         // Handle identifiers, reserved words, keywords, and noise
@@ -258,26 +266,336 @@ void lexicalAnalyzer(const char *input, FILE *file)
                 currentToken.value[j++] = input[i++];
             }
             currentToken.value[j] = '\0';
-
-            if (isReservedWord(currentToken.value))
-            {
-                currentToken.type = RESERVED_WORDS;
-            }
-            else if (isKeyword(currentToken.value))
-            {
-                currentToken.type = KEYWORD;
-            }
-            else if (isNoiseWord(currentToken.value))
-            {
-                currentToken.type = NOISE_WORDS;
-            }
-            else
-            {
-                currentToken.type = IDENTIFIER;
+            int start_index = 0; 
+            switch (currentToken.value[start_index]) {
+                case 'i': //words that start word with 'i'
+                    if (currentToken.value[start_index + 1] == 'f' && 
+                        currentToken.value[start_index + 2] == '\0') 
+                    {
+                        currentToken.type = KEYWORD; // if
+                        // currentToken.value[0] = strdup('if'); 
+                    } 
+                    else if (currentToken.value[start_index + 1] == 'n') 
+                    {
+                        if (currentToken.value[start_index + 2] == 't' && 
+                            currentToken.value[start_index + 3] == '\0') {
+                            currentToken.type = DATA_TYPE; // int
+                        }
+                        else if (currentToken.value[start_index + 2] == 'p' &&
+                                currentToken.value[start_index + 3] == 'u' &&
+                                currentToken.value[start_index + 4] == 't' &&
+                                currentToken.value[start_index + 5] == '\0')
+                        {
+                            currentToken.type = KEYWORD; // input
+                        }
+                        else 
+                        {
+                            currentToken.type = IDENTIFIER; 
+                        }
+                    }
+                    else
+                    {
+                        currentToken.type = IDENTIFIER; 
+                    }
+                    break;
+                case 'a':
+                    if (currentToken.value[start_index + 1] == 'u' &&
+                        currentToken.value[start_index + 2] == 't' &&
+                        currentToken.value[start_index + 3] == 'o' &&
+                        currentToken.value[start_index + 4] == '\0' )
+                    {
+                        currentToken.type = NOISE_WORDS; // auto
+                    }
+                    else 
+                    {
+                        currentToken.type = IDENTIFIER; 
+                    }
+                    break;
+                case 'b':
+                    if (currentToken.value[start_index + 1] == 'o' &&
+                        currentToken.value[start_index + 2] == 'o' &&
+                        currentToken.value[start_index + 3] == 'l' &&
+                        currentToken.value[start_index + 4] == '\0')
+                    {
+                        currentToken.type = DATA_TYPE; // bool
+                    }
+                    else if (currentToken.value[start_index + 1] == 'r' &&
+                            currentToken.value[start_index + 2] == 'e' &&
+                            currentToken.value[start_index + 3] == 'a' &&
+                            currentToken.value[start_index + 4] == 'k' &&
+                            currentToken.value[start_index + 5] == '\0')
+                    {
+                        currentToken.type = KEYWORD; // break
+                    }
+                    else
+                    {
+                        currentToken.type = IDENTIFIER; 
+                    }
+                    break;
+                case 'c':
+                    if (currentToken.value[start_index + 1] == 'h')
+                    {
+                        if (currentToken.value[start_index + 2] == 'a')
+                        {
+                            if (currentToken.value[start_index + 3] == 'r' &&
+                                currentToken.value[start_index + 4] == '\0')
+                            {
+                                currentToken.type = DATA_TYPE; //char
+                            }
+                            else if (currentToken.value[start_index + 3] == 'n' &&
+                                    currentToken.value[start_index + 4] == 'c' &&
+                                    currentToken.value[start_index + 5] == 'e' &&
+                                    currentToken.value[start_index + 6] == '\0' )
+                            {
+                                currentToken.type = KEYWORD; //chance
+                            }
+                            else
+                            {
+                                currentToken.type = IDENTIFIER; 
+                            }
+                        }
+                        
+                    }
+                    else if (currentToken.value[start_index + 1] == 'o')
+                    {
+                        if (currentToken.value[start_index + 2] == 'n')
+                        {
+                            if (currentToken.value[start_index + 3] == 's' &&
+                                currentToken.value[start_index + 4] == 't' &&
+                                currentToken.value[start_index + 5] == '\0')
+                            {
+                                currentToken.type = KEYWORD; //const
+                            }
+                            else if (currentToken.value[start_index + 3] == 't' &&
+                                    currentToken.value[start_index + 4] == 'i' &&
+                                    currentToken.value[start_index + 5] == 'n' &&
+                                    currentToken.value[start_index + 6] == 'u' &&
+                                    currentToken.value[start_index + 7] == 'e' &&
+                                    currentToken.value[start_index + 8] == '\0')
+                            {
+                                currentToken.type = KEYWORD; //continue
+                            }
+                            else
+                            {
+                                currentToken.type = IDENTIFIER; 
+                            }
+                        }
+                    }
+                    else
+                    {
+                        currentToken.type = IDENTIFIER; 
+                    }
+                    break;
+                case 'd':
+                    if (currentToken.value[start_index + 1] == 'e' &&
+                        currentToken.value[start_index + 2] == 'f' &&
+                        currentToken.value[start_index + 3] == '\0')
+                    {
+                        currentToken.type = KEYWORD; //def
+                    }
+                    else
+                    {
+                        currentToken.type = IDENTIFIER; 
+                    }
+                    break;
+                case 'e':
+                    if (currentToken.value[start_index + 1] == 'l')
+                    {
+                        if (currentToken.value[start_index + 2] == 'i' &&
+                            currentToken.value[start_index + 3] == 'f' &&
+                            currentToken.value[start_index + 4] == '\0')
+                        {
+                            currentToken.type = KEYWORD; //elif
+                        }
+                        else if (currentToken.value[start_index + 2] == 's' &&
+                                currentToken.value[start_index + 3] == 'e' &&
+                                currentToken.value[start_index + 4] == '\0')
+                        {
+                            currentToken.type = KEYWORD; //else
+                        }
+                        else
+                        {
+                            currentToken.type = IDENTIFIER; //else
+                        }
+                    }
+                    else if (currentToken.value[start_index + 1] == 'x')
+                    {
+                        if (currentToken.value[start_index + 2] == 't')
+                        {
+                            if (currentToken.value[start_index + 3] == 'e')
+                            {
+                                if (currentToken.value[start_index + 4] == 'n' &&
+                                    currentToken.value[start_index + 5] == 's' &&
+                                    currentToken.value[start_index + 6] == 'i' &&
+                                    currentToken.value[start_index + 7] == 'o' &&
+                                    currentToken.value[start_index + 8] == 'n' &&
+                                    currentToken.value[start_index + 9] == '\0')
+                                {
+                                    currentToken.type = RESERVED_WORDS; //extension
+                                }
+                                else if (currentToken.value[start_index + 4] == 'r' &&
+                                        currentToken.value[start_index + 5] == 'n' &&
+                                        currentToken.value[start_index + 6] == '\0')
+                                {
+                                    currentToken.type = RESERVED_WORDS; //extern
+                                }
+                                else
+                                {
+                                    currentToken.type = IDENTIFIER; //extern
+                                }
+                            }
+                            
+                        }
+                        
+                    }
+                    break;
+                case 'f':
+                    if (currentToken.value[start_index + 1] == 'a' &&
+                        currentToken.value[start_index + 2] == 'l' &&
+                        currentToken.value[start_index + 3] == 's' &&
+                        currentToken.value[start_index + 4] == 'e' &&
+                        currentToken.value[start_index + 5] == '\0')
+                    {
+                        currentToken.type = RESERVED_WORDS; //false
+                    }
+                    else if (currentToken.value[start_index + 1] == 'l' &&
+                            currentToken.value[start_index + 2] == 'o' &&
+                            currentToken.value[start_index + 3] == 'a' &&
+                            currentToken.value[start_index + 4] == 't' &&
+                            currentToken.value[start_index + 5] == '\0')
+                    {
+                        currentToken.type = DATA_TYPE; //float
+                    }
+                    else if (currentToken.value[start_index + 1] == 'o' &&
+                            currentToken.value[start_index + 2] == 'r' &&
+                            currentToken.value[start_index + 3] == '\0')
+                    {
+                       currentToken.type = KEYWORD; //for
+                    }
+                    else
+                    {
+                        currentToken.type = IDENTIFIER;
+                    }
+                    break;
+                case 'm':
+                    if (currentToken.value[start_index + 1] == 'o' &&
+                        currentToken.value[start_index + 2] == 'd' &&
+                        currentToken.value[start_index + 3] == 'u' &&
+                        currentToken.value[start_index + 4] == 'l' &&
+                        currentToken.value[start_index + 5] == 'e' &&
+                        currentToken.value[start_index + 6] == '\0')
+                    {
+                    currentToken.type = RESERVED_WORDS; // module
+                    }
+                    else
+                    {
+                        currentToken.type = IDENTIFIER; 
+                    }
+                    break;
+                case 'p':
+                    if (currentToken.value[start_index + 1] == 'r' &&
+                        currentToken.value[start_index + 2] == 'i' &&
+                        currentToken.value[start_index + 3] == 'n' &&
+                        currentToken.value[start_index + 4] == 't' &&
+                        currentToken.value[start_index + 5] == '\0')
+                    {
+                        currentToken.type = KEYWORD; // print
+                    }
+                    break;
+                case 'r':
+                    if (currentToken.value[start_index + 1] == 'e' &&
+                        currentToken.value[start_index + 2] == 't' &&
+                        currentToken.value[start_index + 3] == 'u' &&
+                        currentToken.value[start_index + 4] == 'r' &&
+                        currentToken.value[start_index + 5] == 'n' && 
+                        currentToken.value[start_index + 6] == '\0')
+                    {
+                    currentToken.type = KEYWORD; // return
+                    }
+                    else
+                    {
+                        currentToken.type = IDENTIFIER;
+                    }
+                    break;
+                case 's':
+                    if (currentToken.value[start_index + 1] == 't' &&
+                        currentToken.value[start_index + 2] == 'r' &&
+                        currentToken.value[start_index + 3] == '\0')
+                    {
+                    currentToken.type = DATA_TYPE; // str
+                    }
+                    else
+                    {
+                        currentToken.type = IDENTIFIER;
+                    }
+                    break;
+                case 't':
+                    if (currentToken.value[start_index + 1] == 'r' &&
+                        currentToken.value[start_index + 2] == 'u' &&
+                        currentToken.value[start_index + 3] == 'e' &&
+                        currentToken.value[start_index + 4] == '\0')
+                    {
+                    currentToken.type = RESERVED_WORDS; // true
+                    }
+                    else
+                    {
+                        currentToken.type = IDENTIFIER;
+                    }
+                    break;
+                case 'u':
+                    if (currentToken.value[start_index + 1] == 's' &&
+                        currentToken.value[start_index + 2] == 'i' &&
+                        currentToken.value[start_index + 3] == 'n' &&
+                        currentToken.value[start_index + 4] == 'g' &&
+                        currentToken.value[start_index + 5] == '\0')
+                    {
+                    currentToken.type = RESERVED_WORDS; // using
+                    }
+                    else
+                    {
+                        currentToken.type = IDENTIFIER; 
+                    }
+                    break;
+                case 'v':
+                    if (currentToken.value[start_index + 1] == 'a' &&
+                        currentToken.value[start_index + 2] == 'l' &&
+                        currentToken.value[start_index + 3] == 'u' &&
+                        currentToken.value[start_index + 4] == 'e' &&
+                        currentToken.value[start_index + 5] == '\0')
+                    {
+                    currentToken.type = RESERVED_WORDS; // value
+                    }
+                    else
+                    {
+                        currentToken.type = IDENTIFIER; 
+                    }
+                    break;
+                case 'w':
+                    if (currentToken.value[start_index + 1] == 'h' &&
+                        currentToken.value[start_index + 2] == 'i' &&
+                        currentToken.value[start_index + 3] == 'l' &&
+                        currentToken.value[start_index + 4] == 'e' &&
+                        currentToken.value[start_index + 5] == '\0')
+                    {
+                        currentToken.type = KEYWORD;  // while
+                    }
+                    else if (currentToken.value[start_index + 1] == 'i' &&
+                            currentToken.value[start_index + 2] == 't' &&
+                            currentToken.value[start_index + 3] == 'h' &&
+                            currentToken.value[start_index + 4] == '\0')
+                    {
+                        currentToken.type = KEYWORD; // with
+                    }
+                    
+                    break; 
+                default:
+                    currentToken.type = IDENTIFIER;
+                    break;
             }
             printToken(currentToken, file);
         }
 
+        
         // Handle numbers
         else if (isdigit(currentChar))
         {
@@ -340,7 +658,6 @@ void lexicalAnalyzer(const char *input, FILE *file)
                  (input[i] == '/' && input[i + 1] == '=') ||
                  (input[i] == '%' && input[i + 1] == '=') ||
                  (input[i] == '^' && input[i + 1] == '='))
-                 
         {
             // Handle other assignment operators (+=, -=, *=, /=, %=, ^=)
             currentToken.value[0] = input[i];
