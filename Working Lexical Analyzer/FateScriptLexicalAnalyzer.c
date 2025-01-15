@@ -377,6 +377,9 @@ void lexicalAnalyzer(const char *input, FILE *file)
                             currentToken.line_number = line_number;
                         }
                     }
+                    else {
+                        currentToken.type = IDENTIFIER;
+                    }
                 }
                 else if (currentToken.value[start_index + 1] == 'o')
                 {
@@ -404,6 +407,9 @@ void lexicalAnalyzer(const char *input, FILE *file)
                             currentToken.type = IDENTIFIER;
                             currentToken.line_number = line_number;
                         }
+                    }
+                    else {
+                        currentToken.type = IDENTIFIER;
                     }
                 }
                 else
@@ -478,7 +484,16 @@ void lexicalAnalyzer(const char *input, FILE *file)
                                 currentToken.line_number = line_number;
                             }
                         }
+                        else {
+                            currentToken.type = IDENTIFIER;
+                        }
                     }
+                    else {
+                        currentToken.type = IDENTIFIER;
+                    }
+                }
+                else {
+                    currentToken.type = IDENTIFIER;
                 }
                 break;
             case 'f':
@@ -637,7 +652,10 @@ void lexicalAnalyzer(const char *input, FILE *file)
                     currentToken.type = KEYWORD; // with
                     currentToken.line_number = line_number;
                 }
-
+                else
+                {
+                     currentToken.type = IDENTIFIER;
+                }
                 break;
             default:
                 currentToken.type = IDENTIFIER;
