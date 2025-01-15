@@ -27,14 +27,14 @@ typedef struct
 {
     TokenType type;
     char value[MAX_TOKEN_SIZE];
-    size_t line_number; 
+    size_t line_number;
 } Token;
 
 size_t line_number = 1;
 // Function to classify and print token
 void printToken(Token token, FILE *file)
 {
-    printf("Line Number: %d ", line_number); 
+    printf("Line Number: %d ", line_number);
     // Print to console
     switch (token.type)
     {
@@ -123,7 +123,7 @@ void printToken(Token token, FILE *file)
         tokenTypeStr = "Error";
     }
 
-    fprintf(file, "%-20s | %-15s | %-10d\n", token.value, tokenTypeStr, token.line_number);
+    fprintf(file, "%-20s %-15s %-10d\n", token.value, tokenTypeStr, token.line_number);
 }
 
 // Lexical analyzer function
@@ -137,15 +137,15 @@ void lexicalAnalyzer(const char *input, FILE *file)
     {
         //  Actual Whitespace
         if (isspace(currentChar))
-        {   
+        {
             if (currentChar == '\n')
             {
-            line_number++;
+                line_number++;
             }
             i++;
             continue;
         }
-        
+
         // Check for \n
         if (input[i] == '\\' && input[i + 1] == 'n')
         {
@@ -377,7 +377,8 @@ void lexicalAnalyzer(const char *input, FILE *file)
                             currentToken.line_number = line_number;
                         }
                     }
-                    else {
+                    else
+                    {
                         currentToken.type = IDENTIFIER;
                     }
                 }
@@ -408,7 +409,8 @@ void lexicalAnalyzer(const char *input, FILE *file)
                             currentToken.line_number = line_number;
                         }
                     }
-                    else {
+                    else
+                    {
                         currentToken.type = IDENTIFIER;
                     }
                 }
@@ -484,15 +486,18 @@ void lexicalAnalyzer(const char *input, FILE *file)
                                 currentToken.line_number = line_number;
                             }
                         }
-                        else {
+                        else
+                        {
                             currentToken.type = IDENTIFIER;
                         }
                     }
-                    else {
+                    else
+                    {
                         currentToken.type = IDENTIFIER;
                     }
                 }
-                else {
+                else
+                {
                     currentToken.type = IDENTIFIER;
                 }
                 break;
@@ -654,7 +659,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
                 }
                 else
                 {
-                     currentToken.type = IDENTIFIER;
+                    currentToken.type = IDENTIFIER;
                 }
                 break;
             default:
@@ -809,7 +814,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
         }
         // Handle delimiters
         else if (strchr("{};,()[].'\"'", currentChar))
-        {   
+        {
             currentToken.value[0] = currentChar;
             currentToken.value[1] = '\0';
             currentToken.type = DELIMITER;
@@ -827,7 +832,6 @@ void lexicalAnalyzer(const char *input, FILE *file)
             printToken(currentToken, file);
             i++;
         }
-        
     }
 }
 
@@ -868,8 +872,8 @@ int main()
     }
 
     // Write headers to the symbol table
-    fprintf(file, "%-20s %-20s %-20s\n", "Lexeme", "Token", "Line Number");
-    fprintf(file, "-----------------------------------------------------\n");
+    // fprintf(file, "%-20s %-20s %-20s\n", "Lexeme", "Token", "Line Number");
+    // fprintf(file, "-----------------------------------------------------\n");
 
     // Open the source .fate file
     FILE *sourceFile = fopen(filename, "r");

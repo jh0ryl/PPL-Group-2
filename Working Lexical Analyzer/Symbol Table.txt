@@ -1,37 +1,9 @@
-Lexeme               Token                Line Number         
------------------------------------------------------
-TITLE                | Identifier      | 0         
-int                  | Data Type       | 2         
-height               | Identifier      | 2         
-=                    | Operator        | 2         
-171                  | Number          | 2         
-;                    | Delimiter       | 2         
-int                  | Data Type       | 3         
-price                | Data Type       | 3         
-=                    | Operator        | 3         
-191                  | Number          | 3         
-;                    | Delimiter       | 3         
-if                   | Keyword         | 4         
-(                    | Delimiter       | 4         
-height               | Identifier      | 4         
->                    | Operator        | 4         
-21                   | Number          | 4         
-)                    | Delimiter       | 4         
-{                    | Delimiter       | 4         
-print                | Keyword         | 5         
-(                    | Delimiter       | 5         
-"thats pretty tall!" | String Literal  | 5         
-)                    | Delimiter       | 5         
-;                    | Delimiter       | 5         
-}                    | Delimiter       | 6         
-for                  | Keyword         | 7         
-(                    | Delimiter       | 7         
-height               | Identifier      | 7         
->                    | Operator        | 7         
-175                  | Number          | 7         
-)                    | Delimiter       | 7         
-{                    | Delimiter       | 7         
-height               | Identifier      | 8         
-++                   | Operator        | 8         
-;                    | Delimiter       | 8         
-}                    | Delimiter       | 9         
+int                  Data Type       1         
+width                Identifier      1         
+,                    Delimiter       1         
+height               Identifier      1         
+;                    Delimiter       1         
+int                  Data Type       3         
+cost                 Identifier      3         
+;                    Delimiter       3         
+"Hello, World!"      String Literal  5         
