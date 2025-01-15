@@ -1,1 +1,9 @@
-int age = 21;
+TITLE
+int height = 171;
+int price = 191;
+if (height > 21) { 
+    print("thats pretty tall!"); 
+}
+for (height > 175) {
+    height ++;
+}

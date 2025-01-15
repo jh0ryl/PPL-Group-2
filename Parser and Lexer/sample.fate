@@ -1,3 +1,5 @@
-int age = 21;
 int height = 171;
 int price = 191;
+if (height > 21) { 
+    print("thats pretty tall!"); 
+}
