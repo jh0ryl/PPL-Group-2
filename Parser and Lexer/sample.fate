@@ -1,3 +1,8 @@
-int age = 21;
-int height = 171;
-int price = 191;
+int cost;
+int age, height;
+cost = 89;
+additional = tax;
+total = tax + price + 5;
+print("Hello, World!");
+print("Value is: %d", result);
+print("Name: %s, Age: %d", name, age);

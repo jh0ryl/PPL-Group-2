@@ -13,7 +13,7 @@ typedef enum
     DELIMITER,
     COMMENT,
     WHITESPACE,
-    STRING_LITERALS,
+    STRING_LITERAL,
     ERROR,
     END
 } TokenType;

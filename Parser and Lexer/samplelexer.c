@@ -15,7 +15,7 @@ typedef enum
     DELIMITER,
     COMMENT,
     WHITESPACE,
-    STRING_LITERALS,
+    STRING_LITERAL,
     ERROR,
     END
 } TokenType;
@@ -55,7 +55,7 @@ const char *token_type_to_string(TokenType type)
         return "Comment";
     case WHITESPACE:
         return "Whitespace";
-    case STRING_LITERALS:
+    case STRING_LITERAL:
         return "String Literals";
     case ERROR:
         return "Error";
@@ -78,6 +78,68 @@ void next_token(char *input, int *index)
         strcpy(current_token.value, "int");
         *index += 3;
     }
+    else if (strncmp(&input[*index], "print", 5) == 0)
+    {
+        current_token.type = KEYWORD;
+        strcpy(current_token.value, "print");
+        *index += 5;
+    }
+    else if (input[*index] == '(')
+    {
+        current_token.type = DELIMITER;
+        strcpy(current_token.value, "(");
+        (*index)++;
+    }
+    else if (input[*index] == ')')
+    {
+        current_token.type = DELIMITER;
+        strcpy(current_token.value, ")");
+        (*index)++;
+    }
+    else if (input[*index] == ',')
+    {
+        current_token.type = OPERATOR;
+        strcpy(current_token.value, ",");
+        (*index)++;
+    }
+    else if (input[*index] == '+')
+    {
+        current_token.type = OPERATOR;
+        strcpy(current_token.value, "+");
+        (*index)++;
+    }
+    else if (input[*index] == '"') // Check for the opening quote of the string literal
+    {
+        current_token.type = STRING_LITERAL;
+        int j = 0;
+        current_token.value[j++] = input[*index]; // Start with the opening quote
+
+        (*index)++;                                           // Move past the opening quote
+        while (input[*index] != '"' && input[*index] != '\0') // Loop until closing quote or end of string
+        {
+            // Handle escape sequences inside string literals (e.g., \" or \\)
+            if (input[*index] == '\\' && (input[*index + 1] == '"' || input[*index + 1] == '\\'))
+            {
+                current_token.value[j++] = input[*index]; // Add the backslash
+                (*index)++;                               // Move past the backslash
+                current_token.value[j++] = input[*index]; // Add the escaped character
+            }
+            else
+            {
+                current_token.value[j++] = input[*index]; // Normal character
+            }
+            (*index)++; // Move to the next character
+        }
+
+        if (input[*index] == '"') // If we reach a closing quote
+        {
+            current_token.value[j++] = input[*index]; // Add the closing quote
+            (*index)++;                               // Move past the closing quote
+        }
+
+        current_token.value[j] = '\0'; // Null-terminate the string literal
+    }
+
     else if (isalpha(input[*index]))
     {
         int start = *index;
