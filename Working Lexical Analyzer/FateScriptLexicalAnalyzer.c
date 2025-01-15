@@ -437,7 +437,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
                                         currentToken.value[start_index + 5] == 'n' &&
                                         currentToken.value[start_index + 6] == '\0')
                                 {
-                                    currentToken.type = RESERVED_WORDS; //extern
+                                    currentToken.type = NOISE_WORDS; //extern
                                 }
                                 else
                                 {
@@ -563,7 +563,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
                         currentToken.value[start_index + 4] == 'e' &&
                         currentToken.value[start_index + 5] == '\0')
                     {
-                    currentToken.type = RESERVED_WORDS; // value
+                    currentToken.type = KEYWORD; // value
                     }
                     else
                     {
