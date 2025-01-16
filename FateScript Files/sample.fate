@@ -1,7 +1,20 @@
-int width, height;
+for (i = 1; i <= 5; i++) {
+    print("%d", i);
+    }
 
-int cost;
+if (x < 20) {
+        printf("x is less than 20\n");
+    }
 
-"Hello, World!"
-
-asd@dqw
+str full_name;
+int age, height;
+bool is_married;
+input("Enter value: ", &result);
+print("Hello, World!");
+print("Value is: %d", result);
+print("Name: %s, Age: %d", name, age);
+x = new_price;
+last_name = "Legarda";
+new_price = 90 - 30;
+new_price = discount - 30;
+discount_status = (sale_price + 20) >= 100;

@@ -1,12 +1,105 @@
-int                  DATA TYPE       1         
-width                IDENTIFIER      1         
-,                    DELIMITER       1         
-height               IDENTIFIER      1         
+for                  KEYWORD         1         
+(                    DELIMITER       1         
+i                    IDENTIFIER      1         
+=                    OPERATOR        1         
+1                    NUMBER          1         
 ;                    DELIMITER       1         
-int                  DATA TYPE       3         
-cost                 IDENTIFIER      3         
-;                    DELIMITER       3         
-"Hello, World!"      STRING LITERAL  5         
-asd                  IDENTIFIER      7         
-@                    ERROR           7         
-dqw                  IDENTIFIER      7         
+i                    IDENTIFIER      1         
+<=                   OPERATOR        1         
+5                    NUMBER          1         
+;                    DELIMITER       1         
+i                    IDENTIFIER      1         
+++                   OPERATOR        1         
+)                    DELIMITER       1         
+{                    DELIMITER       1         
+print                KEYWORD         2         
+(                    DELIMITER       2         
+"%d"                 STRING LITERAL  2         
+,                    DELIMITER       2         
+i                    IDENTIFIER      2         
+)                    DELIMITER       2         
+;                    DELIMITER       2         
+}                    DELIMITER       3         
+if                   KEYWORD         5         
+(                    DELIMITER       5         
+x                    IDENTIFIER      5         
+<                    OPERATOR        5         
+20                   NUMBER          5         
+)                    DELIMITER       5         
+{                    DELIMITER       5         
+printf               DELIMITER       5         
+(                    DELIMITER       6         
+"x is less than 20\n" STRING LITERAL  6         
+)                    DELIMITER       6         
+;                    DELIMITER       6         
+}                    DELIMITER       7         
+str                  DATA TYPE       9         
+full_name            IDENTIFIER      9         
+;                    DELIMITER       9         
+int                  DATA TYPE       10        
+age                  IDENTIFIER      10        
+,                    DELIMITER       10        
+height               IDENTIFIER      10        
+;                    DELIMITER       10        
+bool                 DATA TYPE       11        
+is_married           IDENTIFIER      11        
+;                    DELIMITER       11        
+input                KEYWORD         12        
+(                    DELIMITER       12        
+"Enter value: "      STRING LITERAL  12        
+,                    DELIMITER       12        
+&                    ERROR           12        
+result               IDENTIFIER      12        
+)                    DELIMITER       12        
+;                    DELIMITER       12        
+print                KEYWORD         13        
+(                    DELIMITER       13        
+"Hello, World!"      STRING LITERAL  13        
+)                    DELIMITER       13        
+;                    DELIMITER       13        
+print                KEYWORD         14        
+(                    DELIMITER       14        
+"Value is: %d"       STRING LITERAL  14        
+,                    DELIMITER       14        
+result               IDENTIFIER      14        
+)                    DELIMITER       14        
+;                    DELIMITER       14        
+print                KEYWORD         15        
+(                    DELIMITER       15        
+"Name: %s, Age: %d"  STRING LITERAL  15        
+,                    DELIMITER       15        
+name                 IDENTIFIER      15        
+,                    DELIMITER       15        
+age                  IDENTIFIER      15        
+)                    DELIMITER       15        
+;                    DELIMITER       15        
+x                    IDENTIFIER      16        
+=                    OPERATOR        16        
+new_price            IDENTIFIER      16        
+;                    DELIMITER       16        
+last_name            IDENTIFIER      17        
+=                    OPERATOR        17        
+"Legarda"            STRING LITERAL  17        
+;                    DELIMITER       17        
+new_price            IDENTIFIER      18        
+=                    OPERATOR        18        
+90                   NUMBER          18        
+-                    OPERATOR        18        
+30                   NUMBER          18        
+;                    DELIMITER       18        
+new_price            IDENTIFIER      19        
+=                    OPERATOR        19        
+discount             IDENTIFIER      19        
+-                    OPERATOR        19        
+30                   NUMBER          19        
+;                    DELIMITER       19        
+discount_status      IDENTIFIER      20        
+=                    OPERATOR        20        
+(                    DELIMITER       20        
+sale_price           IDENTIFIER      20        
++                    OPERATOR        20        
+20                   NUMBER          20        
+)                    DELIMITER       20        
+>=                   OPERATOR        20        
+100                  NUMBER          20        
+;                    DELIMITER       20        

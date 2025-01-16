@@ -34,7 +34,7 @@ size_t line_number = 1;
 // Function to classify and print token
 void printToken(Token token, FILE *file)
 {
-    printf("Line Number: %d ", line_number);
+    printf("Line Number: %zu ", line_number);
     // Print to console
     switch (token.type)
     {
@@ -123,12 +123,12 @@ void printToken(Token token, FILE *file)
         tokenTypeStr = "ERROR";
     }
 
-    fprintf(file, "%-20s %-15s %-10d\n", token.value, tokenTypeStr, token.line_number);
+    fprintf(file, "%-20s %-15s %-10zu\n", token.value, tokenTypeStr, token.line_number);
 }
 
 // Lexical analyzer function
 void lexicalAnalyzer(const char *input, FILE *file)
-{   
+{
     int error = 0;
     int i = 0, j = 0;
     char currentChar;
@@ -271,13 +271,12 @@ void lexicalAnalyzer(const char *input, FILE *file)
         {
             j = 0;
             while (isalnum(input[i]) || input[i] == '_')
-            {   
+            {
                 currentToken.value[j++] = input[i++];
-                
             }
             currentToken.value[j] = '\0';
             int start_index = 0;
-            
+
             switch (currentToken.value[start_index])
             {
             case 'i': // words that start word with 'i'
@@ -285,7 +284,6 @@ void lexicalAnalyzer(const char *input, FILE *file)
                     currentToken.value[start_index + 2] == '\0')
                 {
                     currentToken.type = KEYWORD; // if
-                    currentToken.value[j++] = input[i++];
                     currentToken.line_number = line_number;
                 }
                 else if (currentToken.value[start_index + 1] == 'n')
@@ -670,7 +668,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
                 currentToken.line_number = line_number;
                 break;
             }
-            
+
             printToken(currentToken, file);
         }
 
