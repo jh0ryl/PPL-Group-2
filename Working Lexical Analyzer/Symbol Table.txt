@@ -1,9 +1,12 @@
-int                  Data Type       1         
-width                Identifier      1         
-,                    Delimiter       1         
-height               Identifier      1         
-;                    Delimiter       1         
-int                  Data Type       3         
-cost                 Identifier      3         
-;                    Delimiter       3         
-"Hello, World!"      String Literal  5         
+int                  DATA TYPE       1         
+width                IDENTIFIER      1         
+,                    DELIMITER       1         
+height               IDENTIFIER      1         
+;                    DELIMITER       1         
+int                  DATA TYPE       3         
+cost                 IDENTIFIER      3         
+;                    DELIMITER       3         
+"Hello, World!"      STRING LITERAL  5         
+asd                  IDENTIFIER      7         
+@                    ERROR           7         
+dqw                  IDENTIFIER      7         

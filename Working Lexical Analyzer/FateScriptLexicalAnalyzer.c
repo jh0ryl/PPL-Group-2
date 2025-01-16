@@ -275,29 +275,10 @@ void lexicalAnalyzer(const char *input, FILE *file)
                 currentToken.value[j++] = input[i++];
                 
             }
-
-           while (!isspace(input[i]) && input[i] != '\0') // Collect until a space or end of input
-            {
-                if (strchr("@#.`?", input[i])) // If invalid, mark as error
-                {
-                    error = 1;
-                }
-                else if (!strchr("@#.`?", input[i]) && ispunct(input[i]))
-                {
-                    break;
-                }
-                    currentToken.value[j++] = input[i++];
-            }
             currentToken.value[j] = '\0';
             int start_index = 0;
-            if (error)
-            {
-                currentToken.type = ERROR;
-                currentToken.line_number = line_number;
-            }
-            else
-            {
-                switch (currentToken.value[start_index])
+            
+            switch (currentToken.value[start_index])
             {
             case 'i': // words that start word with 'i'
                 if (currentToken.value[start_index + 1] == 'f' &&
@@ -325,13 +306,13 @@ void lexicalAnalyzer(const char *input, FILE *file)
                     }
                     else
                     {
-                        currentToken.type = ERROR;
+                        currentToken.type = IDENTIFIER;
                         currentToken.line_number = line_number;
                     }
                 }
                 else
                 {
-                    currentToken.type = ERROR;
+                    currentToken.type = IDENTIFIER;
                     currentToken.line_number = line_number;
                 }
                 break;
@@ -688,7 +669,6 @@ void lexicalAnalyzer(const char *input, FILE *file)
                 currentToken.type = IDENTIFIER;
                 currentToken.line_number = line_number;
                 break;
-            }
             }
             
             printToken(currentToken, file);
