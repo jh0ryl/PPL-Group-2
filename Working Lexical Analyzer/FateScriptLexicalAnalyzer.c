@@ -234,38 +234,53 @@ void lexicalAnalyzer(const char *input, FILE *file)
             printToken(currentToken, file);
         }
 
-        // Handle string literals (single quoted strings)
+        // Handle single-quoted character literals
         else if (currentChar == '\'')
         {
             currentToken.type = CHARACTER;
             currentToken.line_number = line_number;
             j = 0;
-            currentToken.value[j++] = currentChar;
 
+            currentToken.value[j++] = currentChar; // Add the opening quote
             i++;
-            while (input[i] != '\'' && input[i] != '\0')
+
+            int charCount = 0; // Count valid characters inside the single quotes
+
+            // Process characters inside the single quotes
+            while (input[i] != '\'' && input[i] != '\0') // Stop at closing quote or end of input
             {
-                // Handle escape sequences inside string literals
-                if (input[i] == '\\' && (input[i + 1] == '\'' || input[i + 1] == '\\'))
+                if (charCount >= 1) // If there's more than one character, mark it as an error
                 {
-                    currentToken.value[j++] = input[i++];
-                    currentToken.value[j++] = input[i++];
+                    currentToken.type = ERROR;
                 }
-                else
-                {
-                    currentToken.value[j++] = input[i++];
-                }
+
+                // Add character to the token value
+                currentToken.value[j++] = input[i++];
+                charCount++;
             }
 
+            // Check for the closing quote
             if (input[i] == '\'')
             {
-                currentToken.value[j++] = input[i++];
+                currentToken.value[j++] = input[i++]; // Add the closing quote
+            }
+            else
+            {
+                // If no closing quote, it's an error
+                currentToken.type = ERROR;
             }
 
             currentToken.value[j] = '\0';
+
+            // Final check: If it's not exactly one character, set as an error
+            if (charCount != 1)
+            {
+                currentToken.type = ERROR;
+            }
+
+            // Print the token
             printToken(currentToken, file);
         }
-
         // Handle identifiers, reserved words, keywords, and noise
         else if (isalpha(currentChar))
         {
@@ -847,13 +862,13 @@ int isFateFile(const char *filename)
 int main()
 {
     FILE *file;
-    // char *filename = "../FateScript Files/sample.fate";
+    char *filename = "../FateScript Files/sample.fate";
     // char *filename = "FateScript Files/sample.fate";
     // char *filename = "FateScript Files/sample.txt";
     // char *filename = "FateScript Files/delimitersCommentsWhitespace.fate";
     // char *filename = "FateScript Files/keywordsNoiseWordsReservedWords.fate";
     // char *filename = "FateScript Files/operators.fate";
-    char *filename = "../FateScript Files/sampleProgram1.fate";
+    // char *filename = "../FateScript Files/sampleProgram1.fate";
     // char *filename = "FateScript Files/sampleProgram2.fate";
     char input[1000];
     int i = 0;
