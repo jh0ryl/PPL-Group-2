@@ -320,7 +320,6 @@ void parse_condition(FILE *input_file, FILE *output_file, Token *current_token)
 void parse_increment(FILE *input_file, FILE *output_file, Token *current_token)
 {
     fprintf(output_file, "Statement %d (Line %d): Increment\n", statement_number++, current_token->line_number);
-    get_token(input_file, current_token);
 
     // Parse identifier (variable to increment)
     parse_identifier(input_file, output_file, current_token);
@@ -519,6 +518,7 @@ void parse_for_loop(FILE *input_file, FILE *output_file, Token *current_token)
         parse_condition(input_file, output_file, current_token);
         parse_semicolon(input_file, output_file, current_token);
         fprintf(output_file, "\n");
+        get_token(input_file, current_token); // Get next token
         parse_increment(input_file, output_file, current_token);
 
         // Check for closing parenthesis ')'
@@ -570,6 +570,21 @@ void parse_for_loop(FILE *input_file, FILE *output_file, Token *current_token)
     fprintf(output_file, "\n");
 }
 
+char *peek_next_token(FILE *input_file, Token *current_token)
+{
+    static Token temp_token;                         // Temporary token for peeking
+    long current_pos = ftell(input_file);            // Save the current file position
+    int result = get_token(input_file, &temp_token); // Try to fetch the next token
+
+    if (result == 0)
+    { // End-of-file or error
+        return NULL;
+    }
+
+    fseek(input_file, current_pos, SEEK_SET); // Restore file position
+    return temp_token.value;                  // Return the peeked token's value
+}
+
 void parse_while_loop(FILE *input_file, FILE *output_file, Token *current_token)
 {
     fprintf(output_file, "Statement %d (Line %d): Iterative (while)\n", statement_number++, current_token->line_number);
@@ -606,18 +621,29 @@ void parse_while_loop(FILE *input_file, FILE *output_file, Token *current_token)
             fprintf(output_file, "\n");
             get_token(input_file, current_token); // Get next token
 
-            // // Parse statements inside the loop
-            // while (current_token->type != DELIMITER || strcmp(current_token->value, "}") != 0)
-            // {
-            //     determine_statement(input_file, output_file, current_token);
-            //     get_token(input_file, current_token); // Get next token
-            // }
-            determine_statement(input_file, output_file, current_token);
-            parse_increment(input_file, output_file, current_token);
-            parse_semicolon(input_file, output_file, current_token);
-
-            get_token(input_file, current_token);
-            // fprintf(output_file, "%s \n", current_token->value);
+            while (current_token->type != DELIMITER || strcmp(current_token->value, "}") != 0)
+            {
+                // Check if the token is a variable and followed by '++' or '--'
+                if (current_token->type == IDENTIFIER)
+                {
+                    char *next_value = peek_next_token(input_file, current_token);
+                    if (strcmp(next_value, "++") == 0 || strcmp(next_value, "--") == 0)
+                    {
+                        fprintf(output_file, "%s \n", current_token->value);
+                        parse_increment(input_file, output_file, current_token); // Handle increment/decrement
+                        parse_semicolon(input_file, output_file, current_token); // Handle semicolon
+                    }
+                    else
+                    {
+                        determine_statement(input_file, output_file, current_token); // Handle assignments or other statements
+                    }
+                }
+                else
+                {
+                    determine_statement(input_file, output_file, current_token); // Handle other statements
+                }
+                get_token(input_file, current_token); // Get next token
+            }
 
             // Check for closing curly brace '}'
             if (current_token->type == DELIMITER && strcmp(current_token->value, "}") == 0)

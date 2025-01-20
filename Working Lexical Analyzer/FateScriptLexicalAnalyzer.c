@@ -847,14 +847,8 @@ int isFateFile(const char *filename)
 int main()
 {
     FILE *file;
-    // char *filename = "../FateScript Files/sample.fate";
-    // char *filename = "FateScript Files/sample.fate";
-    // char *filename = "FateScript Files/sample.txt";
-    // char *filename = "FateScript Files/delimitersCommentsWhitespace.fate";
-    // char *filename = "FateScript Files/keywordsNoiseWordsReservedWords.fate";
-    // char *filename = "FateScript Files/operators.fate";
-    char *filename = "../FateScript Files/sampleProgram1.fate";
-    // char *filename = "FateScript Files/sampleProgram2.fate";
+    char *filename = "../FateScript Files/sample.fate";
+    // char *filename = "../FateScript Files/ProgramPresentation.fate";
     char input[1000];
     int i = 0;
 

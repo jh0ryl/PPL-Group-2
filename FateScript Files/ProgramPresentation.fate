@@ -5,7 +5,7 @@ bool is_married;
 input("Enter value: ", &result);
 
 print("Hello, World!");
-print("Value is: %d", result);
+print("%d", result);
 print("Name: %s, Age: %d", name, age);
 
 x = new_price;
@@ -36,12 +36,11 @@ for (i = 1; i <= 5; i++) {
     print("%d", i);
     }
 
-for (i = 1; i <= 5; i++) {
-    print("%d", i);
-    while (count > 0) {
-    print("%d", count);
-    count -- ; 
-    }
+for (i = 1; i <= 5; i++) {        
+        for (j = 1; j <= 5; j++) {
+            print("%d ", j);     
+        }
+        print("\n");           
     }
 
 while (count > 0) {
@@ -49,5 +48,17 @@ while (count > 0) {
     count -- ; 
 }
 
+while (count > 0) {               
+    inner = count;        
+    while (inner > 0) {       
+        print("%d ", inner); 
+        inner--;              
+    }
+    print("\n");              
+    count--;                  
+}
+
 x = ;
 print"Hello, World!";
+bool 12_months_old;
+str email@address;
