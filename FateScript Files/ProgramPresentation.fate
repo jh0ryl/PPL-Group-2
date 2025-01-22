@@ -1,0 +1,64 @@
+str full_name;
+int age, height;
+bool is_married;
+
+input("Enter value: ", &result);
+
+print("Hello, World!");
+print("%d", result);
+print("Name: %s, Age: %d", name, age);
+
+x = new_price;
+last_name = "Legarda";
+new_price = 90 - 30;
+new_price = discount - 30;
+discount_status = (sale_price + 20) >= 100;
+
+if (x < 20) {
+        print("x is less than 20\n");
+    }
+
+if (x > 0) {
+    print("Positive\n");
+} else {
+    print("Negative\n");
+}
+
+if (x > 0) {
+    print("Positive\n");
+} else if (x == 0) {
+    print("Zero\n");
+} else {
+    print("Negative\n");
+}
+
+for (i = 1; i <= 5; i++) {
+    print("%d", i);
+    }
+
+for (i = 1; i <= 5; i++) {        
+        for (j = 1; j <= 5; j++) {
+            print("%d ", j);     
+        }
+        print("\n");           
+    }
+
+while (count > 0) {
+    print("%d", count);
+    count -- ; 
+}
+
+while (count > 0) {               
+    inner = count;        
+    while (inner > 0) {       
+        print("%d ", inner); 
+        inner--;              
+    }
+    print("\n");              
+    count--;                  
+}
+
+x = ;
+print"Hello, World!";
+bool 12_months_old;
+str email@address;

@@ -1,8 +1,0 @@
-#This program calculates the area of a rectangle
-
-num length = input("Enter the length of the rectangle: ")
-num width = input("Enter the width of the rectangle: ")
-
-num area = length * width
-
-print("The area of the rectangle is: " + area)
