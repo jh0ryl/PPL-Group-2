@@ -234,35 +234,51 @@ void lexicalAnalyzer(const char *input, FILE *file)
             printToken(currentToken, file);
         }
 
-        // Handle string literals (single quoted strings)
+        // Handle single-quoted character literals
         else if (currentChar == '\'')
         {
             currentToken.type = CHARACTER;
             currentToken.line_number = line_number;
             j = 0;
-            currentToken.value[j++] = currentChar;
 
+            currentToken.value[j++] = currentChar; // Add the opening quote
             i++;
-            while (input[i] != '\'' && input[i] != '\0')
+
+            int charCount = 0; // Count valid characters inside the single quotes
+
+            // Process characters inside the single quotes
+            while (input[i] != '\'' && input[i] != '\0') // Stop at closing quote or end of input
             {
-                // Handle escape sequences inside string literals
-                if (input[i] == '\\' && (input[i + 1] == '\'' || input[i + 1] == '\\'))
+                if (charCount >= 1) // If there's more than one character, mark it as an error
                 {
-                    currentToken.value[j++] = input[i++];
-                    currentToken.value[j++] = input[i++];
+                    currentToken.type = ERROR;
                 }
-                else
-                {
-                    currentToken.value[j++] = input[i++];
-                }
+
+                // Add character to the token value
+                currentToken.value[j++] = input[i++];
+                charCount++;
             }
 
+            // Check for the closing quote
             if (input[i] == '\'')
             {
-                currentToken.value[j++] = input[i++];
+                currentToken.value[j++] = input[i++]; // Add the closing quote
+            }
+            else
+            {
+                // If no closing quote, it's an error
+                currentToken.type = ERROR;
             }
 
             currentToken.value[j] = '\0';
+
+            // Final check: If it's not exactly one character, set as an error
+            if (charCount != 1)
+            {
+                currentToken.type = ERROR;
+            }
+
+            // Print the token
             printToken(currentToken, file);
         }
 
@@ -844,22 +860,27 @@ int isFateFile(const char *filename)
     return (extension != NULL && strcmp(extension, ".fate") == 0);
 }
 
+// Assuming isFateFile and lexicalAnalyzer are declared elsewhere
+int isFateFile(const char *filename);
+void lexicalAnalyzer(const char *input, FILE *file);
+
 int main()
 {
     FILE *file;
-    // char *filename = "../FateScript Files/sample.fate";
-    // char *filename = "FateScript Files/sample.fate";
-    // char *filename = "FateScript Files/sample.txt";
-    // char *filename = "FateScript Files/delimitersCommentsWhitespace.fate";
-    // char *filename = "FateScript Files/keywordsNoiseWordsReservedWords.fate";
-    // char *filename = "FateScript Files/operators.fate";
-    char *filename = "../FateScript Files/sampleProgram1.fate";
-    // char *filename = "FateScript Files/sampleProgram2.fate";
+    char filename[1000]; // Buffer to store the filename input
+    char fullPath[1024]; // Full path to the file
     char input[1000];
     int i = 0;
 
+    // Prompt the user for the filename (including the extension, e.g., "file.fate")
+    printf("Input FateScript file to parse (with extension, e.g., 'file.fate'): ");
+    scanf("%999s", filename); // Use %999s to avoid buffer overflow
+
+    // Construct the full file path by concatenating the directory and user input
+    snprintf(fullPath, sizeof(fullPath), "../FateScript Files/%s", filename);
+
     // Check if the file has the .fate extension
-    if (!isFateFile(filename))
+    if (!isFateFile(fullPath))
     {
         printf("Error: The file is not a FateScript file.\n");
         return 1;
@@ -873,19 +894,16 @@ int main()
         return 1;
     }
 
-    // Write headers to the symbol table
-    // fprintf(file, "%-20s %-20s %-20s\n", "Lexeme", "Token", "Line Number");
-    // fprintf(file, "-----------------------------------------------------\n");
-
     // Open the source .fate file
-    FILE *sourceFile = fopen(filename, "r");
+    FILE *sourceFile = fopen(fullPath, "r");
     if (sourceFile == NULL)
     {
         perror("Error opening source file");
+        fclose(file); // Close symbol table file before exiting
         return 1;
     }
 
-    // Read the content of the file into input buffer
+    // Read the content of the file into the input buffer
     i = 0;
     while ((input[i] = fgetc(sourceFile)) != EOF && i < sizeof(input) - 1)
     {
@@ -896,7 +914,8 @@ int main()
     // Close the source file after reading
     fclose(sourceFile);
 
-    printf("\nTokens from file '%s':\n", filename);
+    // Perform lexical analysis
+    printf("\nTokens from file '%s':\n", fullPath);
     lexicalAnalyzer(input, file);
 
     // Close the output file after writing
