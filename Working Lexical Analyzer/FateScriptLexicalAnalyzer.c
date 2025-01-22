@@ -269,14 +269,32 @@ void lexicalAnalyzer(const char *input, FILE *file)
         // Handle identifiers, reserved words, keywords, and noise
         else if (isalpha(currentChar))
         {
-            j = 0;
-            while (isalnum(input[i]) || input[i] == '_')
-            {
-                currentToken.value[j++] = input[i++];
-            }
-            currentToken.value[j] = '\0';
-            int start_index = 0;
 
+            j = 0;
+            int start_index = 0, error = 0;
+            while (isalnum(input[i]) || input[i] == '_')
+            {   
+                while (!isspace(input[i]) && input[i] != '\0' && input[i] != ';')
+                {
+                 // Check if the character is an invalid character
+                if (strchr("@#.`?", input[i])) // Mark as error if character is invalid
+                {
+                error = 1; 
+                }
+                currentToken.value[j++] = input[i++];
+                }
+            }
+
+            currentToken.value[j] = '\0';
+        
+            if (error)
+            {
+                currentToken.type = ERROR; 
+                currentToken.line_number = line_number; 
+                error = 0; 
+            }
+            else
+            {
             switch (currentToken.value[start_index])
             {
             case 'i': // words that start word with 'i'
@@ -664,11 +682,13 @@ void lexicalAnalyzer(const char *input, FILE *file)
                 }
                 break;
             default:
-                currentToken.type = IDENTIFIER;
+                currentToken.type = ERROR;
                 currentToken.line_number = line_number;
                 break;
             }
-
+            }
+            
+            
             printToken(currentToken, file);
         }
 
@@ -815,9 +835,9 @@ void lexicalAnalyzer(const char *input, FILE *file)
             i++;
         }
         // Handle delimiters
-        else if (strchr("{}&;,()[].'\"'", currentChar))
+        else if (strchr("{}&;,()[].'\"'", input[i]))
         {
-            currentToken.value[0] = currentChar;
+            currentToken.value[0] = input[i];
             currentToken.value[1] = '\0';
             currentToken.type = DELIMITER;
             currentToken.line_number = line_number;
@@ -826,13 +846,21 @@ void lexicalAnalyzer(const char *input, FILE *file)
         }
         // Handle unknown characters
         else
-        {
-            currentToken.value[0] = currentChar;
-            currentToken.value[1] = '\0';
-            currentToken.type = ERROR;
-            currentToken.line_number = line_number;
+        {   
+            while (!isspace(input[i]) && input[i] != '\0')
+            {
+                 // Check if the character is an invalid character
+                if (strchr("@#.`?", input[i])) // Mark as error if character is invalid
+                {
+                // currentToken.value[0] = currentChar;
+                // currentToken.value[1] = '\0';
+                currentToken.type = ERROR;
+                currentToken.line_number = line_number;
+                }
+                currentToken.value[j++] = input[i++];
+            }
             printToken(currentToken, file);
-            i++;
+            currentToken.value[j] = '\0';
         }
     }
 }

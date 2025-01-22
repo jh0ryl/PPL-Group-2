@@ -1,32 +1,26 @@
 Statement 1 (Line 1): Iterative (while)
 	KEYWORD: ('while')
+		PARENTHESIS: ('(')
 
-Statement 2 (Line 1): Assignment
+Statement 2 (Line 1): Condition
 	IDENTIFIER: ('count')
-Error (Line 1): Expected '=' after identifier in assignment statement
-Error (Line 1): Expected a value, identifier, or nested expression
-Error (Line 1): Expected SEMICOLON (';') after identifier
+	OPERATOR: ('>')
+	NUMBER: ('0')
+
+	PARENTHESIS: (')')
+	CURLY BRACE: ('{')
 
 Statement 3 (Line 2): Output
 	KEYWORD: ('print')
 	PARENTHESIS: ('(')
-Error (Line 2): Expected string literal
-Error (Line 2): Expected closing parenthesis ')'
-Statement 4 (Line 2): Assignment
-	IDENTIFIER: ('d')
-Error (Line 2): Expected '=' after identifier in assignment statement
-Error (Line 2): Expected a value, identifier, or nested expression
-Error (Line 2): Expected SEMICOLON (';') after identifier
-
-Statement 5 (Line 2): Assignment
+	STRING: ("%d")
+	COMMA: (',')
 	IDENTIFIER: ('count')
-Error (Line 2): Expected '=' after identifier in assignment statement
-Error (Line 2): Expected a value, identifier, or nested expression
-Error (Line 2): Expected SEMICOLON (';') after identifier
+	PARENTHESIS: (')')
+	SEMICOLON: (';')
 
-Statement 6 (Line 2): Assignment
+Statement 4 (Line 2): Increment
 	IDENTIFIER: ('count')
-Error (Line 3): Expected '=' after identifier in assignment statement
-Error (Line 3): Expected a value, identifier, or nested expression
-Error (Line 3): Expected SEMICOLON (';') after identifier
+	OPERATOR: ('--')
+	CURLY BRACE: ('}')
 
