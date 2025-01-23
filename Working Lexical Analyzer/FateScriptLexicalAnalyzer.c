@@ -298,27 +298,53 @@ void lexicalAnalyzer(const char *input, FILE *file)
             switch (currentToken.value[start_index])
             {
             case 'i': // words that start word with 'i'
-                if (currentToken.value[start_index + 1] == 'f' &&
-                    currentToken.value[start_index + 2] == '\0')
+                if (currentToken.value[start_index + 1] == 'f')
                 {
-                    currentToken.type = KEYWORD; // if
-                    currentToken.line_number = line_number;
+                    if (currentToken.value[start_index + 2] == '\0')
+                    {
+                        currentToken.type = KEYWORD; // if
+                        currentToken.line_number = line_number;
+                    }
+                    else
+                    {   
+                        currentToken.type = ERROR; 
+                        currentToken.line_number = line_number;  
+                    }  
                 }
                 else if (currentToken.value[start_index + 1] == 'n')
                 {
-                    if (currentToken.value[start_index + 2] == 't' &&
-                        currentToken.value[start_index + 3] == '\0')
+                    if (currentToken.value[start_index + 2] == 't')
                     {
-                        currentToken.type = DATA_TYPE; // int
-                        currentToken.line_number = line_number;
+                        if (currentToken.value[start_index + 3] == '\0')
+                        {
+                           currentToken.type = DATA_TYPE; // int
+                            currentToken.line_number = line_number;
+                        }
+                        else
+                        {
+                           currentToken.type = ERROR; 
+                           currentToken.line_number = line_number;
+                        }
                     }
-                    else if (currentToken.value[start_index + 2] == 'p' &&
-                             currentToken.value[start_index + 3] == 'u' &&
-                             currentToken.value[start_index + 4] == 't' &&
-                             currentToken.value[start_index + 5] == '\0')
+                    else if (currentToken.value[start_index + 2] == 'p')
                     {
-                        currentToken.type = KEYWORD; // input
-                        currentToken.line_number = line_number;
+                        if (currentToken.value[start_index + 3] == 'u')
+                        {
+                            if (currentToken.value[start_index + 4] == 't')
+                            {
+                                if (currentToken.value[start_index + 5] == '\0')
+                                {
+                                   currentToken.type = KEYWORD; // input
+                                    currentToken.line_number = line_number;
+                                }
+                                else
+                                {
+                                    currentToken.type = IDENTIFIER;
+                                    currentToken.line_number = line_number;
+                                }
+                                
+                            }
+                        }
                     }
                     else
                     {
@@ -333,13 +359,22 @@ void lexicalAnalyzer(const char *input, FILE *file)
                 }
                 break;
             case 'a':
-                if (currentToken.value[start_index + 1] == 'u' &&
-                    currentToken.value[start_index + 2] == 't' &&
-                    currentToken.value[start_index + 3] == 'o' &&
-                    currentToken.value[start_index + 4] == '\0')
+                if (currentToken.value[start_index + 1] == 'u')
                 {
-                    currentToken.type = NOISE_WORDS; // auto
-                    currentToken.line_number = line_number;
+                    if (currentToken.value[start_index + 2] == 't')
+                    {
+                        if (currentToken.value[start_index + 3] == 'o')
+                        {
+                            if (currentToken.value[start_index + 4] == '\0')
+                            {
+                                currentToken.type = NOISE_WORDS; // auto
+                                currentToken.line_number = line_number;
+                            }
+                            
+                        }
+                        
+                    }
+                    
                 }
                 else
                 {
@@ -348,22 +383,42 @@ void lexicalAnalyzer(const char *input, FILE *file)
                 }
                 break;
             case 'b':
-                if (currentToken.value[start_index + 1] == 'o' &&
-                    currentToken.value[start_index + 2] == 'o' &&
-                    currentToken.value[start_index + 3] == 'l' &&
-                    currentToken.value[start_index + 4] == '\0')
-                {
-                    currentToken.type = DATA_TYPE; // bool
-                    currentToken.line_number = line_number;
+                if (currentToken.value[start_index + 1] == 'o')
+                {   
+                    if (currentToken.value[start_index + 2] == 'o')
+                    {
+                        if (currentToken.value[start_index + 3] == 'l')
+                        {
+                            if (currentToken.value[start_index + 4] == '\0')
+                            {
+                                currentToken.type = DATA_TYPE; // bool
+                                currentToken.line_number = line_number;
+                            }
+                            
+                        }
+                        
+                    }
+                    
                 }
-                else if (currentToken.value[start_index + 1] == 'r' &&
-                         currentToken.value[start_index + 2] == 'e' &&
-                         currentToken.value[start_index + 3] == 'a' &&
-                         currentToken.value[start_index + 4] == 'k' &&
-                         currentToken.value[start_index + 5] == '\0')
-                {
-                    currentToken.type = KEYWORD; // break
-                    currentToken.line_number = line_number;
+                else if (currentToken.value[start_index + 1] == 'r')
+                {   
+                    if (currentToken.value[start_index + 2] == 'e')
+                    {
+                        if (currentToken.value[start_index + 3] == 'a')
+                        {
+                            if (currentToken.value[start_index + 4] == 'k')
+                            {
+                                if (currentToken.value[start_index + 5] == '\0')
+                                {
+                                    currentToken.type = KEYWORD; // break
+                                    currentToken.line_number = line_number;
+                                }
+                                
+                            }
+                            
+                        }
+                        
+                    }
                 }
                 else
                 {
@@ -376,19 +431,31 @@ void lexicalAnalyzer(const char *input, FILE *file)
                 {
                     if (currentToken.value[start_index + 2] == 'a')
                     {
-                        if (currentToken.value[start_index + 3] == 'r' &&
-                            currentToken.value[start_index + 4] == '\0')
+                        if (currentToken.value[start_index + 3] == 'r')
                         {
-                            currentToken.type = DATA_TYPE; // char
-                            currentToken.line_number = line_number;
+                            if (currentToken.value[start_index + 4] == '\0')
+                            {
+                                currentToken.type = DATA_TYPE; // char
+                                currentToken.line_number = line_number;
+                            }
+                            
                         }
-                        else if (currentToken.value[start_index + 3] == 'n' &&
-                                 currentToken.value[start_index + 4] == 'c' &&
-                                 currentToken.value[start_index + 5] == 'e' &&
-                                 currentToken.value[start_index + 6] == '\0')
+                        else if (currentToken.value[start_index + 3] == 'n')
                         {
-                            currentToken.type = KEYWORD; // chance
-                            currentToken.line_number = line_number;
+                            if (currentToken.value[start_index + 4] == 'c')
+                            {
+                                if (currentToken.value[start_index + 5] == 'e')
+                                {
+                                    if (currentToken.value[start_index + 6] == '\0')
+                                    {
+                                        currentToken.type = KEYWORD; // chance
+                                        currentToken.line_number = line_number;
+                                    }
+                                    
+                                }
+                                
+                            }
+                            
                         }
                         else
                         {
@@ -405,22 +472,41 @@ void lexicalAnalyzer(const char *input, FILE *file)
                 {
                     if (currentToken.value[start_index + 2] == 'n')
                     {
-                        if (currentToken.value[start_index + 3] == 's' &&
-                            currentToken.value[start_index + 4] == 't' &&
-                            currentToken.value[start_index + 5] == '\0')
+                        if (currentToken.value[start_index + 3] == 's')
                         {
-                            currentToken.type = KEYWORD; // const
-                            currentToken.line_number = line_number;
+                            if (currentToken.value[start_index + 4] == 't')
+                            {
+                                if (currentToken.value[start_index + 5] == '\0')
+                                {
+                                    currentToken.type = KEYWORD; // const
+                                    currentToken.line_number = line_number;
+                                }
+                            }
                         }
-                        else if (currentToken.value[start_index + 3] == 't' &&
-                                 currentToken.value[start_index + 4] == 'i' &&
-                                 currentToken.value[start_index + 5] == 'n' &&
-                                 currentToken.value[start_index + 6] == 'u' &&
-                                 currentToken.value[start_index + 7] == 'e' &&
-                                 currentToken.value[start_index + 8] == '\0')
+                        else if (currentToken.value[start_index + 3] == 't')
                         {
-                            currentToken.type = KEYWORD; // continue
-                            currentToken.line_number = line_number;
+                            if (currentToken.value[start_index + 4] == 'i')
+                            {
+                                if (currentToken.value[start_index + 5] == 'n')
+                                {
+                                    if (currentToken.value[start_index + 6] == 'u')
+                                    {
+                                        if (currentToken.value[start_index + 7] == 'e')
+                                        {
+                                            if (currentToken.value[start_index + 8] == '\0')
+                                            {
+                                                currentToken.type = KEYWORD; // continue
+                                                currentToken.line_number = line_number;
+                                            }
+                                            
+                                        }
+                                        
+                                    }
+                                    
+                                }
+                                
+                            }
+                            
                         }
                         else
                         {
@@ -440,12 +526,16 @@ void lexicalAnalyzer(const char *input, FILE *file)
                 }
                 break;
             case 'd':
-                if (currentToken.value[start_index + 1] == 'e' &&
-                    currentToken.value[start_index + 2] == 'f' &&
-                    currentToken.value[start_index + 3] == '\0')
+                if (currentToken.value[start_index + 1] == 'e')
                 {
-                    currentToken.type = KEYWORD; // def
-                    currentToken.line_number = line_number;
+                    if (currentToken.value[start_index + 2] == 'f')
+                    {
+                        if (currentToken.value[start_index + 3] == '\0')
+                        {
+                            currentToken.type = KEYWORD; // def
+                            currentToken.line_number = line_number;
+                        }
+                    }
                 }
                 else
                 {
@@ -456,19 +546,27 @@ void lexicalAnalyzer(const char *input, FILE *file)
             case 'e':
                 if (currentToken.value[start_index + 1] == 'l')
                 {
-                    if (currentToken.value[start_index + 2] == 'i' &&
-                        currentToken.value[start_index + 3] == 'f' &&
-                        currentToken.value[start_index + 4] == '\0')
-                    {
-                        currentToken.type = KEYWORD; // elif
-                        currentToken.line_number = line_number;
+                    if (currentToken.value[start_index + 2] == 'i')
+                    {   
+                        if (currentToken.value[start_index + 3] == 'f')
+                        {
+                            if (currentToken.value[start_index + 4] == '\0')
+                            {
+                                currentToken.type = KEYWORD; // elif
+                                currentToken.line_number = line_number;
+                            }
+                        }
                     }
-                    else if (currentToken.value[start_index + 2] == 's' &&
-                             currentToken.value[start_index + 3] == 'e' &&
-                             currentToken.value[start_index + 4] == '\0')
+                    else if (currentToken.value[start_index + 2] == 's')
                     {
-                        currentToken.type = KEYWORD; // else
-                        currentToken.line_number = line_number;
+                        if (currentToken.value[start_index + 3] == 'e')
+                        {
+                            if (currentToken.value[start_index + 4] == '\0')
+                            {
+                                currentToken.type = KEYWORD; // else
+                                currentToken.line_number = line_number;
+                            }
+                        }
                     }
                     else
                     {
@@ -482,22 +580,41 @@ void lexicalAnalyzer(const char *input, FILE *file)
                     {
                         if (currentToken.value[start_index + 3] == 'e')
                         {
-                            if (currentToken.value[start_index + 4] == 'n' &&
-                                currentToken.value[start_index + 5] == 's' &&
-                                currentToken.value[start_index + 6] == 'i' &&
-                                currentToken.value[start_index + 7] == 'o' &&
-                                currentToken.value[start_index + 8] == 'n' &&
-                                currentToken.value[start_index + 9] == '\0')
-                            {
-                                currentToken.type = RESERVED_WORDS; // extension
-                                currentToken.line_number = line_number;
+                            if (currentToken.value[start_index + 4] == 'n')
+                            {   
+                                if (currentToken.value[start_index + 5] == 's')
+                                {
+                                    if (currentToken.value[start_index + 6] == 'i')
+                                    {
+                                        if (currentToken.value[start_index + 7] == 'o')
+                                        {
+                                            if (currentToken.value[start_index + 8] == 'n' )
+                                            {
+                                                if (currentToken.value[start_index + 9] == '\0')
+                                                {
+                                                    currentToken.type = RESERVED_WORDS; // extension
+                                                    currentToken.line_number = line_number;
+                                                }
+                                                
+                                            }
+                                            
+                                        }
+                                        
+                                    }
+                                    
+                                }
                             }
-                            else if (currentToken.value[start_index + 4] == 'r' &&
-                                     currentToken.value[start_index + 5] == 'n' &&
-                                     currentToken.value[start_index + 6] == '\0')
+                            else if (currentToken.value[start_index + 4] == 'r' )
                             {
-                                currentToken.type = NOISE_WORDS; // extern
-                                currentToken.line_number = line_number;
+                                if (currentToken.value[start_index + 5] == 'n')
+                                {
+                                    if (currentToken.value[start_index + 6] == '\0')
+                                    {
+                                        currentToken.type = NOISE_WORDS; // extern
+                                        currentToken.line_number = line_number;
+                                    }
+                                    
+                                }
                             }
                             else
                             {
@@ -521,30 +638,58 @@ void lexicalAnalyzer(const char *input, FILE *file)
                 }
                 break;
             case 'f':
-                if (currentToken.value[start_index + 1] == 'a' &&
-                    currentToken.value[start_index + 2] == 'l' &&
-                    currentToken.value[start_index + 3] == 's' &&
-                    currentToken.value[start_index + 4] == 'e' &&
-                    currentToken.value[start_index + 5] == '\0')
-                {
-                    currentToken.type = RESERVED_WORDS; // false
-                    currentToken.line_number = line_number;
+                if (currentToken.value[start_index + 1] == 'a')
+                {   
+                    if (currentToken.value[start_index + 2] == 'l')
+                    {
+                        if (currentToken.value[start_index + 3] == 's')
+                        {
+                            if (currentToken.value[start_index + 4] == 'e')
+                            {
+                                if (currentToken.value[start_index + 5] == '\0')
+                                {
+                                    currentToken.type = RESERVED_WORDS; // false
+                                    currentToken.line_number = line_number;
+                                }
+                                
+                            }
+                            
+                        }
+                        
+                    }
+                    
                 }
-                else if (currentToken.value[start_index + 1] == 'l' &&
-                         currentToken.value[start_index + 2] == 'o' &&
-                         currentToken.value[start_index + 3] == 'a' &&
-                         currentToken.value[start_index + 4] == 't' &&
-                         currentToken.value[start_index + 5] == '\0')
-                {
-                    currentToken.type = DATA_TYPE; // float
-                    currentToken.line_number = line_number;
+                else if (currentToken.value[start_index + 1] == 'l')
+                {   
+                    if (currentToken.value[start_index + 2] == 'o' )
+                    {
+                        if (currentToken.value[start_index + 3] == 'a')
+                        {
+                            if (currentToken.value[start_index + 4] == 't')
+                            {
+                                if (currentToken.value[start_index + 5] == '\0')
+                                {
+                                    currentToken.type = DATA_TYPE; // float
+                                    currentToken.line_number = line_number;
+                                }
+                                
+                            }
+                            
+                        }
+                        
+                    }
                 }
-                else if (currentToken.value[start_index + 1] == 'o' &&
-                         currentToken.value[start_index + 2] == 'r' &&
-                         currentToken.value[start_index + 3] == '\0')
-                {
-                    currentToken.type = KEYWORD; // for
-                    currentToken.line_number = line_number;
+                else if (currentToken.value[start_index + 1] == 'o')
+                {   
+                    if (currentToken.value[start_index + 2] == 'r')
+                    {
+                        if (currentToken.value[start_index + 3] == '\0')
+                        {
+                            currentToken.type = KEYWORD; // for
+                            currentToken.line_number = line_number;
+                        }
+                        
+                    }
                 }
                 else
                 {
@@ -553,15 +698,30 @@ void lexicalAnalyzer(const char *input, FILE *file)
                 }
                 break;
             case 'm':
-                if (currentToken.value[start_index + 1] == 'o' &&
-                    currentToken.value[start_index + 2] == 'd' &&
-                    currentToken.value[start_index + 3] == 'u' &&
-                    currentToken.value[start_index + 4] == 'l' &&
-                    currentToken.value[start_index + 5] == 'e' &&
-                    currentToken.value[start_index + 6] == '\0')
-                {
-                    currentToken.type = RESERVED_WORDS; // module
-                    currentToken.line_number = line_number;
+                if (currentToken.value[start_index + 1] == 'o')
+                {   
+                    if (currentToken.value[start_index + 2] == 'd')
+                    {
+                        if (currentToken.value[start_index + 3] == 'u')
+                        {
+                            if (currentToken.value[start_index + 4] == 'l')
+                            {
+                                if (currentToken.value[start_index + 5] == 'e')
+                                {
+                                    if (currentToken.value[start_index + 6] == '\0')
+                                    {
+                                        currentToken.type = RESERVED_WORDS; // module
+                                        currentToken.line_number = line_number;
+                                    }
+                                    
+                                }
+                                
+                            }
+                            
+                        }
+                        
+                    }
+                    
                 }
                 else
                 {
@@ -570,26 +730,49 @@ void lexicalAnalyzer(const char *input, FILE *file)
                 }
                 break;
             case 'p':
-                if (currentToken.value[start_index + 1] == 'r' &&
-                    currentToken.value[start_index + 2] == 'i' &&
-                    currentToken.value[start_index + 3] == 'n' &&
-                    currentToken.value[start_index + 4] == 't' &&
-                    currentToken.value[start_index + 5] == '\0')
-                {
-                    currentToken.type = KEYWORD; // print
-                    currentToken.line_number = line_number;
+                if (currentToken.value[start_index + 1] == 'r')
+                {   
+                    if (currentToken.value[start_index + 2] == 'i')
+                    {
+                        if (currentToken.value[start_index + 3] == 'n' )
+                        {
+                            if (currentToken.value[start_index + 4] == 't')
+                            {
+                                if (currentToken.value[start_index + 5] == '\0')
+                                {
+                                    currentToken.type = KEYWORD; // print
+                                    currentToken.line_number = line_number;
+                                }
+                            }
+                        }
+                    }
                 }
                 break;
             case 'r':
-                if (currentToken.value[start_index + 1] == 'e' &&
-                    currentToken.value[start_index + 2] == 't' &&
-                    currentToken.value[start_index + 3] == 'u' &&
-                    currentToken.value[start_index + 4] == 'r' &&
-                    currentToken.value[start_index + 5] == 'n' &&
-                    currentToken.value[start_index + 6] == '\0')
+                if (currentToken.value[start_index + 1] == 'e')
                 {
-                    currentToken.type = KEYWORD; // return
-                    currentToken.line_number = line_number;
+                    if (currentToken.value[start_index + 2] == 't')
+                    {
+                        if (currentToken.value[start_index + 3] == 'u' )
+                        {
+                            if (currentToken.value[start_index + 4] == 'r')
+                            {
+                                if (currentToken.value[start_index + 5] == 'n')
+                                {
+                                    if (currentToken.value[start_index + 6] == '\0')
+                                    {
+                                       currentToken.type = KEYWORD; // return
+                                        currentToken.line_number = line_number;
+                                    }
+                                    
+                                }
+                                
+                            }
+                            
+                        }
+                        
+                    }
+                    
                 }
                 else
                 {
@@ -601,9 +784,15 @@ void lexicalAnalyzer(const char *input, FILE *file)
                 if (currentToken.value[start_index + 1] == 't' &&
                     currentToken.value[start_index + 2] == 'r' &&
                     currentToken.value[start_index + 3] == '\0')
-                {
-                    currentToken.type = DATA_TYPE; // str
-                    currentToken.line_number = line_number;
+                {   
+                    if (currentToken.value[start_index + 2] == 'r')
+                    {
+                        if (currentToken.value[start_index + 3] == '\0')
+                        {
+                            currentToken.type = DATA_TYPE; // str
+                            currentToken.line_number = line_number;
+                        }
+                    }
                 }
                 else
                 {
@@ -612,13 +801,22 @@ void lexicalAnalyzer(const char *input, FILE *file)
                 }
                 break;
             case 't':
-                if (currentToken.value[start_index + 1] == 'r' &&
-                    currentToken.value[start_index + 2] == 'u' &&
-                    currentToken.value[start_index + 3] == 'e' &&
-                    currentToken.value[start_index + 4] == '\0')
-                {
-                    currentToken.type = RESERVED_WORDS; // true
-                    currentToken.line_number = line_number;
+                if (currentToken.value[start_index + 1] == 'r')
+                {   
+                    if (currentToken.value[start_index + 2] == 'u')
+                    {
+                        if (currentToken.value[start_index + 3] == 'e' )
+                        {
+                            if (currentToken.value[start_index + 4] == '\0')
+                            {
+                                currentToken.type = RESERVED_WORDS; // true
+                                currentToken.line_number = line_number;
+                            }
+                            
+                        }
+                        
+                    }
+                    
                 }
                 else
                 {
@@ -632,9 +830,21 @@ void lexicalAnalyzer(const char *input, FILE *file)
                     currentToken.value[start_index + 3] == 'n' &&
                     currentToken.value[start_index + 4] == 'g' &&
                     currentToken.value[start_index + 5] == '\0')
-                {
-                    currentToken.type = RESERVED_WORDS; // using
-                    currentToken.line_number = line_number;
+                {   
+                    if (currentToken.value[start_index + 2] == 'i')
+                    {
+                        if (currentToken.value[start_index + 3] == 'n')
+                        {
+                            if (currentToken.value[start_index + 4] == 'g')
+                            {
+                                if (currentToken.value[start_index + 5] == '\0')
+                                {
+                                    currentToken.type = RESERVED_WORDS; // using
+                                    currentToken.line_number = line_number;
+                                }
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -643,14 +853,22 @@ void lexicalAnalyzer(const char *input, FILE *file)
                 }
                 break;
             case 'v':
-                if (currentToken.value[start_index + 1] == 'a' &&
-                    currentToken.value[start_index + 2] == 'l' &&
-                    currentToken.value[start_index + 3] == 'u' &&
-                    currentToken.value[start_index + 4] == 'e' &&
-                    currentToken.value[start_index + 5] == '\0')
-                {
-                    currentToken.type = KEYWORD; // value
-                    currentToken.line_number = line_number;
+                if (currentToken.value[start_index + 1] == 'a')
+                {   
+                    if (currentToken.value[start_index + 2] == 'l' )
+                    {
+                        if (currentToken.value[start_index + 3] == 'u')
+                        {
+                            if (currentToken.value[start_index + 4] == 'e')
+                            {
+                                if (currentToken.value[start_index + 5] == '\0')
+                                {
+                                    currentToken.type = KEYWORD; // value
+                                    currentToken.line_number = line_number;
+                                } 
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -659,22 +877,36 @@ void lexicalAnalyzer(const char *input, FILE *file)
                 }
                 break;
             case 'w':
-                if (currentToken.value[start_index + 1] == 'h' &&
-                    currentToken.value[start_index + 2] == 'i' &&
-                    currentToken.value[start_index + 3] == 'l' &&
-                    currentToken.value[start_index + 4] == 'e' &&
-                    currentToken.value[start_index + 5] == '\0')
-                {
-                    currentToken.type = KEYWORD; // while
-                    currentToken.line_number = line_number;
+                if (currentToken.value[start_index + 1] == 'h')
+                {   
+                    if (currentToken.value[start_index + 2] == 'i')
+                    {
+                       if (currentToken.value[start_index + 3] == 'l')
+                       {
+                            if (currentToken.value[start_index + 4] == 'e')
+                            {
+                                if (currentToken.value[start_index + 5] == '\0')
+                                {
+                                    currentToken.type = KEYWORD; // while
+                                    currentToken.line_number = line_number;
+                                }   
+                            }    
+                       }  
+                    }
                 }
-                else if (currentToken.value[start_index + 1] == 'i' &&
-                         currentToken.value[start_index + 2] == 't' &&
-                         currentToken.value[start_index + 3] == 'h' &&
-                         currentToken.value[start_index + 4] == '\0')
-                {
-                    currentToken.type = KEYWORD; // with
-                    currentToken.line_number = line_number;
+                else if (currentToken.value[start_index + 1] == 'i')
+                {   
+                    if (currentToken.value[start_index + 2] == 't')
+                    {
+                        if (currentToken.value[start_index + 3] == 'h')
+                        {
+                            if (currentToken.value[start_index + 4] == '\0')
+                            {
+                                currentToken.type = KEYWORD; // with
+                                currentToken.line_number = line_number;
+                            }
+                        }   
+                    }
                 }
                 else
                 {
