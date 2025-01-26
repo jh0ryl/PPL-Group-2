@@ -9,6 +9,7 @@ print("%d", result);
 print("Name: %s, Age: %d", name, age);
 
 x = new_price;
+middle_initial = 'L'
 last_name = "Legarda";
 new_price = 90 - 30;
 new_price = discount - 30;
@@ -59,6 +60,7 @@ while (count > 0) {
 }
 
 x = ;
+name = 'Jeff';
 print"Hello, World!";
 bool 12_months_old;
 str email@address;
