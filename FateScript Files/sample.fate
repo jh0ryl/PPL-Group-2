@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 @asd 
 ddd@asd
@@ -7,32 +6,8 @@ int 21;
 int dfg; 
 
 char s; 
+char 's'; 
+char 'play'; 
 
-=======
-for (i = 1; i <= 5; i++) {
-    print("%d", i);
-    }
+str "play"; 
 
-for (i = 1; i <= 5; i++) {        
-        for (j = 1; j <= 5; j++) {
-            print("%d ", j);     
-        }
-        print("\n");           
-    }
-
-
-while (count > 0) {
-    print("%d", count);
-    count -- ; 
-}
-
-while (count > 0) {               
-    inner = count;        
-    while (inner > 0) {       
-        print("%d ", inner); 
-        inner--;              
-    }
-    print("\n");              
-    count--;                  
-}
->>>>>>> 42e0807daf91aec52ae4ab6d448f823c3342063a

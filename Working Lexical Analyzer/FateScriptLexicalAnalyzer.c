@@ -289,189 +289,77 @@ void lexicalAnalyzer(const char *input, FILE *file)
             j = 0;
             int start_index = 0, error = 0;
             while (isalnum(input[i]) || input[i] == '_')
-            {   
+            {
                 while (!isspace(input[i]) && input[i] != '\0' && input[i] != ';')
                 {
-                 // Check if the character is an invalid character
-                if (strchr("@#.`?", input[i])) // Mark as error if character is invalid
-                {
-                error = 1; 
-                }
-                currentToken.value[j++] = input[i++];
+                    // Check if the character is an invalid character
+                    if (strchr("@#.`?", input[i])) // Mark as error if character is invalid
+                    {
+                        error = 1;
+                    }
+                    currentToken.value[j++] = input[i++];
                 }
             }
 
             currentToken.value[j] = '\0';
-        
+
             if (error)
             {
-                currentToken.type = ERROR; 
-                currentToken.line_number = line_number; 
-                error = 0; 
+                currentToken.type = ERROR;
+                currentToken.line_number = line_number;
+                error = 0;
             }
             else
             {
-            switch (currentToken.value[start_index])
-            {
-            case 'i': // words that start word with 'i'
-                if (currentToken.value[start_index + 1] == 'f')
+                switch (currentToken.value[start_index])
                 {
-                    if (currentToken.value[start_index + 2] == '\0')
+                case 'i': // words that start word with 'i'
+                    if (currentToken.value[start_index + 1] == 'f')
                     {
-                        currentToken.type = KEYWORD; // if
-                        currentToken.line_number = line_number;
-                    }
-                    else
-                    {   
-                        currentToken.type = ERROR; 
-                        currentToken.line_number = line_number;  
-                    }  
-                }
-                else if (currentToken.value[start_index + 1] == 'n')
-                {
-                    if (currentToken.value[start_index + 2] == 't')
-                    {
-                        if (currentToken.value[start_index + 3] == '\0')
+                        if (currentToken.value[start_index + 2] == '\0')
                         {
-                           currentToken.type = DATA_TYPE; // int
+                            currentToken.type = KEYWORD; // if
                             currentToken.line_number = line_number;
                         }
                         else
                         {
-                           currentToken.type = ERROR; 
-                           currentToken.line_number = line_number;
+                            currentToken.type = ERROR;
+                            currentToken.line_number = line_number;
                         }
                     }
-                    else if (currentToken.value[start_index + 2] == 'p')
+                    else if (currentToken.value[start_index + 1] == 'n')
                     {
-                        if (currentToken.value[start_index + 3] == 'u')
+                        if (currentToken.value[start_index + 2] == 't')
                         {
-                            if (currentToken.value[start_index + 4] == 't')
+                            if (currentToken.value[start_index + 3] == '\0')
                             {
-                                if (currentToken.value[start_index + 5] == '\0')
-                                {
-                                   currentToken.type = KEYWORD; // input
-                                    currentToken.line_number = line_number;
-                                }
-                                else
-                                {
-                                    currentToken.type = IDENTIFIER;
-                                    currentToken.line_number = line_number;
-                                }
-                                
-                            }
-                        }
-                    }
-                    else
-                    {
-                        currentToken.type = IDENTIFIER;
-                        currentToken.line_number = line_number;
-                    }
-                }
-                else
-                {
-                    currentToken.type = IDENTIFIER;
-                    currentToken.line_number = line_number;
-                }
-                break;
-            case 'a':
-                if (currentToken.value[start_index + 1] == 'u')
-                {
-                    if (currentToken.value[start_index + 2] == 't')
-                    {
-                        if (currentToken.value[start_index + 3] == 'o')
-                        {
-                            if (currentToken.value[start_index + 4] == '\0')
-                            {
-                                currentToken.type = NOISE_WORDS; // auto
+                                currentToken.type = DATA_TYPE; // int
                                 currentToken.line_number = line_number;
                             }
-                            
-                        }
-                        
-                    }
-                    
-                }
-                else
-                {
-                    currentToken.type = IDENTIFIER;
-                    currentToken.line_number = line_number;
-                }
-                break;
-            case 'b':
-                if (currentToken.value[start_index + 1] == 'o')
-                {   
-                    if (currentToken.value[start_index + 2] == 'o')
-                    {
-                        if (currentToken.value[start_index + 3] == 'l')
-                        {
-                            if (currentToken.value[start_index + 4] == '\0')
+                            else
                             {
-                                currentToken.type = DATA_TYPE; // bool
+                                currentToken.type = ERROR;
                                 currentToken.line_number = line_number;
                             }
-                            
                         }
-                        
-                    }
-                    
-                }
-                else if (currentToken.value[start_index + 1] == 'r')
-                {   
-                    if (currentToken.value[start_index + 2] == 'e')
-                    {
-                        if (currentToken.value[start_index + 3] == 'a')
+                        else if (currentToken.value[start_index + 2] == 'p')
                         {
-                            if (currentToken.value[start_index + 4] == 'k')
+                            if (currentToken.value[start_index + 3] == 'u')
                             {
-                                if (currentToken.value[start_index + 5] == '\0')
+                                if (currentToken.value[start_index + 4] == 't')
                                 {
-                                    currentToken.type = KEYWORD; // break
-                                    currentToken.line_number = line_number;
-                                }
-                                
-                            }
-                            
-                        }
-                        
-                    }
-                }
-                else
-                {
-                    currentToken.type = IDENTIFIER;
-                    currentToken.line_number = line_number;
-                }
-                break;
-            case 'c':
-                if (currentToken.value[start_index + 1] == 'h')
-                {
-                    if (currentToken.value[start_index + 2] == 'a')
-                    {
-                        if (currentToken.value[start_index + 3] == 'r')
-                        {
-                            if (currentToken.value[start_index + 4] == '\0')
-                            {
-                                currentToken.type = DATA_TYPE; // char
-                                currentToken.line_number = line_number;
-                            }
-                            
-                        }
-                        else if (currentToken.value[start_index + 3] == 'n')
-                        {
-                            if (currentToken.value[start_index + 4] == 'c')
-                            {
-                                if (currentToken.value[start_index + 5] == 'e')
-                                {
-                                    if (currentToken.value[start_index + 6] == '\0')
+                                    if (currentToken.value[start_index + 5] == '\0')
                                     {
-                                        currentToken.type = KEYWORD; // chance
+                                        currentToken.type = KEYWORD; // input
                                         currentToken.line_number = line_number;
                                     }
-                                    
+                                    else
+                                    {
+                                        currentToken.type = IDENTIFIER;
+                                        currentToken.line_number = line_number;
+                                    }
                                 }
-                                
                             }
-                            
                         }
                         else
                         {
@@ -482,159 +370,144 @@ void lexicalAnalyzer(const char *input, FILE *file)
                     else
                     {
                         currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
                     }
-                }
-                else if (currentToken.value[start_index + 1] == 'o')
-                {
-                    if (currentToken.value[start_index + 2] == 'n')
+                    break;
+                case 'a':
+                    if (currentToken.value[start_index + 1] == 'u')
                     {
-                        if (currentToken.value[start_index + 3] == 's')
+                        if (currentToken.value[start_index + 2] == 't')
                         {
-                            if (currentToken.value[start_index + 4] == 't')
+                            if (currentToken.value[start_index + 3] == 'o')
                             {
-                                if (currentToken.value[start_index + 5] == '\0')
+                                if (currentToken.value[start_index + 4] == '\0')
                                 {
-                                    currentToken.type = KEYWORD; // const
+                                    currentToken.type = NOISE_WORDS; // auto
                                     currentToken.line_number = line_number;
                                 }
                             }
-                        }
-                        else if (currentToken.value[start_index + 3] == 't')
-                        {
-                            if (currentToken.value[start_index + 4] == 'i')
-                            {
-                                if (currentToken.value[start_index + 5] == 'n')
-                                {
-                                    if (currentToken.value[start_index + 6] == 'u')
-                                    {
-                                        if (currentToken.value[start_index + 7] == 'e')
-                                        {
-                                            if (currentToken.value[start_index + 8] == '\0')
-                                            {
-                                                currentToken.type = KEYWORD; // continue
-                                                currentToken.line_number = line_number;
-                                            }
-                                            
-                                        }
-                                        
-                                    }
-                                    
-                                }
-                                
-                            }
-                            
-                        }
-                        else
-                        {
-                            currentToken.type = IDENTIFIER;
-                            currentToken.line_number = line_number;
                         }
                     }
                     else
                     {
                         currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
                     }
-                }
-                else
-                {
-                    currentToken.type = IDENTIFIER;
-                    currentToken.line_number = line_number;
-                }
-                break;
-            case 'd':
-                if (currentToken.value[start_index + 1] == 'e')
-                {
-                    if (currentToken.value[start_index + 2] == 'f')
+                    break;
+                case 'b':
+                    if (currentToken.value[start_index + 1] == 'o')
                     {
-                        if (currentToken.value[start_index + 3] == '\0')
+                        if (currentToken.value[start_index + 2] == 'o')
                         {
-                            currentToken.type = KEYWORD; // def
-                            currentToken.line_number = line_number;
-                        }
-                    }
-                }
-                else
-                {
-                    currentToken.type = IDENTIFIER;
-                    currentToken.line_number = line_number;
-                }
-                break;
-            case 'e':
-                if (currentToken.value[start_index + 1] == 'l')
-                {
-                    if (currentToken.value[start_index + 2] == 'i')
-                    {   
-                        if (currentToken.value[start_index + 3] == 'f')
-                        {
-                            if (currentToken.value[start_index + 4] == '\0')
+                            if (currentToken.value[start_index + 3] == 'l')
                             {
-                                currentToken.type = KEYWORD; // elif
-                                currentToken.line_number = line_number;
+                                if (currentToken.value[start_index + 4] == '\0')
+                                {
+                                    currentToken.type = DATA_TYPE; // bool
+                                    currentToken.line_number = line_number;
+                                }
                             }
                         }
                     }
-                    else if (currentToken.value[start_index + 2] == 's')
+                    else if (currentToken.value[start_index + 1] == 'r')
                     {
-                        if (currentToken.value[start_index + 3] == 'e')
+                        if (currentToken.value[start_index + 2] == 'e')
                         {
-                            if (currentToken.value[start_index + 4] == '\0')
+                            if (currentToken.value[start_index + 3] == 'a')
                             {
-                                currentToken.type = KEYWORD; // else
-                                currentToken.line_number = line_number;
+                                if (currentToken.value[start_index + 4] == 'k')
+                                {
+                                    if (currentToken.value[start_index + 5] == '\0')
+                                    {
+                                        currentToken.type = KEYWORD; // break
+                                        currentToken.line_number = line_number;
+                                    }
+                                }
                             }
                         }
                     }
                     else
                     {
-                        currentToken.type = IDENTIFIER; // else
+                        currentToken.type = IDENTIFIER;
                         currentToken.line_number = line_number;
                     }
-                }
-                else if (currentToken.value[start_index + 1] == 'x')
-                {
-                    if (currentToken.value[start_index + 2] == 't')
+                    break;
+                case 'c':
+                    if (currentToken.value[start_index + 1] == 'h')
                     {
-                        if (currentToken.value[start_index + 3] == 'e')
+                        if (currentToken.value[start_index + 2] == 'a')
                         {
-                            if (currentToken.value[start_index + 4] == 'n')
-                            {   
-                                if (currentToken.value[start_index + 5] == 's')
+                            if (currentToken.value[start_index + 3] == 'r')
+                            {
+                                if (currentToken.value[start_index + 4] == '\0')
                                 {
-                                    if (currentToken.value[start_index + 6] == 'i')
-                                    {
-                                        if (currentToken.value[start_index + 7] == 'o')
-                                        {
-                                            if (currentToken.value[start_index + 8] == 'n' )
-                                            {
-                                                if (currentToken.value[start_index + 9] == '\0')
-                                                {
-                                                    currentToken.type = RESERVED_WORDS; // extension
-                                                    currentToken.line_number = line_number;
-                                                }
-                                                
-                                            }
-                                            
-                                        }
-                                        
-                                    }
-                                    
+                                    currentToken.type = DATA_TYPE; // char
+                                    currentToken.line_number = line_number;
                                 }
                             }
-                            else if (currentToken.value[start_index + 4] == 'r' )
+                            else if (currentToken.value[start_index + 3] == 'n')
                             {
-                                if (currentToken.value[start_index + 5] == 'n')
+                                if (currentToken.value[start_index + 4] == 'c')
                                 {
-                                    if (currentToken.value[start_index + 6] == '\0')
+                                    if (currentToken.value[start_index + 5] == 'e')
                                     {
-                                        currentToken.type = NOISE_WORDS; // extern
-                                        currentToken.line_number = line_number;
+                                        if (currentToken.value[start_index + 6] == '\0')
+                                        {
+                                            currentToken.type = KEYWORD; // chance
+                                            currentToken.line_number = line_number;
+                                        }
                                     }
-                                    
                                 }
                             }
                             else
                             {
-                                currentToken.type = IDENTIFIER; // extern
+                                currentToken.type = IDENTIFIER;
+                                currentToken.line_number = line_number;
+                            }
+                        }
+                        else
+                        {
+                            currentToken.type = IDENTIFIER;
+                        }
+                    }
+                    else if (currentToken.value[start_index + 1] == 'o')
+                    {
+                        if (currentToken.value[start_index + 2] == 'n')
+                        {
+                            if (currentToken.value[start_index + 3] == 's')
+                            {
+                                if (currentToken.value[start_index + 4] == 't')
+                                {
+                                    if (currentToken.value[start_index + 5] == '\0')
+                                    {
+                                        currentToken.type = KEYWORD; // const
+                                        currentToken.line_number = line_number;
+                                    }
+                                }
+                            }
+                            else if (currentToken.value[start_index + 3] == 't')
+                            {
+                                if (currentToken.value[start_index + 4] == 'i')
+                                {
+                                    if (currentToken.value[start_index + 5] == 'n')
+                                    {
+                                        if (currentToken.value[start_index + 6] == 'u')
+                                        {
+                                            if (currentToken.value[start_index + 7] == 'e')
+                                            {
+                                                if (currentToken.value[start_index + 8] == '\0')
+                                                {
+                                                    currentToken.type = KEYWORD; // continue
+                                                    currentToken.line_number = line_number;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                currentToken.type = IDENTIFIER;
                                 currentToken.line_number = line_number;
                             }
                         }
@@ -646,297 +519,378 @@ void lexicalAnalyzer(const char *input, FILE *file)
                     else
                     {
                         currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
                     }
-                }
-                else
-                {
-                    currentToken.type = IDENTIFIER;
-                }
-                break;
-            case 'f':
-                if (currentToken.value[start_index + 1] == 'a')
-                {   
-                    if (currentToken.value[start_index + 2] == 'l')
+                    break;
+                case 'd':
+                    if (currentToken.value[start_index + 1] == 'e')
                     {
-                        if (currentToken.value[start_index + 3] == 's')
+                        if (currentToken.value[start_index + 2] == 'f')
                         {
-                            if (currentToken.value[start_index + 4] == 'e')
+                            if (currentToken.value[start_index + 3] == '\0')
                             {
-                                if (currentToken.value[start_index + 5] == '\0')
-                                {
-                                    currentToken.type = RESERVED_WORDS; // false
-                                    currentToken.line_number = line_number;
-                                }
-                                
+                                currentToken.type = KEYWORD; // def
+                                currentToken.line_number = line_number;
                             }
-                            
                         }
-                        
                     }
-                    
-                }
-                else if (currentToken.value[start_index + 1] == 'l')
-                {   
-                    if (currentToken.value[start_index + 2] == 'o' )
+                    else
                     {
-                        if (currentToken.value[start_index + 3] == 'a')
+                        currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
+                    }
+                    break;
+                case 'e':
+                    if (currentToken.value[start_index + 1] == 'l')
+                    {
+                        if (currentToken.value[start_index + 2] == 'i')
                         {
-                            if (currentToken.value[start_index + 4] == 't')
+                            if (currentToken.value[start_index + 3] == 'f')
                             {
-                                if (currentToken.value[start_index + 5] == '\0')
+                                if (currentToken.value[start_index + 4] == '\0')
                                 {
-                                    currentToken.type = DATA_TYPE; // float
-                                    currentToken.line_number = line_number;
-                                }
-                                
-                            }
-                            
-                        }
-                        
-                    }
-                }
-                else if (currentToken.value[start_index + 1] == 'o')
-                {   
-                    if (currentToken.value[start_index + 2] == 'r')
-                    {
-                        if (currentToken.value[start_index + 3] == '\0')
-                        {
-                            currentToken.type = KEYWORD; // for
-                            currentToken.line_number = line_number;
-                        }
-                        
-                    }
-                }
-                else
-                {
-                    currentToken.type = IDENTIFIER;
-                    currentToken.line_number = line_number;
-                }
-                break;
-            case 'm':
-                if (currentToken.value[start_index + 1] == 'o')
-                {   
-                    if (currentToken.value[start_index + 2] == 'd')
-                    {
-                        if (currentToken.value[start_index + 3] == 'u')
-                        {
-                            if (currentToken.value[start_index + 4] == 'l')
-                            {
-                                if (currentToken.value[start_index + 5] == 'e')
-                                {
-                                    if (currentToken.value[start_index + 6] == '\0')
-                                    {
-                                        currentToken.type = RESERVED_WORDS; // module
-                                        currentToken.line_number = line_number;
-                                    }
-                                    
-                                }
-                                
-                            }
-                            
-                        }
-                        
-                    }
-                    
-                }
-                else
-                {
-                    currentToken.type = IDENTIFIER;
-                    currentToken.line_number = line_number;
-                }
-                break;
-            case 'p':
-                if (currentToken.value[start_index + 1] == 'r')
-                {   
-                    if (currentToken.value[start_index + 2] == 'i')
-                    {
-                        if (currentToken.value[start_index + 3] == 'n' )
-                        {
-                            if (currentToken.value[start_index + 4] == 't')
-                            {
-                                if (currentToken.value[start_index + 5] == '\0')
-                                {
-                                    currentToken.type = KEYWORD; // print
+                                    currentToken.type = KEYWORD; // elif
                                     currentToken.line_number = line_number;
                                 }
                             }
                         }
-                    }
-                }
-                break;
-            case 'r':
-                if (currentToken.value[start_index + 1] == 'e')
-                {
-                    if (currentToken.value[start_index + 2] == 't')
-                    {
-                        if (currentToken.value[start_index + 3] == 'u' )
+                        else if (currentToken.value[start_index + 2] == 's')
                         {
-                            if (currentToken.value[start_index + 4] == 'r')
+                            if (currentToken.value[start_index + 3] == 'e')
                             {
-                                if (currentToken.value[start_index + 5] == 'n')
+                                if (currentToken.value[start_index + 4] == '\0')
                                 {
-                                    if (currentToken.value[start_index + 6] == '\0')
-                                    {
-                                       currentToken.type = KEYWORD; // return
-                                        currentToken.line_number = line_number;
-                                    }
-                                    
+                                    currentToken.type = KEYWORD; // else
+                                    currentToken.line_number = line_number;
                                 }
-                                
                             }
-                            
                         }
-                        
-                    }
-                    
-                }
-                else
-                {
-                    currentToken.type = IDENTIFIER;
-                    currentToken.line_number = line_number;
-                }
-                break;
-            case 's':
-                if (currentToken.value[start_index + 1] == 't' &&
-                    currentToken.value[start_index + 2] == 'r' &&
-                    currentToken.value[start_index + 3] == '\0')
-                {   
-                    if (currentToken.value[start_index + 2] == 'r')
-                    {
-                        if (currentToken.value[start_index + 3] == '\0')
+                        else
                         {
-                            currentToken.type = DATA_TYPE; // str
+                            currentToken.type = IDENTIFIER; // else
                             currentToken.line_number = line_number;
                         }
                     }
-                }
-                else
-                {
-                    currentToken.type = IDENTIFIER;
-                    currentToken.line_number = line_number;
-                }
-                break;
-            case 't':
-                if (currentToken.value[start_index + 1] == 'r')
-                {   
-                    if (currentToken.value[start_index + 2] == 'u')
+                    else if (currentToken.value[start_index + 1] == 'x')
                     {
-                        if (currentToken.value[start_index + 3] == 'e' )
+                        if (currentToken.value[start_index + 2] == 't')
                         {
-                            if (currentToken.value[start_index + 4] == '\0')
+                            if (currentToken.value[start_index + 3] == 'e')
                             {
-                                currentToken.type = RESERVED_WORDS; // true
+                                if (currentToken.value[start_index + 4] == 'n')
+                                {
+                                    if (currentToken.value[start_index + 5] == 's')
+                                    {
+                                        if (currentToken.value[start_index + 6] == 'i')
+                                        {
+                                            if (currentToken.value[start_index + 7] == 'o')
+                                            {
+                                                if (currentToken.value[start_index + 8] == 'n')
+                                                {
+                                                    if (currentToken.value[start_index + 9] == '\0')
+                                                    {
+                                                        currentToken.type = RESERVED_WORDS; // extension
+                                                        currentToken.line_number = line_number;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else if (currentToken.value[start_index + 4] == 'r')
+                                {
+                                    if (currentToken.value[start_index + 5] == 'n')
+                                    {
+                                        if (currentToken.value[start_index + 6] == '\0')
+                                        {
+                                            currentToken.type = NOISE_WORDS; // extern
+                                            currentToken.line_number = line_number;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    currentToken.type = IDENTIFIER; // extern
+                                    currentToken.line_number = line_number;
+                                }
+                            }
+                            else
+                            {
+                                currentToken.type = IDENTIFIER;
+                            }
+                        }
+                        else
+                        {
+                            currentToken.type = IDENTIFIER;
+                        }
+                    }
+                    else
+                    {
+                        currentToken.type = IDENTIFIER;
+                    }
+                    break;
+                case 'f':
+                    if (currentToken.value[start_index + 1] == 'a')
+                    {
+                        if (currentToken.value[start_index + 2] == 'l')
+                        {
+                            if (currentToken.value[start_index + 3] == 's')
+                            {
+                                if (currentToken.value[start_index + 4] == 'e')
+                                {
+                                    if (currentToken.value[start_index + 5] == '\0')
+                                    {
+                                        currentToken.type = RESERVED_WORDS; // false
+                                        currentToken.line_number = line_number;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else if (currentToken.value[start_index + 1] == 'l')
+                    {
+                        if (currentToken.value[start_index + 2] == 'o')
+                        {
+                            if (currentToken.value[start_index + 3] == 'a')
+                            {
+                                if (currentToken.value[start_index + 4] == 't')
+                                {
+                                    if (currentToken.value[start_index + 5] == '\0')
+                                    {
+                                        currentToken.type = DATA_TYPE; // float
+                                        currentToken.line_number = line_number;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else if (currentToken.value[start_index + 1] == 'o')
+                    {
+                        if (currentToken.value[start_index + 2] == 'r')
+                        {
+                            if (currentToken.value[start_index + 3] == '\0')
+                            {
+                                currentToken.type = KEYWORD; // for
                                 currentToken.line_number = line_number;
                             }
-                            
                         }
-                        
                     }
-                    
-                }
-                else
-                {
-                    currentToken.type = IDENTIFIER;
-                    currentToken.line_number = line_number;
-                }
-                break;
-            case 'u':
-                if (currentToken.value[start_index + 1] == 's' &&
-                    currentToken.value[start_index + 2] == 'i' &&
-                    currentToken.value[start_index + 3] == 'n' &&
-                    currentToken.value[start_index + 4] == 'g' &&
-                    currentToken.value[start_index + 5] == '\0')
-                {   
-                    if (currentToken.value[start_index + 2] == 'i')
+                    else
                     {
-                        if (currentToken.value[start_index + 3] == 'n')
+                        currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
+                    }
+                    break;
+                case 'm':
+                    if (currentToken.value[start_index + 1] == 'o')
+                    {
+                        if (currentToken.value[start_index + 2] == 'd')
                         {
-                            if (currentToken.value[start_index + 4] == 'g')
+                            if (currentToken.value[start_index + 3] == 'u')
                             {
-                                if (currentToken.value[start_index + 5] == '\0')
+                                if (currentToken.value[start_index + 4] == 'l')
                                 {
-                                    currentToken.type = RESERVED_WORDS; // using
+                                    if (currentToken.value[start_index + 5] == 'e')
+                                    {
+                                        if (currentToken.value[start_index + 6] == '\0')
+                                        {
+                                            currentToken.type = RESERVED_WORDS; // module
+                                            currentToken.line_number = line_number;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
+                    }
+                    break;
+                case 'p':
+                    if (currentToken.value[start_index + 1] == 'r')
+                    {
+                        if (currentToken.value[start_index + 2] == 'i')
+                        {
+                            if (currentToken.value[start_index + 3] == 'n')
+                            {
+                                if (currentToken.value[start_index + 4] == 't')
+                                {
+                                    if (currentToken.value[start_index + 5] == '\0')
+                                    {
+                                        currentToken.type = KEYWORD; // print
+                                        currentToken.line_number = line_number;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 'r':
+                    if (currentToken.value[start_index + 1] == 'e')
+                    {
+                        if (currentToken.value[start_index + 2] == 't')
+                        {
+                            if (currentToken.value[start_index + 3] == 'u')
+                            {
+                                if (currentToken.value[start_index + 4] == 'r')
+                                {
+                                    if (currentToken.value[start_index + 5] == 'n')
+                                    {
+                                        if (currentToken.value[start_index + 6] == '\0')
+                                        {
+                                            currentToken.type = KEYWORD; // return
+                                            currentToken.line_number = line_number;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
+                    }
+                    break;
+                case 's':
+                    if (currentToken.value[start_index + 1] == 't' &&
+                        currentToken.value[start_index + 2] == 'r' &&
+                        currentToken.value[start_index + 3] == '\0')
+                    {
+                        if (currentToken.value[start_index + 2] == 'r')
+                        {
+                            if (currentToken.value[start_index + 3] == '\0')
+                            {
+                                currentToken.type = DATA_TYPE; // str
+                                currentToken.line_number = line_number;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
+                    }
+                    break;
+                case 't':
+                    if (currentToken.value[start_index + 1] == 'r')
+                    {
+                        if (currentToken.value[start_index + 2] == 'u')
+                        {
+                            if (currentToken.value[start_index + 3] == 'e')
+                            {
+                                if (currentToken.value[start_index + 4] == '\0')
+                                {
+                                    currentToken.type = RESERVED_WORDS; // true
                                     currentToken.line_number = line_number;
                                 }
                             }
                         }
                     }
-                }
-                else
-                {
-                    currentToken.type = IDENTIFIER;
-                    currentToken.line_number = line_number;
-                }
-                break;
-            case 'v':
-                if (currentToken.value[start_index + 1] == 'a')
-                {   
-                    if (currentToken.value[start_index + 2] == 'l' )
+                    else
                     {
-                        if (currentToken.value[start_index + 3] == 'u')
+                        currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
+                    }
+                    break;
+                case 'u':
+                    if (currentToken.value[start_index + 1] == 's' &&
+                        currentToken.value[start_index + 2] == 'i' &&
+                        currentToken.value[start_index + 3] == 'n' &&
+                        currentToken.value[start_index + 4] == 'g' &&
+                        currentToken.value[start_index + 5] == '\0')
+                    {
+                        if (currentToken.value[start_index + 2] == 'i')
                         {
-                            if (currentToken.value[start_index + 4] == 'e')
+                            if (currentToken.value[start_index + 3] == 'n')
                             {
-                                if (currentToken.value[start_index + 5] == '\0')
+                                if (currentToken.value[start_index + 4] == 'g')
                                 {
-                                    currentToken.type = KEYWORD; // value
-                                    currentToken.line_number = line_number;
-                                } 
+                                    if (currentToken.value[start_index + 5] == '\0')
+                                    {
+                                        currentToken.type = RESERVED_WORDS; // using
+                                        currentToken.line_number = line_number;
+                                    }
+                                }
                             }
                         }
                     }
-                }
-                else
-                {
-                    currentToken.type = IDENTIFIER;
-                    currentToken.line_number = line_number;
-                }
-                break;
-            case 'w':
-                if (currentToken.value[start_index + 1] == 'h')
-                {   
-                    if (currentToken.value[start_index + 2] == 'i')
+                    else
                     {
-                       if (currentToken.value[start_index + 3] == 'l')
-                       {
-                            if (currentToken.value[start_index + 4] == 'e')
-                            {
-                                if (currentToken.value[start_index + 5] == '\0')
-                                {
-                                    currentToken.type = KEYWORD; // while
-                                    currentToken.line_number = line_number;
-                                }   
-                            }    
-                       }  
+                        currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
                     }
-                }
-                else if (currentToken.value[start_index + 1] == 'i')
-                {   
-                    if (currentToken.value[start_index + 2] == 't')
+                    break;
+                case 'v':
+                    if (currentToken.value[start_index + 1] == 'a')
                     {
-                        if (currentToken.value[start_index + 3] == 'h')
+                        if (currentToken.value[start_index + 2] == 'l')
                         {
-                            if (currentToken.value[start_index + 4] == '\0')
+                            if (currentToken.value[start_index + 3] == 'u')
                             {
-                                currentToken.type = KEYWORD; // with
-                                currentToken.line_number = line_number;
+                                if (currentToken.value[start_index + 4] == 'e')
+                                {
+                                    if (currentToken.value[start_index + 5] == '\0')
+                                    {
+                                        currentToken.type = KEYWORD; // value
+                                        currentToken.line_number = line_number;
+                                    }
+                                }
                             }
-                        }   
+                        }
                     }
+                    else
+                    {
+                        currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
+                    }
+                    break;
+                case 'w':
+                    if (currentToken.value[start_index + 1] == 'h')
+                    {
+                        if (currentToken.value[start_index + 2] == 'i')
+                        {
+                            if (currentToken.value[start_index + 3] == 'l')
+                            {
+                                if (currentToken.value[start_index + 4] == 'e')
+                                {
+                                    if (currentToken.value[start_index + 5] == '\0')
+                                    {
+                                        currentToken.type = KEYWORD; // while
+                                        currentToken.line_number = line_number;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else if (currentToken.value[start_index + 1] == 'i')
+                    {
+                        if (currentToken.value[start_index + 2] == 't')
+                        {
+                            if (currentToken.value[start_index + 3] == 'h')
+                            {
+                                if (currentToken.value[start_index + 4] == '\0')
+                                {
+                                    currentToken.type = KEYWORD; // with
+                                    currentToken.line_number = line_number;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        currentToken.type = IDENTIFIER;
+                    }
+                    break;
+                default:
+                    currentToken.type = ERROR;
+                    currentToken.line_number = line_number;
+                    break;
                 }
-                else
-                {
-                    currentToken.type = IDENTIFIER;
-                }
-                break;
-            default:
-                currentToken.type = ERROR;
-                currentToken.line_number = line_number;
-                break;
             }
-            }
-            
-            
+
             printToken(currentToken, file);
         }
 
@@ -1094,16 +1048,16 @@ void lexicalAnalyzer(const char *input, FILE *file)
         }
         // Handle unknown characters
         else
-        {   
+        {
             while (!isspace(input[i]) && input[i] != '\0')
             {
-                 // Check if the character is an invalid character
+                // Check if the character is an invalid character
                 if (strchr("@#.`?", input[i])) // Mark as error if character is invalid
                 {
-                // currentToken.value[0] = currentChar;
-                // currentToken.value[1] = '\0';
-                currentToken.type = ERROR;
-                currentToken.line_number = line_number;
+                    // currentToken.value[0] = currentChar;
+                    // currentToken.value[1] = '\0';
+                    currentToken.type = ERROR;
+                    currentToken.line_number = line_number;
                 }
                 currentToken.value[j++] = input[i++];
             }
