@@ -290,7 +290,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
             int start_index = 0, error = 0;
             while (isalnum(input[i]) || input[i] == '_')
             {
-                    currentToken.value[j++] = input[i++];
+                currentToken.value[j++] = input[i++];
             }
             currentToken.value[j] = '\0';
             if (error)
@@ -304,44 +304,39 @@ void lexicalAnalyzer(const char *input, FILE *file)
                 switch (currentToken.value[start_index])
                 {
                 case 'i': // words that start word with 'i'
-                   if (currentToken.value[start_index + 1] == 'f')
-                   {
-                    if (currentToken.value[start_index + 2] == '\0')
+                    if (currentToken.value[start_index + 1] == 'f')
                     {
-                        currentToken.type = KEYWORD; // auto
-                        currentToken.line_number = line_number;
-                    }
-                    
-                   }
-                   else if (currentToken.value[start_index + 1] == 'n')
-                   {
-                    if (currentToken.value[start_index + 2] == 't')
-                    {
-                        if (currentToken.value[start_index + 3] == '\0')
+                        if (currentToken.value[start_index + 2] == '\0')
                         {
-                           currentToken.type = KEYWORD; // auto
-                        currentToken.line_number = line_number;
+                            currentToken.type = KEYWORD; // auto
+                            currentToken.line_number = line_number;
                         }
-                        
                     }
-                    else if (currentToken.value[start_index + 2] == 'p')
+                    else if (currentToken.value[start_index + 1] == 'n')
                     {
-                        if (currentToken.value[start_index + 3] == 'u')
+                        if (currentToken.value[start_index + 2] == 't')
                         {
-                            if (currentToken.value[start_index + 4] == 't')
+                            if (currentToken.value[start_index + 3] == '\0')
                             {
-                                if (currentToken.value[start_index + 1] == '\0')
-                                {
-                                    currentToken.type = KEYWORD; // auto
-                                    currentToken.line_number = line_number;
-                                }
-                                
+                                currentToken.type = KEYWORD; // auto
+                                currentToken.line_number = line_number;
                             }
-                            
                         }
-                        
+                        else if (currentToken.value[start_index + 2] == 'p')
+                        {
+                            if (currentToken.value[start_index + 3] == 'u')
+                            {
+                                if (currentToken.value[start_index + 4] == 't')
+                                {
+                                    if (currentToken.value[start_index + 1] == '\0')
+                                    {
+                                        currentToken.type = KEYWORD; // auto
+                                        currentToken.line_number = line_number;
+                                    }
+                                }
+                            }
+                        }
                     }
-                   }
                     else
                     {
                         currentToken.type = IDENTIFIER;
@@ -720,18 +715,13 @@ void lexicalAnalyzer(const char *input, FILE *file)
                                         }
                                         else
                                         {
-                                        currentToken.type = IDENTIFIER; // Any other word starting with 'r'
-                                        currentToken.line_number = line_number;
+                                            currentToken.type = IDENTIFIER; // Any other word starting with 'r'
+                                            currentToken.line_number = line_number;
                                         }
-                                        
                                     }
-                                    
                                 }
-                                
                             }
-                            
                         }
-                        
                     }
                     else
                     {
@@ -1027,7 +1017,8 @@ void lexicalAnalyzer(const char *input, FILE *file)
         }
         // Handle unknown characters
         else
-        {   j = 0; 
+        {
+            j = 0;
             while (!isspace(input[i]) && input[i] != '\0')
             {
                 // Check if the character is an invalid character
@@ -1051,24 +1042,22 @@ int isFateFile(const char *filename)
     return (extension != NULL && strcmp(extension, ".fate") == 0);
 }
 
-// Assuming isFateFile and lexicalAnalyzer are declared elsewhere
-int isFateFile(const char *filename);
-void lexicalAnalyzer(const char *input, FILE *file);
-
 int main()
 {
     FILE *file;
-    char filename[1000]; // Buffer to store the filename input
+    char *filename = "../FateScript Files/ProgramPresentation.fate";
+    // char filename[1000]; // Buffer to store the filename input
     char fullPath[1024]; // Full path to the file
     char input[1000];
     int i = 0;
 
     // Prompt the user for the filename (including the extension, e.g., "file.fate")
-    printf("Input FateScript file to parse (with extension, e.g., 'file.fate'): ");
-    scanf("%999s", filename); // Use %999s to avoid buffer overflow
+    // printf("Input FateScript file to parse (with extension, e.g., 'file.fate'): ");
+    // scanf("%999s", filename); // Use %999s to avoid buffer overflow
 
     // Construct the full file path by concatenating the directory and user input
-    snprintf(fullPath, sizeof(fullPath), "../FateScript Files/%s", filename);
+    // snprintf(fullPath, sizeof(fullPath), "../FateScript Files/%s", filename);
+    snprintf(fullPath, sizeof(fullPath), "%s", filename);
 
     // Check if the file has the .fate extension
     if (!isFateFile(fullPath))
