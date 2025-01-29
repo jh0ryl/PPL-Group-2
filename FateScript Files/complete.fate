@@ -12,7 +12,7 @@
 =
 +=
 -=
-*-
+*=
 /=
 ~=
 %=
@@ -37,8 +37,6 @@
 <=
 >=
 #-------------------------
-
-=======
 # Keywords, Reserved Words and Noise Words
 if 
 elif 

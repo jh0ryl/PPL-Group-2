@@ -897,28 +897,19 @@ void lexicalAnalyzer(const char *input, FILE *file)
             i++;
         }
 
-        else if (input[i] == '+' || input[i] == '-')
+        else if ((input[i] == '+' && input[i + 1] == '+') ||
+                 (input[i] == '-' && input[i + 1] == '-') ||
+                 (input[i] == '+' && isdigit(input[i + 1])) ||
+                 (input[i] == '-' && isdigit(input[i + 1])))
         {
+            // Handle unary operators
             currentToken.value[0] = input[i];
-            currentToken.value[1] = '\0';
+            currentToken.value[1] = input[i + 1];
+            currentToken.value[2] = '\0';
             currentToken.type = OPERATOR;
             currentToken.line_number = line_number;
-
-            if (input[i + 1] == '+')
-            {
-                currentToken.value[1] = input[i + 1];
-                currentToken.value[2] = '\0';
-                i++; // Move past the second '+'
-            }
-            else if (input[i + 1] == '-')
-            {
-                currentToken.value[1] = input[i + 1];
-                currentToken.value[2] = '\0';
-                i++; // Move past the second '-'
-            }
-
             printToken(currentToken, file);
-            i++; // Move to the next character
+            i += 2;
         }
 
         else if ((input[i] == '=' && input[i + 1] == '='))
@@ -1063,10 +1054,10 @@ int isFateFile(const char *filename)
 int main()
 {
     FILE *file;
-    char *filename = "../FateScript Files/ProgramPresentation.fate";
+    char *filename = "../FateScript Files/complete.fate";
     // char filename[1000]; // Buffer to store the filename input
     char fullPath[1024]; // Full path to the file
-    char input[1000];
+    char input[2000];
     int i = 0;
 
     // Prompt the user for the filename (including the extension, e.g., "file.fate")
