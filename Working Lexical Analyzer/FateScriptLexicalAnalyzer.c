@@ -303,143 +303,55 @@ void lexicalAnalyzer(const char *input, FILE *file)
             {
                 switch (currentToken.value[start_index])
                 {
-<<<<<<< HEAD
                 case 'i': // words that start with 'i'
-                    switch (currentToken.value[start_index + 1]) {
-                        case 'f':
-                            if (currentToken.value[start_index + 2] == '\0') {
-                                currentToken.type = KEYWORD; // if
+                    switch (currentToken.value[start_index + 1])
+                    {
+                    case 'f':
+                        if (currentToken.value[start_index + 2] == '\0')
+                        {
+                            currentToken.type = KEYWORD; // if
+                            currentToken.line_number = line_number;
+                        }
+                        else
+                        {
+                            currentToken.type = IDENTIFIER;
+                            currentToken.line_number = line_number;
+                        }
+                        break;
+                    case 'n':
+                        switch (currentToken.value[start_index + 2])
+                        {
+                        case 't':
+                            if (currentToken.value[start_index + 3] == '\0')
+                            {
+                                currentToken.type = DATA_TYPE; // int
                                 currentToken.line_number = line_number;
-                            } else {
+                            }
+                            else
+                            {
                                 currentToken.type = IDENTIFIER;
                                 currentToken.line_number = line_number;
                             }
                             break;
-                        case 'n':
-                            switch (currentToken.value[start_index + 2]) {
+                        case 'p':
+                            switch (currentToken.value[start_index + 3])
+                            {
+                            case 'u':
+                                switch (currentToken.value[start_index + 4])
+                                {
                                 case 't':
-                                    if (currentToken.value[start_index + 3] == '\0') {
-                                        currentToken.type = KEYWORD; // int
+                                    if (currentToken.value[start_index + 5] == '\0')
+                                    {
+                                        currentToken.type = KEYWORD; // input
                                         currentToken.line_number = line_number;
-                                    } else {
+                                    }
+                                    else
+                                    {
                                         currentToken.type = IDENTIFIER;
                                         currentToken.line_number = line_number;
                                     }
                                     break;
-                                case 'p':
-                                    switch (currentToken.value[start_index + 3]) {
-                                        case 'u':
-                                            switch (currentToken.value[start_index + 4]) {
-                                                case 't':
-                                                    if (currentToken.value[start_index + 5] == '\0') {
-                                                        currentToken.type = KEYWORD; // input
-                                                        currentToken.line_number = line_number;
-                                                    } else {
-                                                        currentToken.type = IDENTIFIER;
-                                                        currentToken.line_number = line_number;
-                                                    }
-                                                    break;
-                                                default:
-                                                    currentToken.type = IDENTIFIER;
-                                                    currentToken.line_number = line_number;
-                                            }
-                                            break;
-                                        default:
-                                            currentToken.type = IDENTIFIER;
-                                            currentToken.line_number = line_number;
-                                    }
-                                    break;
                                 default:
-                                    currentToken.type = IDENTIFIER;
-                                    currentToken.line_number = line_number;
-                            }
-                            break;
-                        default:
-                            currentToken.type = IDENTIFIER;
-                            currentToken.line_number = line_number;
-=======
-                case 'i': // words that start word with 'i'
-                    if (currentToken.value[start_index + 1] == 'f')
-                    {
-                        if (currentToken.value[start_index + 2] == '\0')
-                        {
-                            currentToken.type = KEYWORD; // auto
-                            currentToken.line_number = line_number;
-                        }
-                    }
-                    else if (currentToken.value[start_index + 1] == 'n')
-                    {
-                        if (currentToken.value[start_index + 2] == 't')
-                        {
-                            if (currentToken.value[start_index + 3] == '\0')
-                            {
-                                currentToken.type = KEYWORD; // auto
-                                currentToken.line_number = line_number;
-                            }
-                        }
-                        else if (currentToken.value[start_index + 2] == 'p')
-                        {
-                            if (currentToken.value[start_index + 3] == 'u')
-                            {
-                                if (currentToken.value[start_index + 4] == 't')
-                                {
-                                    if (currentToken.value[start_index + 1] == '\0')
-                                    {
-                                        currentToken.type = KEYWORD; // auto
-                                        currentToken.line_number = line_number;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        currentToken.type = IDENTIFIER;
-                        currentToken.line_number = line_number;
->>>>>>> b211ba232310fb9fc7526068a7870d434c1c196e
-                    }
-                    break;
-                case 'a': // words that start with 'a'
-                    switch (currentToken.value[start_index + 1]) {
-                        case 'u':
-                            switch (currentToken.value[start_index + 2]) {
-                                case 't':
-                                    switch (currentToken.value[start_index + 3]) {
-                                        case 'o':
-                                            if (currentToken.value[start_index + 4] == '\0') {
-                                                currentToken.type = NOISE_WORDS; // auto
-                                                currentToken.line_number = line_number;
-                                            } else {
-                                                currentToken.type = IDENTIFIER;
-                                                currentToken.line_number = line_number;
-                                            }
-                                            break;
-                                        default:
-                                            currentToken.type = IDENTIFIER;
-                                            currentToken.line_number = line_number;
-                                    }
-                                    break;
-                                default:
-                                    currentToken.type = IDENTIFIER;
-                                    currentToken.line_number = line_number;
-                            }
-                            break;
-                        default:
-                            currentToken.type = IDENTIFIER;
-                            currentToken.line_number = line_number;
-                    }
-                    break;
-                case 'b': // words that start with 'b'
-        switch (currentToken.value[start_index + 1]) {
-            case 'o':
-                switch (currentToken.value[start_index + 2]) {
-                    case 'o':
-                        switch (currentToken.value[start_index + 3]) {
-                            case 'l':
-                                if (currentToken.value[start_index + 4] == '\0') {
-                                    currentToken.type = DATA_TYPE; // bool
-                                    currentToken.line_number = line_number;
-                                } else {
                                     currentToken.type = IDENTIFIER;
                                     currentToken.line_number = line_number;
                                 }
@@ -447,817 +359,921 @@ void lexicalAnalyzer(const char *input, FILE *file)
                             default:
                                 currentToken.type = IDENTIFIER;
                                 currentToken.line_number = line_number;
+                            }
+                            break;
+                        default:
+                            currentToken.type = IDENTIFIER;
+                            currentToken.line_number = line_number;
                         }
                         break;
                     default:
                         currentToken.type = IDENTIFIER;
                         currentToken.line_number = line_number;
-                }
-                break;
+                    }
+                    break;
+                case 'a': // words that start with 'a'
+                    switch (currentToken.value[start_index + 1])
+                    {
+                    case 'u':
+                        switch (currentToken.value[start_index + 2])
+                        {
+                        case 't':
+                            switch (currentToken.value[start_index + 3])
+                            {
+                            case 'o':
+                                if (currentToken.value[start_index + 4] == '\0')
+                                {
+                                    currentToken.type = NOISE_WORDS; // auto
+                                    currentToken.line_number = line_number;
+                                }
+                                else
+                                {
+                                    currentToken.type = IDENTIFIER;
+                                    currentToken.line_number = line_number;
+                                }
+                                break;
+                            default:
+                                currentToken.type = IDENTIFIER;
+                                currentToken.line_number = line_number;
+                            }
+                            break;
+                        default:
+                            currentToken.type = IDENTIFIER;
+                            currentToken.line_number = line_number;
+                        }
+                        break;
+                    default:
+                        currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
+                    }
+                    break;
+                case 'b': // words that start with 'b'
+                    switch (currentToken.value[start_index + 1])
+                    {
+                    case 'o':
+                        switch (currentToken.value[start_index + 2])
+                        {
+                        case 'o':
+                            switch (currentToken.value[start_index + 3])
+                            {
+                            case 'l':
+                                if (currentToken.value[start_index + 4] == '\0')
+                                {
+                                    currentToken.type = DATA_TYPE; // bool
+                                    currentToken.line_number = line_number;
+                                }
+                                else
+                                {
+                                    currentToken.type = IDENTIFIER;
+                                    currentToken.line_number = line_number;
+                                }
+                                break;
+                            default:
+                                currentToken.type = IDENTIFIER;
+                                currentToken.line_number = line_number;
+                            }
+                            break;
+                        default:
+                            currentToken.type = IDENTIFIER;
+                            currentToken.line_number = line_number;
+                        }
+                        break;
                     case 'r':
-                        switch (currentToken.value[start_index + 2]) {
-                            case 'e':
-                                switch (currentToken.value[start_index + 3]) {
-                                    case 'a':
-                                        switch (currentToken.value[start_index + 4]) {
-                                            case 'k':
-                                                if (currentToken.value[start_index + 5] == '\0') {
-                                                    currentToken.type = KEYWORD; // break
-                                                    currentToken.line_number = line_number;
-                                                } else {
-                                                    currentToken.type = IDENTIFIER;
-                                                    currentToken.line_number = line_number;
-                                                }
-                                                break;
-                                            default:
-                                                currentToken.type = IDENTIFIER;
-                                                currentToken.line_number = line_number;
+                        switch (currentToken.value[start_index + 2])
+                        {
+                        case 'e':
+                            switch (currentToken.value[start_index + 3])
+                            {
+                            case 'a':
+                                switch (currentToken.value[start_index + 4])
+                                {
+                                case 'k':
+                                    if (currentToken.value[start_index + 5] == '\0')
+                                    {
+                                        currentToken.type = KEYWORD; // break
+                                        currentToken.line_number = line_number;
+                                    }
+                                    else
+                                    {
+                                        currentToken.type = IDENTIFIER;
+                                        currentToken.line_number = line_number;
+                                    }
+                                    break;
+                                default:
+                                    currentToken.type = IDENTIFIER;
+                                    currentToken.line_number = line_number;
+                                }
+                                break;
+                            default:
+                                currentToken.type = IDENTIFIER;
+                                currentToken.line_number = line_number;
+                            }
+                            break;
+                        default:
+                            currentToken.type = IDENTIFIER;
+                            currentToken.line_number = line_number;
+                        }
+                        break;
+                    default:
+                        currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
+                    }
+                    break;
+                case 'c':
+                    switch (currentToken.value[start_index + 1])
+                    {
+                    case 'h':
+                        switch (currentToken.value[start_index + 2])
+                        {
+                        case 'a':
+                            switch (currentToken.value[start_index + 3])
+                            {
+                            case 'r':
+                                switch (currentToken.value[start_index + 4])
+                                {
+                                case '\0':
+                                    currentToken.type = DATA_TYPE; // char
+                                    currentToken.line_number = line_number;
+                                    break;
+                                default:
+                                    currentToken.type = IDENTIFIER;
+                                    currentToken.line_number = line_number;
+                                    break;
+                                }
+                                break;
+                            case 'n':
+                                switch (currentToken.value[start_index + 4])
+                                {
+                                case 'c':
+                                    switch (currentToken.value[start_index + 5])
+                                    {
+                                    case 'e':
+                                        switch (currentToken.value[start_index + 6])
+                                        {
+                                        case '\0':
+                                            currentToken.type = KEYWORD; // chance
+                                            currentToken.line_number = line_number;
+                                            break;
+                                        default:
+                                            currentToken.type = IDENTIFIER;
+                                            currentToken.line_number = line_number;
+                                            break;
                                         }
                                         break;
                                     default:
                                         currentToken.type = IDENTIFIER;
                                         currentToken.line_number = line_number;
+                                        break;
+                                    }
+                                    break;
+                                default:
+                                    currentToken.type = IDENTIFIER;
+                                    currentToken.line_number = line_number;
+                                    break;
                                 }
                                 break;
                             default:
                                 currentToken.type = IDENTIFIER;
                                 currentToken.line_number = line_number;
+                                break;
+                            }
+                            break;
+                        default:
+                            currentToken.type = IDENTIFIER;
+                            currentToken.line_number = line_number;
+                            break;
+                        }
+                        break;
+                    case 'o':
+                        switch (currentToken.value[start_index + 2])
+                        {
+                        case 'n':
+                            switch (currentToken.value[start_index + 3])
+                            {
+                            case 's':
+                                switch (currentToken.value[start_index + 4])
+                                {
+                                case 't':
+                                    switch (currentToken.value[start_index + 5])
+                                    {
+                                    case '\0':
+                                        currentToken.type = KEYWORD; // const
+                                        currentToken.line_number = line_number;
+                                        break;
+                                    default:
+                                        currentToken.type = IDENTIFIER;
+                                        currentToken.line_number = line_number;
+                                        break;
+                                    }
+                                    break;
+                                default:
+                                    currentToken.type = IDENTIFIER;
+                                    currentToken.line_number = line_number;
+                                    break;
+                                }
+                                break;
+                            case 't':
+                                switch (currentToken.value[start_index + 4])
+                                {
+                                case 'i':
+                                    switch (currentToken.value[start_index + 5])
+                                    {
+                                    case 'n':
+                                        switch (currentToken.value[start_index + 6])
+                                        {
+                                        case 'u':
+                                            switch (currentToken.value[start_index + 7])
+                                            {
+                                            case 'e':
+                                                switch (currentToken.value[start_index + 8])
+                                                {
+                                                case '\0':
+                                                    currentToken.type = KEYWORD; // continue
+                                                    currentToken.line_number = line_number;
+                                                    break;
+                                                default:
+                                                    currentToken.type = IDENTIFIER;
+                                                    currentToken.line_number = line_number;
+                                                    break;
+                                                }
+                                                break;
+                                            default:
+                                                currentToken.type = IDENTIFIER;
+                                                currentToken.line_number = line_number;
+                                                break;
+                                            }
+                                            break;
+                                        default:
+                                            currentToken.type = IDENTIFIER;
+                                            currentToken.line_number = line_number;
+                                            break;
+                                        }
+                                        break;
+                                    default:
+                                        currentToken.type = IDENTIFIER;
+                                        currentToken.line_number = line_number;
+                                        break;
+                                    }
+                                    break;
+                                default:
+                                    currentToken.type = IDENTIFIER;
+                                    currentToken.line_number = line_number;
+                                    break;
+                                }
+                                break;
+                            default:
+                                currentToken.type = IDENTIFIER;
+                                currentToken.line_number = line_number;
+                                break;
+                            }
+                            break;
+                        default:
+                            currentToken.type = IDENTIFIER;
+                            currentToken.line_number = line_number;
+                            break;
                         }
                         break;
                     default:
                         currentToken.type = IDENTIFIER;
                         currentToken.line_number = line_number;
-                }
-                break;
-                case 'c':
-                   switch (currentToken.value[start_index + 1]) {
-                        case 'h':
-                            switch (currentToken.value[start_index + 2]) {
-                                case 'a':
-                                    switch (currentToken.value[start_index + 3]) {
-                                        case 'r':
-                                            switch (currentToken.value[start_index + 4]) {
-                                                case '\0':
-                                                    currentToken.type = DATA_TYPE; // char
-                                                    currentToken.line_number = line_number;
-                                                    break;
-                                                default:
-                                                    currentToken.type = IDENTIFIER;
-                                                    currentToken.line_number = line_number;
-                                                    break;
-                                            }
-                                            break;
-                                        case 'n':
-                                            switch (currentToken.value[start_index + 4]) {
-                                                case 'c':
-                                                    switch (currentToken.value[start_index + 5]) {
-                                                        case 'e':
-                                                            switch (currentToken.value[start_index + 6]) {
-                                                                case '\0':
-                                                                    currentToken.type = KEYWORD; // chance
-                                                                    currentToken.line_number = line_number;
-                                                                    break;
-                                                                default:
-                                                                    currentToken.type = IDENTIFIER;
-                                                                    currentToken.line_number = line_number;
-                                                                    break;
-                                                            }
-                                                            break;
-                                                        default:
-                                                            currentToken.type = IDENTIFIER;
-                                                            currentToken.line_number = line_number;
-                                                            break;
-                                                    }
-                                                    break;
-                                                default:
-                                                    currentToken.type = IDENTIFIER;
-                                                    currentToken.line_number = line_number;
-                                                    break;
-                                            }
-                                            break;
-                                        default:
-                                            currentToken.type = IDENTIFIER;
-                                            currentToken.line_number = line_number;
-                                            break;
-                                    }
-                                    break;
-                                default:
-                                    currentToken.type = IDENTIFIER;
-                                    currentToken.line_number = line_number;
-                                    break;
-                            }
-                            break;
-                        case 'o':
-                            switch (currentToken.value[start_index + 2]) {
-                                case 'n':
-                                    switch (currentToken.value[start_index + 3]) {
-                                        case 's':
-                                            switch (currentToken.value[start_index + 4]) {
-                                                case 't':
-                                                    switch (currentToken.value[start_index + 5]) {
-                                                        case '\0':
-                                                            currentToken.type = KEYWORD; // const
-                                                            currentToken.line_number = line_number;
-                                                            break;
-                                                        default:
-                                                            currentToken.type = IDENTIFIER;
-                                                            currentToken.line_number = line_number;
-                                                            break;
-                                                    }
-                                                    break;
-                                                default:
-                                                    currentToken.type = IDENTIFIER;
-                                                    currentToken.line_number = line_number;
-                                                    break;
-                                            }
-                                            break;
-                                        case 't':
-                                            switch (currentToken.value[start_index + 4]) {
-                                                case 'i':
-                                                    switch (currentToken.value[start_index + 5]) {
-                                                        case 'n':
-                                                            switch (currentToken.value[start_index + 6]) {
-                                                                case 'u':
-                                                                    switch (currentToken.value[start_index + 7]) {
-                                                                        case 'e':
-                                                                            switch (currentToken.value[start_index + 8]) {
-                                                                                case '\0':
-                                                                                    currentToken.type = KEYWORD; // continue
-                                                                                    currentToken.line_number = line_number;
-                                                                                    break;
-                                                                                default:
-                                                                                    currentToken.type = IDENTIFIER;
-                                                                                    currentToken.line_number = line_number;
-                                                                                    break;
-                                                                            }
-                                                                            break;
-                                                                        default:
-                                                                            currentToken.type = IDENTIFIER;
-                                                                            currentToken.line_number = line_number;
-                                                                            break;
-                                                                    }
-                                                                    break;
-                                                                default:
-                                                                    currentToken.type = IDENTIFIER;
-                                                                    currentToken.line_number = line_number;
-                                                                    break;
-                                                            }
-                                                            break;
-                                                        default:
-                                                            currentToken.type = IDENTIFIER;
-                                                            currentToken.line_number = line_number;
-                                                            break;
-                                                    }
-                                                    break;
-                                                default:
-                                                    currentToken.type = IDENTIFIER;
-                                                    currentToken.line_number = line_number;
-                                                    break;
-                                            }
-                                            break;
-                                        default:
-                                            currentToken.type = IDENTIFIER;
-                                            currentToken.line_number = line_number;
-                                            break;
-                                    }
-                                    break;
-                                default:
-                                    currentToken.type = IDENTIFIER;
-                                    currentToken.line_number = line_number;
-                                    break;
-                            }
-                            break;
-                        default:
-                            currentToken.type = IDENTIFIER;
-                            currentToken.line_number = line_number;
-                            break;
+                        break;
                     }
                     break;
                 case 'd':
-                    switch (currentToken.value[start_index + 1]) {
-                        case 'e':
-                            switch (currentToken.value[start_index + 2]) {
-                                case 'f':
-                                    switch (currentToken.value[start_index + 3]) {
-                                        case '\0':
-                                            currentToken.type = KEYWORD; // def
-                                            currentToken.line_number = line_number;
-                                            break;
-                                        default:
-                                            currentToken.type = IDENTIFIER;
-                                            currentToken.line_number = line_number;
-                                            break;
-                                    }
-                                    break;
-                                default:
-                                    currentToken.type = IDENTIFIER;
-                                    currentToken.line_number = line_number;
-                                    break;
+                    switch (currentToken.value[start_index + 1])
+                    {
+                    case 'e':
+                        switch (currentToken.value[start_index + 2])
+                        {
+                        case 'f':
+                            switch (currentToken.value[start_index + 3])
+                            {
+                            case '\0':
+                                currentToken.type = KEYWORD; // def
+                                currentToken.line_number = line_number;
+                                break;
+                            default:
+                                currentToken.type = IDENTIFIER;
+                                currentToken.line_number = line_number;
+                                break;
                             }
                             break;
                         default:
                             currentToken.type = IDENTIFIER;
                             currentToken.line_number = line_number;
                             break;
+                        }
+                        break;
+                    default:
+                        currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
+                        break;
                     }
                     break;
                 case 'e':
-                    switch (currentToken.value[start_index + 1]) {
-                        case 'l':
-                            switch (currentToken.value[start_index + 2]) {
-                                case 'i':
-                                    switch (currentToken.value[start_index + 3]) {
-                                        case 'f':
-                                            switch (currentToken.value[start_index + 4]) {
-                                                case '\0':
-                                                    currentToken.type = KEYWORD; // elif
-                                                    currentToken.line_number = line_number;
-                                                    break;
-                                                default:
-                                                    currentToken.type = IDENTIFIER;
-                                                    currentToken.line_number = line_number;
-                                                    break;
-                                            }
-                                            break;
-                                        default:
-                                            currentToken.type = IDENTIFIER;
-                                            currentToken.line_number = line_number;
-                                            break;
-                                    }
-                                    break;
-                                case 's':
-                                    switch (currentToken.value[start_index + 3]) {
-                                        case 'e':
-                                            switch (currentToken.value[start_index + 4]) {
-                                                case '\0':
-                                                    currentToken.type = KEYWORD; // else
-                                                    currentToken.line_number = line_number;
-                                                    break;
-                                                default:
-                                                    currentToken.type = IDENTIFIER;
-                                                    currentToken.line_number = line_number;
-                                                    break;
-                                            }
-                                            break;
-                                        default:
-                                            currentToken.type = IDENTIFIER;
-                                            currentToken.line_number = line_number;
-                                            break;
-                                    }
+                    switch (currentToken.value[start_index + 1])
+                    {
+                    case 'l':
+                        switch (currentToken.value[start_index + 2])
+                        {
+                        case 'i':
+                            switch (currentToken.value[start_index + 3])
+                            {
+                            case 'f':
+                                switch (currentToken.value[start_index + 4])
+                                {
+                                case '\0':
+                                    currentToken.type = KEYWORD; // elif
+                                    currentToken.line_number = line_number;
                                     break;
                                 default:
                                     currentToken.type = IDENTIFIER;
                                     currentToken.line_number = line_number;
                                     break;
+                                }
+                                break;
+                            default:
+                                currentToken.type = IDENTIFIER;
+                                currentToken.line_number = line_number;
+                                break;
                             }
                             break;
-                        case 'x':
-                            switch (currentToken.value[start_index + 2]) {
-                                case 't':
-                                    switch (currentToken.value[start_index + 3]) {
-                                        case 'e':
-                                            switch (currentToken.value[start_index + 4]) {
-                                                case 'n':
-                                                    switch (currentToken.value[start_index + 5]) {
-                                                        case 's':
-                                                            switch (currentToken.value[start_index + 6]) {
-                                                                case 'i':
-                                                                    switch (currentToken.value[start_index + 7]) {
-                                                                        case 'o':
-                                                                            switch (currentToken.value[start_index + 8]) {
-                                                                                case 'n':
-                                                                                    switch (currentToken.value[start_index + 9]) {
-                                                                                        case '\0':
-                                                                                            currentToken.type = RESERVED_WORDS; // extension
-                                                                                            currentToken.line_number = line_number;
-                                                                                            break;
-                                                                                        default:
-                                                                                            currentToken.type = IDENTIFIER;
-                                                                                            currentToken.line_number = line_number;
-                                                                                            break;
-                                                                                    }
-                                                                                    break;
-                                                                                default:
-                                                                                    currentToken.type = IDENTIFIER;
-                                                                                    currentToken.line_number = line_number;
-                                                                                    break;
-                                                                            }
-                                                                            break;
-                                                                        default:
-                                                                            currentToken.type = IDENTIFIER;
-                                                                            currentToken.line_number = line_number;
-                                                                            break;
-                                                                    }
-                                                                    break;
-                                                                default:
-                                                                    currentToken.type = IDENTIFIER;
-                                                                    currentToken.line_number = line_number;
-                                                                    break;
-                                                            }
-                                                            break;
-                                                        default:
-                                                            currentToken.type = IDENTIFIER;
-                                                            currentToken.line_number = line_number;
-                                                            break;
-                                                    }
-                                                    break;
-                                                case 'r':
-                                                    switch (currentToken.value[start_index + 5]) {
-                                                        case 'n':
-                                                            switch (currentToken.value[start_index + 6]) {
-                                                                case '\0':
-                                                                    currentToken.type = NOISE_WORDS; // extern
-                                                                    currentToken.line_number = line_number;
-                                                                    break;
-                                                                default:
-                                                                    currentToken.type = IDENTIFIER;
-                                                                    currentToken.line_number = line_number;
-                                                                    break;
-                                                            }
-                                                            break;
-                                                        default:
-                                                            currentToken.type = IDENTIFIER;
-                                                            currentToken.line_number = line_number;
-                                                            break;
-                                                    }
-                                                    break;
-                                                default:
-                                                    currentToken.type = IDENTIFIER;
-                                                    currentToken.line_number = line_number;
-                                                    break;
-                                            }
-                                            break;
-                                        default:
-                                            currentToken.type = IDENTIFIER;
-                                            currentToken.line_number = line_number;
-                                            break;
-                                    }
+                        case 's':
+                            switch (currentToken.value[start_index + 3])
+                            {
+                            case 'e':
+                                switch (currentToken.value[start_index + 4])
+                                {
+                                case '\0':
+                                    currentToken.type = KEYWORD; // else
+                                    currentToken.line_number = line_number;
                                     break;
                                 default:
                                     currentToken.type = IDENTIFIER;
                                     currentToken.line_number = line_number;
                                     break;
+                                }
+                                break;
+                            default:
+                                currentToken.type = IDENTIFIER;
+                                currentToken.line_number = line_number;
+                                break;
                             }
                             break;
                         default:
                             currentToken.type = IDENTIFIER;
                             currentToken.line_number = line_number;
                             break;
-                    }
-                    break;
-                case 'f':
-                    switch (currentToken.value[start_index + 1]) {
-                        case 'a':
-                            switch (currentToken.value[start_index + 2]) {
-                                case 'l':
-                                    switch (currentToken.value[start_index + 3]) {
-                                        case 's':
-                                            switch (currentToken.value[start_index + 4]) {
-                                                case 'e':
-                                                    switch (currentToken.value[start_index + 5]) {
-                                                        case '\0':
-                                                            currentToken.type = RESERVED_WORDS; // false
-                                                            break;
-                                                        default:
-                                                            currentToken.type = IDENTIFIER;
-                                                            break;
-                                                    }
-                                                    break;
-                                                default:
-                                                    currentToken.type = IDENTIFIER;
-                                                    break;
-                                            }
-                                            break;
-                                        default:
-                                            currentToken.type = IDENTIFIER;
-                                            break;
-                                    }
-                                    break;
-                                default:
-                                    currentToken.type = IDENTIFIER;
-                                    break;
-                            }
-                            break;
-                        case 'l':
-                            switch (currentToken.value[start_index + 2]) {
-                                case 'o':
-                                    switch (currentToken.value[start_index + 3]) {
-                                        case 'a':
-                                            switch (currentToken.value[start_index + 4]) {
-                                                case 't':
-                                                    switch (currentToken.value[start_index + 5]) {
-                                                        case '\0':
-                                                            currentToken.type = DATA_TYPE; // float
-                                                            break;
-                                                        default:
-                                                            currentToken.type = IDENTIFIER;
-                                                            break;
-                                                    }
-                                                    break;
-                                                default:
-                                                    currentToken.type = IDENTIFIER;
-                                                    break;
-                                            }
-                                            break;
-                                        default:
-                                            currentToken.type = IDENTIFIER;
-                                            break;
-                                    }
-                                    break;
-                                default:
-                                    currentToken.type = IDENTIFIER;
-                                    break;
-                            }
-                            break;
-                        case 'o':
-                            switch (currentToken.value[start_index + 2]) {
-                                case 'r':
-                                    switch (currentToken.value[start_index + 3]) {
-                                        case '\0':
-                                            currentToken.type = KEYWORD; // for
-                                            break;
-                                        default:
-                                            currentToken.type = IDENTIFIER;
-                                            break;
-                                    }
-                                    break;
-                                default:
-                                    currentToken.type = IDENTIFIER;
-                                    break;
-                            }
-                            break;
-                        default:
-                            currentToken.type = IDENTIFIER;
-                            break;
-                    }
-                    break;
-                   case 'p':
-                        switch (currentToken.value[start_index + 1]) {
-                            case 'r':
-                                switch (currentToken.value[start_index + 2]) {
-                                    case 'i':
-                                        switch (currentToken.value[start_index + 3]) {
-                                            case 'n':
-                                                switch (currentToken.value[start_index + 4]) {
-                                                    case 't':
-                                                        if (currentToken.value[start_index + 5] == '\0') {
-                                                            currentToken.type = KEYWORD; // print
-                                                            currentToken.line_number = line_number;
-                                                        } else {
-                                                            currentToken.type = IDENTIFIER;
-                                                            currentToken.line_number = line_number;
-                                                        }
+                        }
+                        break;
+                    case 'x':
+                        switch (currentToken.value[start_index + 2])
+                        {
+                        case 't':
+                            switch (currentToken.value[start_index + 3])
+                            {
+                            case 'e':
+                                switch (currentToken.value[start_index + 4])
+                                {
+                                case 'n':
+                                    switch (currentToken.value[start_index + 5])
+                                    {
+                                    case 's':
+                                        switch (currentToken.value[start_index + 6])
+                                        {
+                                        case 'i':
+                                            switch (currentToken.value[start_index + 7])
+                                            {
+                                            case 'o':
+                                                switch (currentToken.value[start_index + 8])
+                                                {
+                                                case 'n':
+                                                    switch (currentToken.value[start_index + 9])
+                                                    {
+                                                    case '\0':
+                                                        currentToken.type = RESERVED_WORDS; // extension
+                                                        currentToken.line_number = line_number;
                                                         break;
                                                     default:
                                                         currentToken.type = IDENTIFIER;
                                                         currentToken.line_number = line_number;
-                                                }
-                                                break;
-                                            default:
-                                                currentToken.type = IDENTIFIER;
-                                                currentToken.line_number = line_number;
-                                        }
-                                        break;
-                                    default:
-                                        currentToken.type = IDENTIFIER;
-                                        currentToken.line_number = line_number;
-                                }
-                                break;
-                            default:
-                                currentToken.type = IDENTIFIER;
-                                currentToken.line_number = line_number;
-                        }
-                        break;
-                    case 'r':
-                    switch (currentToken.value[start_index + 1]) {
-                        case 'e':
-                            switch (currentToken.value[start_index + 2]) {
-                                case 't':
-                                    switch (currentToken.value[start_index + 3]) {
-                                        case 'u':
-                                            switch (currentToken.value[start_index + 4]) {
-                                                case 'r':
-                                                    switch (currentToken.value[start_index + 5]) {
-                                                        case 'n':
-                                                            switch (currentToken.value[start_index + 6]) {
-                                                                case '\0':
-                                                                    currentToken.type = KEYWORD; // return
-                                                                    currentToken.line_number = line_number;
-                                                                    break;
-                                                                default:
-                                                                    currentToken.type = IDENTIFIER;
-                                                                    currentToken.line_number = line_number;
-                                                                    break;
-                                                            }
-                                                            break;
-                                                        default:
-                                                            currentToken.type = IDENTIFIER;
-                                                            currentToken.line_number = line_number;
-                                                            break;
+                                                        break;
                                                     }
                                                     break;
                                                 default:
                                                     currentToken.type = IDENTIFIER;
                                                     currentToken.line_number = line_number;
                                                     break;
+                                                }
+                                                break;
+                                            default:
+                                                currentToken.type = IDENTIFIER;
+                                                currentToken.line_number = line_number;
+                                                break;
                                             }
                                             break;
                                         default:
                                             currentToken.type = IDENTIFIER;
                                             currentToken.line_number = line_number;
                                             break;
+                                        }
+                                        break;
+                                    default:
+                                        currentToken.type = IDENTIFIER;
+                                        currentToken.line_number = line_number;
+                                        break;
+                                    }
+                                    break;
+                                case 'r':
+                                    switch (currentToken.value[start_index + 5])
+                                    {
+                                    case 'n':
+                                        switch (currentToken.value[start_index + 6])
+                                        {
+                                        case '\0':
+                                            currentToken.type = NOISE_WORDS; // extern
+                                            currentToken.line_number = line_number;
+                                            break;
+                                        default:
+                                            currentToken.type = IDENTIFIER;
+                                            currentToken.line_number = line_number;
+                                            break;
+                                        }
+                                        break;
+                                    default:
+                                        currentToken.type = IDENTIFIER;
+                                        currentToken.line_number = line_number;
+                                        break;
                                     }
                                     break;
                                 default:
                                     currentToken.type = IDENTIFIER;
                                     currentToken.line_number = line_number;
                                     break;
+                                }
+                                break;
+                            default:
+                                currentToken.type = IDENTIFIER;
+                                currentToken.line_number = line_number;
+                                break;
                             }
-<<<<<<< HEAD
                             break;
                         default:
                             currentToken.type = IDENTIFIER;
                             currentToken.line_number = line_number;
                             break;
-=======
                         }
-                    }
-                    else
-                    {
+                        break;
+                    default:
                         currentToken.type = IDENTIFIER;
                         currentToken.line_number = line_number;
+                        break;
+                    }
+                    break;
+                case 'f':
+                    switch (currentToken.value[start_index + 1])
+                    {
+                    case 'a':
+                        switch (currentToken.value[start_index + 2])
+                        {
+                        case 'l':
+                            switch (currentToken.value[start_index + 3])
+                            {
+                            case 's':
+                                switch (currentToken.value[start_index + 4])
+                                {
+                                case 'e':
+                                    switch (currentToken.value[start_index + 5])
+                                    {
+                                    case '\0':
+                                        currentToken.type = RESERVED_WORDS; // false
+                                        break;
+                                    default:
+                                        currentToken.type = IDENTIFIER;
+                                        break;
+                                    }
+                                    break;
+                                default:
+                                    currentToken.type = IDENTIFIER;
+                                    break;
+                                }
+                                break;
+                            default:
+                                currentToken.type = IDENTIFIER;
+                                break;
+                            }
+                            break;
+                        default:
+                            currentToken.type = IDENTIFIER;
+                            break;
+                        }
+                        break;
+                    case 'l':
+                        switch (currentToken.value[start_index + 2])
+                        {
+                        case 'o':
+                            switch (currentToken.value[start_index + 3])
+                            {
+                            case 'a':
+                                switch (currentToken.value[start_index + 4])
+                                {
+                                case 't':
+                                    switch (currentToken.value[start_index + 5])
+                                    {
+                                    case '\0':
+                                        currentToken.type = DATA_TYPE; // float
+                                        break;
+                                    default:
+                                        currentToken.type = IDENTIFIER;
+                                        break;
+                                    }
+                                    break;
+                                default:
+                                    currentToken.type = IDENTIFIER;
+                                    break;
+                                }
+                                break;
+                            default:
+                                currentToken.type = IDENTIFIER;
+                                break;
+                            }
+                            break;
+                        default:
+                            currentToken.type = IDENTIFIER;
+                            break;
+                        }
+                        break;
+                    case 'o':
+                        switch (currentToken.value[start_index + 2])
+                        {
+                        case 'r':
+                            switch (currentToken.value[start_index + 3])
+                            {
+                            case '\0':
+                                currentToken.type = KEYWORD; // for
+                                break;
+                            default:
+                                currentToken.type = IDENTIFIER;
+                                break;
+                            }
+                            break;
+                        default:
+                            currentToken.type = IDENTIFIER;
+                            break;
+                        }
+                        break;
+                    default:
+                        currentToken.type = IDENTIFIER;
+                        break;
                     }
                     break;
                 case 'p':
-                    if (currentToken.value[start_index + 1] == 'r')
+                    switch (currentToken.value[start_index + 1])
                     {
-                        if (currentToken.value[start_index + 2] == 'i')
+                    case 'r':
+                        switch (currentToken.value[start_index + 2])
                         {
-                            if (currentToken.value[start_index + 3] == 'n')
+                        case 'i':
+                            switch (currentToken.value[start_index + 3])
                             {
-                                if (currentToken.value[start_index + 4] == 't')
+                            case 'n':
+                                switch (currentToken.value[start_index + 4])
                                 {
+                                case 't':
                                     if (currentToken.value[start_index + 5] == '\0')
                                     {
                                         currentToken.type = KEYWORD; // print
                                         currentToken.line_number = line_number;
                                     }
+                                    else
+                                    {
+                                        currentToken.type = IDENTIFIER;
+                                        currentToken.line_number = line_number;
+                                    }
+                                    break;
+                                default:
+                                    currentToken.type = IDENTIFIER;
+                                    currentToken.line_number = line_number;
                                 }
+                                break;
+                            default:
+                                currentToken.type = IDENTIFIER;
+                                currentToken.line_number = line_number;
                             }
+                            break;
+                        default:
+                            currentToken.type = IDENTIFIER;
+                            currentToken.line_number = line_number;
                         }
+                        break;
+                    default:
+                        currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
                     }
                     break;
                 case 'r':
-                    if (currentToken.value[start_index + 1] == 'e')
+                    switch (currentToken.value[start_index + 1])
                     {
-                        if (currentToken.value[start_index + 2] == 't')
+                    case 'e':
+                        switch (currentToken.value[start_index + 2])
                         {
-                            if (currentToken.value[start_index + 3] == 'u')
+                        case 't':
+                            switch (currentToken.value[start_index + 3])
                             {
-                                if (currentToken.value[start_index + 4] == 'r')
+                            case 'u':
+                                switch (currentToken.value[start_index + 4])
                                 {
-                                    if (currentToken.value[start_index + 5] == 'n')
+                                case 'r':
+                                    switch (currentToken.value[start_index + 5])
                                     {
-                                        if (currentToken.value[start_index + 6] == '\0')
+                                    case 'n':
+                                        switch (currentToken.value[start_index + 6])
                                         {
+                                        case '\0':
                                             currentToken.type = KEYWORD; // return
                                             currentToken.line_number = line_number;
-                                        }
-                                        else
-                                        {
-                                            currentToken.type = IDENTIFIER; // Any other word starting with 'r'
+                                            break;
+                                        default:
+                                            currentToken.type = IDENTIFIER;
                                             currentToken.line_number = line_number;
+                                            break;
                                         }
+                                        break;
+                                    default:
+                                        currentToken.type = IDENTIFIER;
+                                        currentToken.line_number = line_number;
+                                        break;
                                     }
+                                    break;
+                                default:
+                                    currentToken.type = IDENTIFIER;
+                                    currentToken.line_number = line_number;
+                                    break;
                                 }
+                                break;
+                            default:
+                                currentToken.type = IDENTIFIER;
+                                currentToken.line_number = line_number;
+                                break;
                             }
+                            break;
+                        default:
+                            currentToken.type = IDENTIFIER;
+                            currentToken.line_number = line_number;
+                            break;
                         }
-                    }
-                    else
-                    {
-                        currentToken.type = IDENTIFIER; // Any other word starting with 'r'
+                        break;
+                    default:
+                        currentToken.type = IDENTIFIER;
                         currentToken.line_number = line_number;
->>>>>>> b211ba232310fb9fc7526068a7870d434c1c196e
+                        break;
                     }
                     break;
                 case 's':
-                    switch (currentToken.value[start_index + 1]) {
-                        case 't':
-                            switch (currentToken.value[start_index + 2]) {
-                                case 'r':
-                                    switch (currentToken.value[start_index + 3]) {
-                                        case '\0':
-                                            currentToken.type = DATA_TYPE; // str
-                                            currentToken.line_number = line_number;
-                                            break;
-                                        default:
-                                            currentToken.type = IDENTIFIER;
-                                            currentToken.line_number = line_number;
-                                            break;
-                                    }
-                                    break;
-                                default:
-                                    currentToken.type = IDENTIFIER;
-                                    currentToken.line_number = line_number;
-                                    break;
+                    switch (currentToken.value[start_index + 1])
+                    {
+                    case 't':
+                        switch (currentToken.value[start_index + 2])
+                        {
+                        case 'r':
+                            switch (currentToken.value[start_index + 3])
+                            {
+                            case '\0':
+                                currentToken.type = DATA_TYPE; // str
+                                currentToken.line_number = line_number;
+                                break;
+                            default:
+                                currentToken.type = IDENTIFIER;
+                                currentToken.line_number = line_number;
+                                break;
                             }
                             break;
                         default:
                             currentToken.type = IDENTIFIER;
                             currentToken.line_number = line_number;
                             break;
+                        }
+                        break;
+                    default:
+                        currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
+                        break;
                     }
                     break;
                 case 't':
-                    switch (currentToken.value[start_index + 1]) {
-                        case 'r':
-                            switch (currentToken.value[start_index + 2]) {
-                                case 'u':
-                                    switch (currentToken.value[start_index + 3]) {
-                                        case 'e':
-                                            switch (currentToken.value[start_index + 4]) {
-                                                case '\0':
-                                                    currentToken.type = RESERVED_WORDS; // true
-                                                    currentToken.line_number = line_number;
-                                                    break;
-                                                default:
-                                                    currentToken.type = IDENTIFIER;
-                                                    currentToken.line_number = line_number;
-                                                    break;
-                                            }
-                                            break;
-                                        default:
-                                            currentToken.type = IDENTIFIER;
-                                            currentToken.line_number = line_number;
-                                            break;
-                                    }
+                    switch (currentToken.value[start_index + 1])
+                    {
+                    case 'r':
+                        switch (currentToken.value[start_index + 2])
+                        {
+                        case 'u':
+                            switch (currentToken.value[start_index + 3])
+                            {
+                            case 'e':
+                                switch (currentToken.value[start_index + 4])
+                                {
+                                case '\0':
+                                    currentToken.type = RESERVED_WORDS; // true
+                                    currentToken.line_number = line_number;
                                     break;
                                 default:
                                     currentToken.type = IDENTIFIER;
                                     currentToken.line_number = line_number;
                                     break;
+                                }
+                                break;
+                            default:
+                                currentToken.type = IDENTIFIER;
+                                currentToken.line_number = line_number;
+                                break;
                             }
                             break;
                         default:
                             currentToken.type = IDENTIFIER;
                             currentToken.line_number = line_number;
                             break;
+                        }
+                        break;
+                    default:
+                        currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
+                        break;
                     }
                     break;
-                 case 'u':
-        switch (currentToken.value[start_index + 1]) {
-            case 's':
-                switch (currentToken.value[start_index + 2]) {
-                    case 'i':
-                        switch (currentToken.value[start_index + 3]) {
-                            case 'n':
-                                switch (currentToken.value[start_index + 4]) {
-                                    case 'g':
-                                        switch (currentToken.value[start_index + 5]) {
-                                            case '\0':
-                                                currentToken.type = RESERVED_WORDS; // using
-                                                currentToken.line_number = line_number;
-                                                break;
-                                            default:
-                                                currentToken.type = IDENTIFIER;
-                                                currentToken.line_number = line_number;
-                                                break;
-                                        }
-                                        break;
-                                    default:
-                                        currentToken.type = IDENTIFIER;
-                                        currentToken.line_number = line_number;
-                                        break;
-                                }
-                                break;
-                            default:
-                                currentToken.type = IDENTIFIER;
-                                currentToken.line_number = line_number;
-                                break;
-                        }
-                        break;
-                    default:
-                        currentToken.type = IDENTIFIER;
-                        currentToken.line_number = line_number;
-                        break;
-                }
-                break;
-            default:
-                currentToken.type = IDENTIFIER;
-                currentToken.line_number = line_number;
-                break;
-        }
-        break;
-            case 'v':
-                switch (currentToken.value[start_index + 1]) {
-                    case 'a':
-                        switch (currentToken.value[start_index + 2]) {
-                            case 'l':
-                                switch (currentToken.value[start_index + 3]) {
-                                    case 'u':
-                                        switch (currentToken.value[start_index + 4]) {
-                                            case 'e':
-                                                switch (currentToken.value[start_index + 5]) {
-                                                    case '\0':
-                                                        currentToken.type = KEYWORD; // value
-                                                        currentToken.line_number = line_number;
-                                                        break;
-                                                    default:
-                                                        currentToken.type = IDENTIFIER;
-                                                        currentToken.line_number = line_number;
-                                                        break;
-                                                }
-                                                break;
-                                            default:
-                                                currentToken.type = IDENTIFIER;
-                                                currentToken.line_number = line_number;
-                                                break;
-                                        }
-                                        break;
-                                    default:
-                                        currentToken.type = IDENTIFIER;
-                                        currentToken.line_number = line_number;
-                                        break;
-                                }
-                                break;
-                            default:
-                                currentToken.type = IDENTIFIER;
-                                currentToken.line_number = line_number;
-                                break;
-                        }
-                        break;
-                    default:
-                        currentToken.type = IDENTIFIER;
-                        currentToken.line_number = line_number;
-                        break;
-                }
-                break;
-                 case 'w':
-                    switch (currentToken.value[start_index + 1]) {
-                        case 'h':
-                            switch (currentToken.value[start_index + 2]) {
-                                case 'i':
-                                    switch (currentToken.value[start_index + 3]) {
-                                        case 'l':
-                                            switch (currentToken.value[start_index + 4]) {
-                                                case 'e':
-                                                    if (currentToken.value[start_index + 5] == '\0') {
-                                                        currentToken.type = KEYWORD; // while
-                                                        currentToken.line_number = line_number;
-                                                    }
-                                                    else {
-                                                        currentToken.type = IDENTIFIER;
-                                                        currentToken.line_number = line_number;
-                                                    }
-                                                    break;
-                                                default:
-                                                    currentToken.type = IDENTIFIER;
-                                                    currentToken.line_number = line_number;
-                                                    break;
-                                            }
-                                            break;
-                                        default:
-                                            currentToken.type = IDENTIFIER;
-                                            currentToken.line_number = line_number;
-                                            break;
-                                    }
-                                    break;
-                                default:
-                                    currentToken.type = IDENTIFIER;
-                                    currentToken.line_number = line_number;
-                                    break;
-                            }
-                            break;
+                case 'u':
+                    switch (currentToken.value[start_index + 1])
+                    {
+                    case 's':
+                        switch (currentToken.value[start_index + 2])
+                        {
                         case 'i':
-                            switch (currentToken.value[start_index + 2]) {
-                                case 't':
-                                    switch (currentToken.value[start_index + 3]) {
-                                        case 'h':
-                                            if (currentToken.value[start_index + 4] == '\0') {
-                                                currentToken.type = KEYWORD; // with
-                                                currentToken.line_number = line_number;
-                                            }
-                                            else {
-                                                currentToken.type = IDENTIFIER;
-                                                currentToken.line_number = line_number;
-                                            }
-                                            break;
-                                        default:
-                                            currentToken.type = IDENTIFIER;
-                                            currentToken.line_number = line_number;
-                                            break;
+                            switch (currentToken.value[start_index + 3])
+                            {
+                            case 'n':
+                                switch (currentToken.value[start_index + 4])
+                                {
+                                case 'g':
+                                    switch (currentToken.value[start_index + 5])
+                                    {
+                                    case '\0':
+                                        currentToken.type = RESERVED_WORDS; // using
+                                        currentToken.line_number = line_number;
+                                        break;
+                                    default:
+                                        currentToken.type = IDENTIFIER;
+                                        currentToken.line_number = line_number;
+                                        break;
                                     }
                                     break;
                                 default:
                                     currentToken.type = IDENTIFIER;
                                     currentToken.line_number = line_number;
                                     break;
+                                }
+                                break;
+                            default:
+                                currentToken.type = IDENTIFIER;
+                                currentToken.line_number = line_number;
+                                break;
                             }
                             break;
                         default:
                             currentToken.type = IDENTIFIER;
                             currentToken.line_number = line_number;
                             break;
+                        }
+                        break;
+                    default:
+                        currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
+                        break;
+                    }
+                    break;
+                case 'v':
+                    switch (currentToken.value[start_index + 1])
+                    {
+                    case 'a':
+                        switch (currentToken.value[start_index + 2])
+                        {
+                        case 'l':
+                            switch (currentToken.value[start_index + 3])
+                            {
+                            case 'u':
+                                switch (currentToken.value[start_index + 4])
+                                {
+                                case 'e':
+                                    switch (currentToken.value[start_index + 5])
+                                    {
+                                    case '\0':
+                                        currentToken.type = KEYWORD; // value
+                                        currentToken.line_number = line_number;
+                                        break;
+                                    default:
+                                        currentToken.type = IDENTIFIER;
+                                        currentToken.line_number = line_number;
+                                        break;
+                                    }
+                                    break;
+                                default:
+                                    currentToken.type = IDENTIFIER;
+                                    currentToken.line_number = line_number;
+                                    break;
+                                }
+                                break;
+                            default:
+                                currentToken.type = IDENTIFIER;
+                                currentToken.line_number = line_number;
+                                break;
+                            }
+                            break;
+                        default:
+                            currentToken.type = IDENTIFIER;
+                            currentToken.line_number = line_number;
+                            break;
+                        }
+                        break;
+                    default:
+                        currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
+                        break;
+                    }
+                    break;
+                case 'w':
+                    switch (currentToken.value[start_index + 1])
+                    {
+                    case 'h':
+                        switch (currentToken.value[start_index + 2])
+                        {
+                        case 'i':
+                            switch (currentToken.value[start_index + 3])
+                            {
+                            case 'l':
+                                switch (currentToken.value[start_index + 4])
+                                {
+                                case 'e':
+                                    if (currentToken.value[start_index + 5] == '\0')
+                                    {
+                                        currentToken.type = KEYWORD; // while
+                                        currentToken.line_number = line_number;
+                                    }
+                                    else
+                                    {
+                                        currentToken.type = IDENTIFIER;
+                                        currentToken.line_number = line_number;
+                                    }
+                                    break;
+                                default:
+                                    currentToken.type = IDENTIFIER;
+                                    currentToken.line_number = line_number;
+                                    break;
+                                }
+                                break;
+                            default:
+                                currentToken.type = IDENTIFIER;
+                                currentToken.line_number = line_number;
+                                break;
+                            }
+                            break;
+                        default:
+                            currentToken.type = IDENTIFIER;
+                            currentToken.line_number = line_number;
+                            break;
+                        }
+                        break;
+                    case 'i':
+                        switch (currentToken.value[start_index + 2])
+                        {
+                        case 't':
+                            switch (currentToken.value[start_index + 3])
+                            {
+                            case 'h':
+                                if (currentToken.value[start_index + 4] == '\0')
+                                {
+                                    currentToken.type = KEYWORD; // with
+                                    currentToken.line_number = line_number;
+                                }
+                                else
+                                {
+                                    currentToken.type = IDENTIFIER;
+                                    currentToken.line_number = line_number;
+                                }
+                                break;
+                            default:
+                                currentToken.type = IDENTIFIER;
+                                currentToken.line_number = line_number;
+                                break;
+                            }
+                            break;
+                        default:
+                            currentToken.type = IDENTIFIER;
+                            currentToken.line_number = line_number;
+                            break;
+                        }
+                        break;
+                    default:
+                        currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
+                        break;
                     }
                     break;
                 default:
@@ -1523,7 +1539,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
             i++;
         }
         // Handle delimiters
-        else if (strchr("{}&;,()[].'\"'", input[i]))
+        else if (strchr("{};,()[].'\"'", input[i]))
         {
             currentToken.value[0] = input[i];
             currentToken.value[1] = '\0';
@@ -1534,12 +1550,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
         }
         // Handle unknown characters
         else
-<<<<<<< HEAD
-        {   
-=======
         {
-            j = 0;
->>>>>>> b211ba232310fb9fc7526068a7870d434c1c196e
             while (!isspace(input[i]) && input[i] != '\0')
             {
                 // Check if the character is an invalid character
@@ -1566,7 +1577,8 @@ int isFateFile(const char *filename)
 int main()
 {
     FILE *file;
-    char *filename = "../FateScript Files/complete.fate";
+    char *filename = "../FateScript Files/ProgramPresentation.fate";
+    // char *filename = "../FateScript Files/sample.fate";
     // char filename[1000]; // Buffer to store the filename input
     char fullPath[1024]; // Full path to the file
     char input[2000];

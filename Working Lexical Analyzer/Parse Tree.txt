@@ -3,21 +3,26 @@ Statement 1 (Line 1): Declaration
 	IDENTIFIER: ('full_name')
 	SEMICOLON: (';')
 
-Statement 2 (Line 2): Assignment
+Statement 2 (Line 2): Declaration
+	DATA TYPE: ('int')
 	IDENTIFIER: ('age')
-Error (Line 2): Expected '=' after identifier in assignment statement
-Error (Line 2): Expected a value, identifier, or nested expression
-Error (Line 2): Expected SEMICOLON (';') after identifier
-
-Statement 3 (Line 2): Assignment
+	COMMA: (',')
 	IDENTIFIER: ('height')
-Error (Line 2): Expected '=' after identifier in assignment statement
-Error (Line 2): Expected a value, identifier, or nested expression
 	SEMICOLON: (';')
 
-Statement 4 (Line 3): Declaration
+Statement 3 (Line 3): Declaration
 	DATA TYPE: ('bool')
 	IDENTIFIER: ('is_married')
+	SEMICOLON: (';')
+
+Statement 4 (Line 5): Input
+	KEYWORD: ('input')
+	PARENTHESIS: ('(')
+	STRING: ("Enter value: ")
+	DELIMITER: (',')
+	DELIMITER: ('&')
+	IDENTIFIER: ('result')
+	PARENTHESIS: (')')
 	SEMICOLON: (';')
 
 Statement 5 (Line 7): Output
@@ -32,7 +37,10 @@ Statement 6 (Line 8): Output
 	PARENTHESIS: ('(')
 	STRING: ("%d")
 	COMMA: (',')
-Error (Line 8): Expected identifier or number after ','
+	IDENTIFIER: ('result')
+	PARENTHESIS: (')')
+	SEMICOLON: (';')
+
 Statement 7 (Line 9): Output
 	KEYWORD: ('print')
 	PARENTHESIS: ('(')
@@ -53,16 +61,10 @@ Statement 8 (Line 11): Assignment
 Statement 9 (Line 12): Assignment
 	IDENTIFIER: ('middle_initial')
 	ASSIGNMENT OPERATOR: ('=')
-Error (Line 12): Expected a value, identifier, or nested expression
-Error (Line 12): Expected SEMICOLON (';') after identifier
+	CHARACTER: ('L')
+Error (Line 13): Expected SEMICOLON (';') after identifier
 
-Statement 10 (Line 13): Assignment
-	IDENTIFIER: ('last_name')
-	ASSIGNMENT OPERATOR: ('=')
-	STRING: ("Legarda")
-	SEMICOLON: (';')
-
-Statement 11 (Line 14): Assignment
+Statement 10 (Line 14): Assignment
 	IDENTIFIER: ('new_price')
 	ASSIGNMENT OPERATOR: ('=')
 	NUMBER: ('90')
@@ -70,7 +72,7 @@ Statement 11 (Line 14): Assignment
 	NUMBER: ('30')
 	SEMICOLON: (';')
 
-Statement 12 (Line 15): Assignment
+Statement 11 (Line 15): Assignment
 	IDENTIFIER: ('new_price')
 	ASSIGNMENT OPERATOR: ('=')
 	IDENTIFIER: ('discount')
@@ -78,7 +80,7 @@ Statement 12 (Line 15): Assignment
 	NUMBER: ('30')
 	SEMICOLON: (';')
 
-Statement 13 (Line 16): Assignment
+Statement 12 (Line 16): Assignment
 	IDENTIFIER: ('discount_status')
 	ASSIGNMENT OPERATOR: ('=')
 	PARENTHESIS: ('(')
@@ -90,18 +92,18 @@ Statement 13 (Line 16): Assignment
 	NUMBER: ('100')
 	SEMICOLON: (';')
 
-Statement 14 (Line 18): Conditional (if-statement)
+Statement 13 (Line 18): Conditional (if-statement)
 	KEYWORD: ('if')
 	PARENTHESIS: ('(')
 
-Statement 15 (Line 18): Condition
+Statement 14 (Line 18): Condition
 	IDENTIFIER: ('x')
 	OPERATOR: ('<')
 	NUMBER: ('20')
 	PARENTHESIS: (')')
 	CURLY BRACE: ('{')
 
-Statement 16 (Line 19): Output
+Statement 15 (Line 19): Output
 	KEYWORD: ('print')
 	PARENTHESIS: ('(')
 	STRING: ("x is less than 20\n")
@@ -111,18 +113,18 @@ Statement 16 (Line 19): Output
 	CURLY BRACE: ('}')
 
 
-Statement 17 (Line 22): Conditional (if-statement)
+Statement 16 (Line 22): Conditional (if-statement)
 	KEYWORD: ('if')
 	PARENTHESIS: ('(')
 
-Statement 18 (Line 22): Condition
+Statement 17 (Line 22): Condition
 	IDENTIFIER: ('x')
 	OPERATOR: ('>')
 	NUMBER: ('0')
 	PARENTHESIS: (')')
 	CURLY BRACE: ('{')
 
-Statement 19 (Line 23): Output
+Statement 18 (Line 23): Output
 	KEYWORD: ('print')
 	PARENTHESIS: ('(')
 	STRING: ("Positive\n")
@@ -132,25 +134,25 @@ Statement 19 (Line 23): Output
 	CURLY BRACE: ('}')
 
 
-Statement 20 (Line 25): Output
+Statement 19 (Line 25): Output
 	KEYWORD: ('print')
 	PARENTHESIS: ('(')
 	STRING: ("Negative\n")
 	PARENTHESIS: (')')
 	SEMICOLON: (';')
 
-Statement 21 (Line 28): Conditional (if-statement)
+Statement 20 (Line 28): Conditional (if-statement)
 	KEYWORD: ('if')
 	PARENTHESIS: ('(')
 
-Statement 22 (Line 28): Condition
+Statement 21 (Line 28): Condition
 	IDENTIFIER: ('x')
 	OPERATOR: ('>')
 	NUMBER: ('0')
 	PARENTHESIS: (')')
 	CURLY BRACE: ('{')
 
-Statement 23 (Line 29): Output
+Statement 22 (Line 29): Output
 	KEYWORD: ('print')
 	PARENTHESIS: ('(')
 	STRING: ("Positive\n")
@@ -160,18 +162,18 @@ Statement 23 (Line 29): Output
 	CURLY BRACE: ('}')
 
 
-Statement 24 (Line 30): Conditional (if-statement)
+Statement 23 (Line 30): Conditional (if-statement)
 	KEYWORD: ('if')
 	PARENTHESIS: ('(')
 
-Statement 25 (Line 30): Condition
+Statement 24 (Line 30): Condition
 	IDENTIFIER: ('x')
 	OPERATOR: ('==')
 	NUMBER: ('0')
 	PARENTHESIS: (')')
 	CURLY BRACE: ('{')
 
-Statement 26 (Line 31): Output
+Statement 25 (Line 31): Output
 	KEYWORD: ('print')
 	PARENTHESIS: ('(')
 	STRING: ("Zero\n")
@@ -181,16 +183,223 @@ Statement 26 (Line 31): Output
 	CURLY BRACE: ('}')
 
 
-Statement 27 (Line 33): Output
+Statement 26 (Line 33): Output
 	KEYWORD: ('print')
 	PARENTHESIS: ('(')
 	STRING: ("Negative\n")
 	PARENTHESIS: (')')
 	SEMICOLON: (';')
 
-Statement 28 (Line 36): Iterative (for)
+Statement 27 (Line 34): Iterative (for)
 	KEYWORD: ('for')
 		PARENTHESIS: ('(')
 
-Statement 29 (Line 36): Assignment
-	
+Statement 28 (Line 36): Assignment
+	IDENTIFIER: ('i')
+	ASSIGNMENT OPERATOR: ('=')
+	NUMBER: ('1')
+	SEMICOLON: (';')
+
+Statement 29 (Line 36): Condition
+	IDENTIFIER: ('i')
+	OPERATOR: ('<=')
+	NUMBER: ('5')
+	SEMICOLON: (';')
+
+Statement 30 (Line 36): Increment
+	IDENTIFIER: ('i')
+	OPERATOR: ('++')
+	PARENTHESIS: (')')
+	CURLY BRACE: ('{')
+
+Statement 31 (Line 37): Output
+	KEYWORD: ('print')
+	PARENTHESIS: ('(')
+	STRING: ("%d")
+	COMMA: (',')
+	IDENTIFIER: ('i')
+	PARENTHESIS: (')')
+	SEMICOLON: (';')
+
+	CURLY BRACE: ('}')
+
+Statement 32 (Line 38): Iterative (for)
+	KEYWORD: ('for')
+		PARENTHESIS: ('(')
+
+Statement 33 (Line 40): Assignment
+	IDENTIFIER: ('i')
+	ASSIGNMENT OPERATOR: ('=')
+	NUMBER: ('1')
+	SEMICOLON: (';')
+
+Statement 34 (Line 40): Condition
+	IDENTIFIER: ('i')
+	OPERATOR: ('<=')
+	NUMBER: ('5')
+	SEMICOLON: (';')
+
+Statement 35 (Line 40): Increment
+	IDENTIFIER: ('i')
+	OPERATOR: ('++')
+	PARENTHESIS: (')')
+	CURLY BRACE: ('{')
+
+Statement 36 (Line 40): Iterative (for)
+	KEYWORD: ('for')
+		PARENTHESIS: ('(')
+
+Statement 37 (Line 41): Assignment
+	IDENTIFIER: ('j')
+	ASSIGNMENT OPERATOR: ('=')
+	NUMBER: ('1')
+	SEMICOLON: (';')
+
+Statement 38 (Line 41): Condition
+	IDENTIFIER: ('j')
+	OPERATOR: ('<=')
+	NUMBER: ('5')
+	SEMICOLON: (';')
+
+Statement 39 (Line 41): Increment
+	IDENTIFIER: ('j')
+	OPERATOR: ('++')
+	PARENTHESIS: (')')
+	CURLY BRACE: ('{')
+
+Statement 40 (Line 42): Output
+	KEYWORD: ('print')
+	PARENTHESIS: ('(')
+	STRING: ("%d ")
+	COMMA: (',')
+	IDENTIFIER: ('j')
+	PARENTHESIS: (')')
+	SEMICOLON: (';')
+
+	CURLY BRACE: ('}')
+
+Statement 41 (Line 44): Output
+	KEYWORD: ('print')
+	PARENTHESIS: ('(')
+	STRING: ("\n")
+	PARENTHESIS: (')')
+	SEMICOLON: (';')
+
+	CURLY BRACE: ('}')
+
+Statement 42 (Line 47): Iterative (while)
+	KEYWORD: ('while')
+		PARENTHESIS: ('(')
+
+Statement 43 (Line 47): Condition
+	IDENTIFIER: ('count')
+	OPERATOR: ('>')
+	NUMBER: ('0')
+
+	PARENTHESIS: (')')
+	CURLY BRACE: ('{')
+
+Statement 44 (Line 48): Output
+	KEYWORD: ('print')
+	PARENTHESIS: ('(')
+	STRING: ("%d")
+	COMMA: (',')
+	IDENTIFIER: ('count')
+	PARENTHESIS: (')')
+	SEMICOLON: (';')
+
+count 
+Statement 45 (Line 49): Increment
+	IDENTIFIER: ('count')
+	OPERATOR: ('--')
+	SEMICOLON: (';')
+
+	CURLY BRACE: ('}')
+
+Statement 46 (Line 52): Iterative (while)
+	KEYWORD: ('while')
+		PARENTHESIS: ('(')
+
+Statement 47 (Line 52): Condition
+	IDENTIFIER: ('count')
+	OPERATOR: ('>')
+	NUMBER: ('0')
+
+	PARENTHESIS: (')')
+	CURLY BRACE: ('{')
+
+Statement 48 (Line 53): Assignment
+	IDENTIFIER: ('inner')
+	ASSIGNMENT OPERATOR: ('=')
+	IDENTIFIER: ('count')
+	SEMICOLON: (';')
+
+Statement 49 (Line 54): Iterative (while)
+	KEYWORD: ('while')
+		PARENTHESIS: ('(')
+
+Statement 50 (Line 54): Condition
+	IDENTIFIER: ('inner')
+	OPERATOR: ('>')
+	NUMBER: ('0')
+
+	PARENTHESIS: (')')
+	CURLY BRACE: ('{')
+
+Statement 51 (Line 55): Output
+	KEYWORD: ('print')
+	PARENTHESIS: ('(')
+	STRING: ("%d ")
+	COMMA: (',')
+	IDENTIFIER: ('inner')
+	PARENTHESIS: (')')
+	SEMICOLON: (';')
+
+inner 
+Statement 52 (Line 56): Increment
+	IDENTIFIER: ('inner')
+	OPERATOR: ('--')
+	SEMICOLON: (';')
+
+	CURLY BRACE: ('}')
+
+Statement 53 (Line 58): Output
+	KEYWORD: ('print')
+	PARENTHESIS: ('(')
+	STRING: ("\n")
+	PARENTHESIS: (')')
+	SEMICOLON: (';')
+
+count 
+Statement 54 (Line 59): Increment
+	IDENTIFIER: ('count')
+	OPERATOR: ('--')
+	SEMICOLON: (';')
+
+	CURLY BRACE: ('}')
+
+Statement 55 (Line 62): Assignment
+	IDENTIFIER: ('x')
+	ASSIGNMENT OPERATOR: ('=')
+Error (Line 62): Expected a value, identifier, or nested expression
+	SEMICOLON: (';')
+
+Statement 56 (Line 63): Assignment
+	IDENTIFIER: ('name')
+	ASSIGNMENT OPERATOR: ('=')
+Error (Line 63): Expected a value, identifier, or nested expression
+Error (Line 63): Expected SEMICOLON (';') after identifier
+
+Statement 57 (Line 64): Output
+	KEYWORD: ('print')
+Error (Line 64): Expected opening parenthesis '('
+Statement 58 (Line 65): Declaration
+	DATA TYPE: ('bool')
+Error (Line 65): Expected IDENTIFIER
+Error (Line 65): Expected SEMICOLON (';') after identifier
+
+Statement 59 (Line 66): Declaration
+	DATA TYPE: ('str')
+	IDENTIFIER: ('email')
+Error (Line 66): Expected SEMICOLON (';') after identifier
+

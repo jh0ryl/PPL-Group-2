@@ -230,6 +230,21 @@ void parse_string_literal(FILE *input_file, FILE *output_file, Token *current_to
     }
 }
 
+// Helper function to parse string literals
+void parse_character(FILE *input_file, FILE *output_file, Token *current_token)
+{
+    // Check for STRING_LITERALS token type and print it
+    if (current_token->type == CHARACTER)
+    {
+        fprintf(output_file, "\tCHARACTER: (%s)\n", current_token->value);
+        get_token(input_file, current_token); // Get next token
+    }
+    else
+    {
+        fprintf(output_file, "Error (Line %d): Expected Character\n", current_token->line_number);
+    }
+}
+
 void parse_number(FILE *input_file, FILE *output_file, Token *current_token)
 {
     // Print the number value
@@ -272,6 +287,10 @@ void parse_expression(FILE *input_file, FILE *output_file, Token *current_token)
     else if (current_token->type == STRING_LITERALS)
     {
         parse_string_literal(input_file, output_file, current_token);
+    }
+    else if (current_token->type == CHARACTER)
+    {
+        parse_character(input_file, output_file, current_token);
     }
     else
     {
@@ -452,7 +471,7 @@ void parse_input(FILE *input_file, FILE *output_file, Token *current_token)
             get_token(input_file, current_token); // Get next token (to check for address operator or identifier)
 
             // Check if it's the address operator '&'
-            if (current_token->type == DELIMITER && strcmp(current_token->value, "&") == 0)
+            if (current_token->type == OPERATOR && strcmp(current_token->value, "&") == 0)
             {
                 fprintf(output_file, "\tDELIMITER: ('%s')\n", current_token->value);
                 get_token(input_file, current_token); // Get next token (to check for identifier)
