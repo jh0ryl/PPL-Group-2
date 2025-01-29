@@ -22,94 +22,93 @@
 -                    OPERATOR        22        
 ++                   OPERATOR        23        
 --                   OPERATOR        24        
-+1                   OPERATOR        25        
-#------------------------- COMMENT         26        
-#Logical Operators   COMMENT         27        
-!                    OPERATOR        28        
-||                   OPERATOR        29        
-&&                   OPERATOR        30        
-#------------------------- COMMENT         31        
-#Relational Operators COMMENT         32        
-==                   OPERATOR        33        
-!=                   OPERATOR        34        
-<                    OPERATOR        35        
->                    OPERATOR        36        
-<=                   OPERATOR        37        
->=                   OPERATOR        38        
-#------------------------- COMMENT         39        
-# Keywords, Reserved Words and Noise Words COMMENT         40        
-if                   KEYWORD         41        
-elif                 KEYWORD         42        
-else                 KEYWORD         43        
-while                KEYWORD         44        
-for                  KEYWORD         45        
-continue             KEYWORD         46        
-break                KEYWORD         47        
-return               KEYWORD         48        
-int                  KEYWORD         49        
-float                DATA_TYPE       50        
-bool                 DATA_TYPE       51        
-str                  DATA_TYPE       52        
-char                 DATA_TYPE       53        
-const                KEYWORD         54        
-def                  KEYWORD         55        
-with                 KEYWORD         56        
-value                KEYWORD         57        
-chance               KEYWORD         58        
-print                KEYWORD         59        
-input                KEYWORD         59        
-output               IDENTIFIER      61        
-# Reserved Words     COMMENT         62        
-using                RESERVED_WORD   63        
-extension            RESERVED_WORD   64        
-module               RESERVED_WORD   65        
-true                 RESERVED_WORD   66        
-false                RESERVED_WORD   67        
-# Noise Words        COMMENT         68        
-extern               NOISE_WORD      69        
-auto                 NOISE_WORD      70        
-# Delimiters and Comments COMMENT         72        
-;                    DELIMITER       73        
-,                    DELIMITER       74        
-.                    DELIMITER       75        
-(                    DELIMITER       76        
-)                    DELIMITER       76        
-{                    DELIMITER       77        
-}                    DELIMITER       77        
-[                    DELIMITER       78        
-]                    DELIMITER       78        
-#                    COMMENT         79        
+#------------------------- COMMENT         25        
+#Logical Operators   COMMENT         26        
+!                    OPERATOR        27        
+||                   OPERATOR        28        
+&&                   OPERATOR        29        
+#------------------------- COMMENT         30        
+#Relational Operators COMMENT         31        
+==                   OPERATOR        32        
+!=                   OPERATOR        33        
+<                    OPERATOR        34        
+>                    OPERATOR        35        
+<=                   OPERATOR        36        
+>=                   OPERATOR        37        
+#------------------------- COMMENT         38        
+# Keywords, Reserved Words and Noise Words COMMENT         39        
+if                   KEYWORD         40        
+elif                 KEYWORD         41        
+else                 KEYWORD         42        
+while                KEYWORD         43        
+for                  KEYWORD         44        
+continue             KEYWORD         45        
+break                KEYWORD         46        
+return               KEYWORD         47        
+int                  KEYWORD         48        
+float                DATA_TYPE       49        
+bool                 DATA_TYPE       50        
+str                  DATA_TYPE       51        
+char                 DATA_TYPE       52        
+const                KEYWORD         53        
+def                  KEYWORD         54        
+with                 KEYWORD         55        
+value                KEYWORD         56        
+chance               KEYWORD         57        
+print                KEYWORD         58        
+input                KEYWORD         58        
+output               IDENTIFIER      60        
+# Reserved Words     COMMENT         61        
+using                RESERVED_WORD   62        
+extension            RESERVED_WORD   63        
+module               RESERVED_WORD   64        
+true                 RESERVED_WORD   65        
+false                RESERVED_WORD   66        
+# Noise Words        COMMENT         67        
+extern               NOISE_WORD      68        
+auto                 NOISE_WORD      69        
+# Delimiters and Comments COMMENT         71        
+;                    DELIMITER       72        
+,                    DELIMITER       73        
+.                    DELIMITER       74        
+(                    DELIMITER       75        
+)                    DELIMITER       75        
+{                    DELIMITER       76        
+}                    DELIMITER       76        
+[                    DELIMITER       77        
+]                    DELIMITER       77        
+#                    COMMENT         78        
 """
 
-"""             COMMENT         80        
-\n                   WHITESPACE      81        
-                     WHITESPACE      81        
-#------------------------- COMMENT         83        
-# Sample variables   COMMENT         84        
-int                  KEYWORD         85        
-age                  IDENTIFIER      85        
+"""             COMMENT         79        
+\n                   WHITESPACE      80        
+                     WHITESPACE      80        
+#------------------------- COMMENT         81        
+# Sample variables   COMMENT         82        
+int                  KEYWORD         83        
+age                  IDENTIFIER      83        
+=                    OPERATOR        83        
+21                   NUMBER          83        
+;                    DELIMITER       83        
+bool                 DATA_TYPE       84        
+isOpen               IDENTIFIER      84        
+=                    OPERATOR        84        
+true                 RESERVED_WORD   84        
+;                    DELIMITER       84        
+char                 DATA_TYPE       85        
+middleInitial        IDENTIFIER      85        
 =                    OPERATOR        85        
-21                   NUMBER          85        
+'P'                  CHARACTER       85        
 ;                    DELIMITER       85        
-bool                 DATA_TYPE       86        
-isOpen               IDENTIFIER      86        
+float                DATA_TYPE       86        
+maxSalary            IDENTIFIER      86        
 =                    OPERATOR        86        
-true                 RESERVED_WORD   86        
+10                   NUMBER          86        
+.                    DELIMITER       86        
+98                   NUMBER          86        
 ;                    DELIMITER       86        
-char                 DATA_TYPE       87        
-middleInitial        IDENTIFIER      87        
+str                  DATA_TYPE       87        
+firstName            IDENTIFIER      87        
 =                    OPERATOR        87        
-'P'                  CHARACTER       87        
+"Mark"               STRING_LITERAL  87        
 ;                    DELIMITER       87        
-float                DATA_TYPE       88        
-maxSalary            IDENTIFIER      88        
-=                    OPERATOR        88        
-10                   NUMBER          88        
-.                    DELIMITER       88        
-98                   NUMBER          88        
-;                    DELIMITER       88        
-str                  DATA_TYPE       89        
-firstName            IDENTIFIER      89        
-=                    OPERATOR        89        
-"Mark"               STRING_LITERAL  89        
-;                    DELIMITER       89        

@@ -897,21 +897,6 @@ void lexicalAnalyzer(const char *input, FILE *file)
             i++;
         }
 
-        else if ((input[i] == '+' && input[i + 1] == '+') ||
-                 (input[i] == '-' && input[i + 1] == '-') ||
-                 (input[i] == '+' && isdigit(input[i + 1])) ||
-                 (input[i] == '-' && isdigit(input[i + 1])))
-        {
-            // Handle unary operators
-            currentToken.value[0] = input[i];
-            currentToken.value[1] = input[i + 1];
-            currentToken.value[2] = '\0';
-            currentToken.type = OPERATOR;
-            currentToken.line_number = line_number;
-            printToken(currentToken, file);
-            i += 2;
-        }
-
         else if ((input[i] == '=' && input[i + 1] == '='))
         {
             // Handle relational equality (==)
@@ -933,56 +918,172 @@ void lexicalAnalyzer(const char *input, FILE *file)
             printToken(currentToken, file);
             i++;
         }
-        else if ((input[i] == '+' && input[i + 1] == '=') ||
-                 (input[i] == '-' && input[i + 1] == '=') ||
-                 (input[i] == '*' && input[i + 1] == '=') ||
-                 (input[i] == '/' && input[i + 1] == '=') ||
-                 (input[i] == '%' && input[i + 1] == '=') ||
-                 (input[i] == '^' && input[i + 1] == '='))
-        {
-            // Handle other assignment operators (+=, -=, *=, /=, %=, ^=)
-            currentToken.value[0] = input[i];
-            currentToken.value[1] = input[i + 1];
-            currentToken.value[2] = '\0';
-            currentToken.line_number = line_number;
-            currentToken.type = OPERATOR;
-            printToken(currentToken, file);
-            i += 2;
-        }
-        else if ((input[i] == '>' && input[i + 1] == '=') ||
-                 (input[i] == '<' && input[i + 1] == '=') ||
-                 (input[i] == '!' && input[i + 1] == '=') ||
-                 (input[i] == '=' && input[i + 1] == '='))
-        {
-            // Handle two-character relational operators (>=, <=, !=, ==)
-            currentToken.value[0] = input[i];
-            currentToken.value[1] = input[i + 1];
-            currentToken.value[2] = '\0';
-            currentToken.type = OPERATOR;
-            currentToken.line_number = line_number;
-            printToken(currentToken, file);
-            i += 2;
-        }
-        else if (input[i] == '>' || input[i] == '<') // Handle single-character relational operators (> or <)
+
+        else if (input[i] == '+' || input[i] == '-')
         {
             currentToken.value[0] = input[i];
             currentToken.value[1] = '\0';
             currentToken.type = OPERATOR;
             currentToken.line_number = line_number;
+
+            if (input[i + 1] == '+')
+            {
+                currentToken.value[1] = input[i + 1];
+                currentToken.value[2] = '\0';
+                i++; // Move past '+'
+            }
+            else if (input[i + 1] == '-')
+            {
+                currentToken.value[1] = input[i + 1];
+                currentToken.value[2] = '\0';
+                i++; // Move past '-'
+            }
+            else if (input[i + 1] == '=')
+            {
+                currentToken.value[1] = input[i + 1];
+                currentToken.value[2] = '\0';
+                i++; // Move past '='
+            }
+            else if (isdigit(input[i + 1]))
+            {
+                // Handle cases where the operator is followed by a digit (e.g., unary operators like +5 or -3)
+            }
+
             printToken(currentToken, file);
-            i++;
+            i++; // Move to the next character
         }
-        else if ((input[i] == '&' && input[i + 1] == '&') ||
-                 (input[i] == '|' && input[i + 1] == '|'))
+        else if (input[i] == '*' || input[i] == '/' || input[i] == '%' || input[i] == '^')
         {
-            // Handle logical operators (&&, ||)
             currentToken.value[0] = input[i];
-            currentToken.value[1] = input[i + 1];
-            currentToken.value[2] = '\0';
+            currentToken.value[1] = '\0';
             currentToken.type = OPERATOR;
             currentToken.line_number = line_number;
+
+            if (input[i + 1] == '=')
+            {
+                currentToken.value[1] = input[i + 1];
+                currentToken.value[2] = '\0';
+                i++; // Move past '='
+            }
+
             printToken(currentToken, file);
-            i += 2;
+            i++; // Move to the next character
+        }
+
+        else if (input[i] == '>')
+        {
+            // Handle '>' or '>='
+            currentToken.value[0] = '>';
+            currentToken.value[1] = '\0';
+            currentToken.type = OPERATOR;
+            currentToken.line_number = line_number;
+
+            // Check if the next character is '=' to form '>='
+            if (input[i + 1] == '=')
+            {
+                currentToken.value[1] = '=';
+                currentToken.value[2] = '\0';
+                i++; // Move past the '='
+            }
+
+            printToken(currentToken, file);
+            i++; // Move to the next character
+        }
+        else if (input[i] == '<')
+        {
+            // Handle '<' or '<='
+            currentToken.value[0] = '<';
+            currentToken.value[1] = '\0';
+            currentToken.type = OPERATOR;
+            currentToken.line_number = line_number;
+
+            // Check if the next character is '=' to form '<='
+            if (input[i + 1] == '=')
+            {
+                currentToken.value[1] = '=';
+                currentToken.value[2] = '\0';
+                i++; // Move past the '='
+            }
+
+            printToken(currentToken, file);
+            i++; // Move to the next character
+        }
+        else if (input[i] == '!')
+        {
+            // Handle '!='
+            currentToken.value[0] = '!';
+            currentToken.value[1] = '\0';
+            currentToken.type = OPERATOR;
+            currentToken.line_number = line_number;
+
+            // Check if the next character is '=' to form '!='
+            if (input[i + 1] == '=')
+            {
+                currentToken.value[1] = '=';
+                currentToken.value[2] = '\0';
+                i++; // Move past the '='
+            }
+
+            printToken(currentToken, file);
+            i++; // Move to the next character
+        }
+        else if (input[i] == '=')
+        {
+            // Handle '=='
+            currentToken.value[0] = '=';
+            currentToken.value[1] = '\0';
+            currentToken.type = OPERATOR;
+            currentToken.line_number = line_number;
+
+            // Check if the next character is '=' to form '=='
+            if (input[i + 1] == '=')
+            {
+                currentToken.value[1] = '=';
+                currentToken.value[2] = '\0';
+                i++; // Move past the '='
+            }
+
+            printToken(currentToken, file);
+            i++; // Move to the next character
+        }
+
+        else if (input[i] == '&')
+        {
+            // Handle the case for '&'
+            currentToken.value[0] = '&';
+            currentToken.value[1] = '\0';
+            currentToken.type = OPERATOR;
+            currentToken.line_number = line_number;
+
+            // Check if the next character is '&' for '&&'
+            if (input[i + 1] == '&')
+            {
+                currentToken.value[1] = '&';
+                currentToken.value[2] = '\0';
+                i++; // Move past the second '&'
+            }
+
+            printToken(currentToken, file);
+            i++; // Move to the next character
+        }
+        else if (input[i] == '|')
+        {
+            // Handle the case for '|'
+            currentToken.value[0] = '|';
+            currentToken.value[1] = '\0';
+            currentToken.type = OPERATOR;
+            currentToken.line_number = line_number;
+
+            // Check if the next character is '|' for '||'
+            if (input[i + 1] == '|')
+            {
+                currentToken.value[1] = '|';
+                currentToken.value[2] = '\0';
+                i++; // Move past the second '|'
+            }
+
+            printToken(currentToken, file);
+            i++; // Move to the next character
         }
 
         // Handle Logical NOT Operator
