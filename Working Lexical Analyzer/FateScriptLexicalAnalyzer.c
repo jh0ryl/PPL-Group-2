@@ -878,31 +878,49 @@ void lexicalAnalyzer(const char *input, FILE *file)
         }
 
         // Handle Arithmetic, Relational, Logical, Assignment, and Unary Operators
-        else if (input[i] == '~' && input[i + 1] == '=')
+        else if (input[i] == '~')
         {
-            // Handle the ~= operator (integer division assignment)
             currentToken.value[0] = input[i];
-            currentToken.value[1] = input[i + 1];
-            currentToken.value[2] = '\0';
+            currentToken.value[1] = '\0';
             currentToken.type = OPERATOR;
             currentToken.line_number = line_number;
+
+            if (input[i + 1] == '=')
+            {
+                // Handle the ~= operator (integer division assignment)
+                currentToken.value[1] = input[i + 1];
+                currentToken.value[2] = '\0';
+                i++; // Move past '='
+            }
+
             printToken(currentToken, file);
-            i += 2;
+            i++;
         }
-        else if ((input[i] == '+' && input[i + 1] == '+') ||
-                 (input[i] == '-' && input[i + 1] == '-') ||
-                 (input[i] == '+' && isdigit(input[i + 1])) ||
-                 (input[i] == '-' && isdigit(input[i + 1])))
+
+        else if (input[i] == '+' || input[i] == '-')
         {
-            // Handle unary operators
             currentToken.value[0] = input[i];
-            currentToken.value[1] = input[i + 1];
-            currentToken.value[2] = '\0';
+            currentToken.value[1] = '\0';
             currentToken.type = OPERATOR;
             currentToken.line_number = line_number;
+
+            if (input[i + 1] == '+')
+            {
+                currentToken.value[1] = input[i + 1];
+                currentToken.value[2] = '\0';
+                i++; // Move past the second '+'
+            }
+            else if (input[i + 1] == '-')
+            {
+                currentToken.value[1] = input[i + 1];
+                currentToken.value[2] = '\0';
+                i++; // Move past the second '-'
+            }
+
             printToken(currentToken, file);
-            i += 2;
+            i++; // Move to the next character
         }
+
         else if ((input[i] == '=' && input[i + 1] == '='))
         {
             // Handle relational equality (==)
