@@ -290,7 +290,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
             int start_index = 0, error = 0;
             while (isalnum(input[i]) || input[i] == '_')
             {
-                    currentToken.value[j++] = input[i++];
+                currentToken.value[j++] = input[i++];
             }
             currentToken.value[j] = '\0';
             if (error)
@@ -303,6 +303,7 @@ void lexicalAnalyzer(const char *input, FILE *file)
             {
                 switch (currentToken.value[start_index])
                 {
+<<<<<<< HEAD
                 case 'i': // words that start with 'i'
                     switch (currentToken.value[start_index + 1]) {
                         case 'f':
@@ -356,6 +357,46 @@ void lexicalAnalyzer(const char *input, FILE *file)
                         default:
                             currentToken.type = IDENTIFIER;
                             currentToken.line_number = line_number;
+=======
+                case 'i': // words that start word with 'i'
+                    if (currentToken.value[start_index + 1] == 'f')
+                    {
+                        if (currentToken.value[start_index + 2] == '\0')
+                        {
+                            currentToken.type = KEYWORD; // auto
+                            currentToken.line_number = line_number;
+                        }
+                    }
+                    else if (currentToken.value[start_index + 1] == 'n')
+                    {
+                        if (currentToken.value[start_index + 2] == 't')
+                        {
+                            if (currentToken.value[start_index + 3] == '\0')
+                            {
+                                currentToken.type = KEYWORD; // auto
+                                currentToken.line_number = line_number;
+                            }
+                        }
+                        else if (currentToken.value[start_index + 2] == 'p')
+                        {
+                            if (currentToken.value[start_index + 3] == 'u')
+                            {
+                                if (currentToken.value[start_index + 4] == 't')
+                                {
+                                    if (currentToken.value[start_index + 1] == '\0')
+                                    {
+                                        currentToken.type = KEYWORD; // auto
+                                        currentToken.line_number = line_number;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
+>>>>>>> b211ba232310fb9fc7526068a7870d434c1c196e
                     }
                     break;
                 case 'a': // words that start with 'a'
@@ -932,11 +973,71 @@ void lexicalAnalyzer(const char *input, FILE *file)
                                     currentToken.line_number = line_number;
                                     break;
                             }
+<<<<<<< HEAD
                             break;
                         default:
                             currentToken.type = IDENTIFIER;
                             currentToken.line_number = line_number;
                             break;
+=======
+                        }
+                    }
+                    else
+                    {
+                        currentToken.type = IDENTIFIER;
+                        currentToken.line_number = line_number;
+                    }
+                    break;
+                case 'p':
+                    if (currentToken.value[start_index + 1] == 'r')
+                    {
+                        if (currentToken.value[start_index + 2] == 'i')
+                        {
+                            if (currentToken.value[start_index + 3] == 'n')
+                            {
+                                if (currentToken.value[start_index + 4] == 't')
+                                {
+                                    if (currentToken.value[start_index + 5] == '\0')
+                                    {
+                                        currentToken.type = KEYWORD; // print
+                                        currentToken.line_number = line_number;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 'r':
+                    if (currentToken.value[start_index + 1] == 'e')
+                    {
+                        if (currentToken.value[start_index + 2] == 't')
+                        {
+                            if (currentToken.value[start_index + 3] == 'u')
+                            {
+                                if (currentToken.value[start_index + 4] == 'r')
+                                {
+                                    if (currentToken.value[start_index + 5] == 'n')
+                                    {
+                                        if (currentToken.value[start_index + 6] == '\0')
+                                        {
+                                            currentToken.type = KEYWORD; // return
+                                            currentToken.line_number = line_number;
+                                        }
+                                        else
+                                        {
+                                            currentToken.type = IDENTIFIER; // Any other word starting with 'r'
+                                            currentToken.line_number = line_number;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        currentToken.type = IDENTIFIER; // Any other word starting with 'r'
+                        currentToken.line_number = line_number;
+>>>>>>> b211ba232310fb9fc7526068a7870d434c1c196e
                     }
                     break;
                 case 's':
@@ -1184,31 +1285,25 @@ void lexicalAnalyzer(const char *input, FILE *file)
         }
 
         // Handle Arithmetic, Relational, Logical, Assignment, and Unary Operators
-        else if (input[i] == '~' && input[i + 1] == '=')
+        else if (input[i] == '~')
         {
-            // Handle the ~= operator (integer division assignment)
             currentToken.value[0] = input[i];
-            currentToken.value[1] = input[i + 1];
-            currentToken.value[2] = '\0';
+            currentToken.value[1] = '\0';
             currentToken.type = OPERATOR;
             currentToken.line_number = line_number;
+
+            if (input[i + 1] == '=')
+            {
+                // Handle the ~= operator (integer division assignment)
+                currentToken.value[1] = input[i + 1];
+                currentToken.value[2] = '\0';
+                i++; // Move past '='
+            }
+
             printToken(currentToken, file);
-            i += 2;
+            i++;
         }
-        else if ((input[i] == '+' && input[i + 1] == '+') ||
-                 (input[i] == '-' && input[i + 1] == '-') ||
-                 (input[i] == '+' && isdigit(input[i + 1])) ||
-                 (input[i] == '-' && isdigit(input[i + 1])))
-        {
-            // Handle unary operators
-            currentToken.value[0] = input[i];
-            currentToken.value[1] = input[i + 1];
-            currentToken.value[2] = '\0';
-            currentToken.type = OPERATOR;
-            currentToken.line_number = line_number;
-            printToken(currentToken, file);
-            i += 2;
-        }
+
         else if ((input[i] == '=' && input[i + 1] == '='))
         {
             // Handle relational equality (==)
@@ -1230,56 +1325,172 @@ void lexicalAnalyzer(const char *input, FILE *file)
             printToken(currentToken, file);
             i++;
         }
-        else if ((input[i] == '+' && input[i + 1] == '=') ||
-                 (input[i] == '-' && input[i + 1] == '=') ||
-                 (input[i] == '*' && input[i + 1] == '=') ||
-                 (input[i] == '/' && input[i + 1] == '=') ||
-                 (input[i] == '%' && input[i + 1] == '=') ||
-                 (input[i] == '^' && input[i + 1] == '='))
-        {
-            // Handle other assignment operators (+=, -=, *=, /=, %=, ^=)
-            currentToken.value[0] = input[i];
-            currentToken.value[1] = input[i + 1];
-            currentToken.value[2] = '\0';
-            currentToken.line_number = line_number;
-            currentToken.type = OPERATOR;
-            printToken(currentToken, file);
-            i += 2;
-        }
-        else if ((input[i] == '>' && input[i + 1] == '=') ||
-                 (input[i] == '<' && input[i + 1] == '=') ||
-                 (input[i] == '!' && input[i + 1] == '=') ||
-                 (input[i] == '=' && input[i + 1] == '='))
-        {
-            // Handle two-character relational operators (>=, <=, !=, ==)
-            currentToken.value[0] = input[i];
-            currentToken.value[1] = input[i + 1];
-            currentToken.value[2] = '\0';
-            currentToken.type = OPERATOR;
-            currentToken.line_number = line_number;
-            printToken(currentToken, file);
-            i += 2;
-        }
-        else if (input[i] == '>' || input[i] == '<') // Handle single-character relational operators (> or <)
+
+        else if (input[i] == '+' || input[i] == '-')
         {
             currentToken.value[0] = input[i];
             currentToken.value[1] = '\0';
             currentToken.type = OPERATOR;
             currentToken.line_number = line_number;
+
+            if (input[i + 1] == '+')
+            {
+                currentToken.value[1] = input[i + 1];
+                currentToken.value[2] = '\0';
+                i++; // Move past '+'
+            }
+            else if (input[i + 1] == '-')
+            {
+                currentToken.value[1] = input[i + 1];
+                currentToken.value[2] = '\0';
+                i++; // Move past '-'
+            }
+            else if (input[i + 1] == '=')
+            {
+                currentToken.value[1] = input[i + 1];
+                currentToken.value[2] = '\0';
+                i++; // Move past '='
+            }
+            else if (isdigit(input[i + 1]))
+            {
+                // Handle cases where the operator is followed by a digit (e.g., unary operators like +5 or -3)
+            }
+
             printToken(currentToken, file);
-            i++;
+            i++; // Move to the next character
         }
-        else if ((input[i] == '&' && input[i + 1] == '&') ||
-                 (input[i] == '|' && input[i + 1] == '|'))
+        else if (input[i] == '*' || input[i] == '/' || input[i] == '%' || input[i] == '^')
         {
-            // Handle logical operators (&&, ||)
             currentToken.value[0] = input[i];
-            currentToken.value[1] = input[i + 1];
-            currentToken.value[2] = '\0';
+            currentToken.value[1] = '\0';
             currentToken.type = OPERATOR;
             currentToken.line_number = line_number;
+
+            if (input[i + 1] == '=')
+            {
+                currentToken.value[1] = input[i + 1];
+                currentToken.value[2] = '\0';
+                i++; // Move past '='
+            }
+
             printToken(currentToken, file);
-            i += 2;
+            i++; // Move to the next character
+        }
+
+        else if (input[i] == '>')
+        {
+            // Handle '>' or '>='
+            currentToken.value[0] = '>';
+            currentToken.value[1] = '\0';
+            currentToken.type = OPERATOR;
+            currentToken.line_number = line_number;
+
+            // Check if the next character is '=' to form '>='
+            if (input[i + 1] == '=')
+            {
+                currentToken.value[1] = '=';
+                currentToken.value[2] = '\0';
+                i++; // Move past the '='
+            }
+
+            printToken(currentToken, file);
+            i++; // Move to the next character
+        }
+        else if (input[i] == '<')
+        {
+            // Handle '<' or '<='
+            currentToken.value[0] = '<';
+            currentToken.value[1] = '\0';
+            currentToken.type = OPERATOR;
+            currentToken.line_number = line_number;
+
+            // Check if the next character is '=' to form '<='
+            if (input[i + 1] == '=')
+            {
+                currentToken.value[1] = '=';
+                currentToken.value[2] = '\0';
+                i++; // Move past the '='
+            }
+
+            printToken(currentToken, file);
+            i++; // Move to the next character
+        }
+        else if (input[i] == '!')
+        {
+            // Handle '!='
+            currentToken.value[0] = '!';
+            currentToken.value[1] = '\0';
+            currentToken.type = OPERATOR;
+            currentToken.line_number = line_number;
+
+            // Check if the next character is '=' to form '!='
+            if (input[i + 1] == '=')
+            {
+                currentToken.value[1] = '=';
+                currentToken.value[2] = '\0';
+                i++; // Move past the '='
+            }
+
+            printToken(currentToken, file);
+            i++; // Move to the next character
+        }
+        else if (input[i] == '=')
+        {
+            // Handle '=='
+            currentToken.value[0] = '=';
+            currentToken.value[1] = '\0';
+            currentToken.type = OPERATOR;
+            currentToken.line_number = line_number;
+
+            // Check if the next character is '=' to form '=='
+            if (input[i + 1] == '=')
+            {
+                currentToken.value[1] = '=';
+                currentToken.value[2] = '\0';
+                i++; // Move past the '='
+            }
+
+            printToken(currentToken, file);
+            i++; // Move to the next character
+        }
+
+        else if (input[i] == '&')
+        {
+            // Handle the case for '&'
+            currentToken.value[0] = '&';
+            currentToken.value[1] = '\0';
+            currentToken.type = OPERATOR;
+            currentToken.line_number = line_number;
+
+            // Check if the next character is '&' for '&&'
+            if (input[i + 1] == '&')
+            {
+                currentToken.value[1] = '&';
+                currentToken.value[2] = '\0';
+                i++; // Move past the second '&'
+            }
+
+            printToken(currentToken, file);
+            i++; // Move to the next character
+        }
+        else if (input[i] == '|')
+        {
+            // Handle the case for '|'
+            currentToken.value[0] = '|';
+            currentToken.value[1] = '\0';
+            currentToken.type = OPERATOR;
+            currentToken.line_number = line_number;
+
+            // Check if the next character is '|' for '||'
+            if (input[i + 1] == '|')
+            {
+                currentToken.value[1] = '|';
+                currentToken.value[2] = '\0';
+                i++; // Move past the second '|'
+            }
+
+            printToken(currentToken, file);
+            i++; // Move to the next character
         }
 
         // Handle Logical NOT Operator
@@ -1323,7 +1534,12 @@ void lexicalAnalyzer(const char *input, FILE *file)
         }
         // Handle unknown characters
         else
+<<<<<<< HEAD
         {   
+=======
+        {
+            j = 0;
+>>>>>>> b211ba232310fb9fc7526068a7870d434c1c196e
             while (!isspace(input[i]) && input[i] != '\0')
             {
                 // Check if the character is an invalid character
@@ -1347,24 +1563,22 @@ int isFateFile(const char *filename)
     return (extension != NULL && strcmp(extension, ".fate") == 0);
 }
 
-// Assuming isFateFile and lexicalAnalyzer are declared elsewhere
-int isFateFile(const char *filename);
-void lexicalAnalyzer(const char *input, FILE *file);
-
 int main()
 {
     FILE *file;
-    char filename[1000]; // Buffer to store the filename input
+    char *filename = "../FateScript Files/complete.fate";
+    // char filename[1000]; // Buffer to store the filename input
     char fullPath[1024]; // Full path to the file
-    char input[1000];
+    char input[2000];
     int i = 0;
 
     // Prompt the user for the filename (including the extension, e.g., "file.fate")
-    printf("Input FateScript file to parse (with extension, e.g., 'file.fate'): ");
-    scanf("%999s", filename); // Use %999s to avoid buffer overflow
+    // printf("Input FateScript file to parse (with extension, e.g., 'file.fate'): ");
+    // scanf("%999s", filename); // Use %999s to avoid buffer overflow
 
     // Construct the full file path by concatenating the directory and user input
-    snprintf(fullPath, sizeof(fullPath), "../FateScript Files/%s", filename);
+    // snprintf(fullPath, sizeof(fullPath), "../FateScript Files/%s", filename);
+    snprintf(fullPath, sizeof(fullPath), "%s", filename);
 
     // Check if the file has the .fate extension
     if (!isFateFile(fullPath))
