@@ -1593,20 +1593,20 @@ int isFateFile(const char *filename)
 int main()
 {
     FILE *file;
-    char *filename = "../FateScript Files/ProgramPresentation.fate";
+    // char *filename = "../FateScript Files/ProgramPresentation.fate";
     // char *filename = "../FateScript Files/sample.fate";
-    // char filename[1000]; // Buffer to store the filename input
+    char filename[1000]; // Buffer to store the filename input
     char fullPath[1024]; // Full path to the file
     char input[2000];
     int i = 0;
 
     // Prompt the user for the filename (including the extension, e.g., "file.fate")
-    // printf("Input FateScript file to parse (with extension, e.g., 'file.fate'): ");
-    // scanf("%999s", filename); // Use %999s to avoid buffer overflow
+    printf("Input FateScript file to parse (with extension, e.g., 'file.fate'): ");
+    scanf("%999s", filename); // Use %999s to avoid buffer overflow
 
     // Construct the full file path by concatenating the directory and user input
-    // snprintf(fullPath, sizeof(fullPath), "../FateScript Files/%s", filename);
-    snprintf(fullPath, sizeof(fullPath), "%s", filename);
+    snprintf(fullPath, sizeof(fullPath), "../FateScript Files/%s", filename);
+    // snprintf(fullPath, sizeof(fullPath), "%s", filename);
 
     // Check if the file has the .fate extension
     if (!isFateFile(fullPath))

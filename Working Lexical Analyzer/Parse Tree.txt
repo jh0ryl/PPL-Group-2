@@ -399,7 +399,12 @@ Error (Line 66): Expected IDENTIFIER
 Error (Line 66): Expected SEMICOLON (';') after identifier
 
 Statement 59 (Line 67): Declaration
-	DATA TYPE: ('int')
+	DATA TYPE: ('str')
 Error (Line 67): Expected IDENTIFIER
 Error (Line 67): Expected SEMICOLON (';') after identifier
+
+Statement 60 (Line 68): Declaration
+	DATA TYPE: ('str')
+Error (Line 68): Expected IDENTIFIER
+Error (Line 68): Expected SEMICOLON (';') after identifier
 
