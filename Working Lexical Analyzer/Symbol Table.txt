@@ -277,3 +277,6 @@ bool                 DATA_TYPE       66
 str                  DATA_TYPE       67        
 @address             ERROR           67        
 ;                    DELIMITER       67        
+str                  DATA_TYPE       68        
+_name                ERROR           68        
+;                    DELIMITER       68        

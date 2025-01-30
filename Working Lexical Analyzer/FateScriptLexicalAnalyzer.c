@@ -282,8 +282,8 @@ void lexicalAnalyzer(const char *input, FILE *file)
             printToken(currentToken, file);
         }
 
-        // Handle invalid characters like special characters (@, #, . etc)
-        if (strchr("@#.`?", input[i])) // If invalid character is found
+        // Handle invalid characters like special characters
+        if (strchr("@#.`?_", input[i])) // If invalid character is found
         {
             // Mark the entire token as an error
             currentToken.type = ERROR;
