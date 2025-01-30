@@ -1,21 +1,21 @@
 str full_name;
-int age, height;
+int age height;
 bool is_married;
 
-input("Enter value: ", &result);
+input("Enter value: ", );
 
 print("Hello, World!");
 print("%d", result);
-print("Name: %s, Age: %d", name, age);
+print("Name: %s, Age: ", name, age);
 
 x = new_price;
 middle_initial = 'L'
 last_name = "Legarda";
-new_price = 90 - 30;
+new_price = 90  30;
 new_price = discount - 30;
 discount_status = (sale_price + 20) >= 100;
 
-if (x < 20) {
+if (x  20) {
         print("x is less than 20\n");
     }
 
@@ -33,7 +33,7 @@ if (x > 0) {
     print("Negative\n");
 }
 
-for (i = 1; i <= 5; i++) {
+for (i = 1 i <= 5; i++) {
     print("%d", i);
     }
 
@@ -58,11 +58,3 @@ while (count > 0) {
     print("\n");              
     count--;                  
 }
-
-?address
-x = ;
-name = 'Jeff';
-print"Hello, World!";
-bool 12;
-str @address;
-str _name;
