@@ -648,7 +648,7 @@ void parse_while_loop(FILE *input_file, FILE *output_file, Token *current_token)
                     char *next_value = peek_next_token(input_file, current_token);
                     if (strcmp(next_value, "++") == 0 || strcmp(next_value, "--") == 0)
                     {
-                        fprintf(output_file, "%s \n", current_token->value);
+                        // fprintf(output_file, "%s \n", current_token->value);
                         parse_increment(input_file, output_file, current_token); // Handle increment/decrement
                         parse_semicolon(input_file, output_file, current_token); // Handle semicolon
                     }

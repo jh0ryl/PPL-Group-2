@@ -1,6 +1,20 @@
 
 input("Enter value: ", &result);
 
+while (count > 0) {               
+    inner = count;        
+    while (inner > 0) {       
+        print("%d ", inner); 
+        for (i = 1; i <= 5; i++) {
+            print("%d", i);
+            }
+        inner--;              
+    }
+    print("\n");              
+    count--;                  
+}
+
+
 @asd 
 int 21; 
 
