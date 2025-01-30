@@ -59,8 +59,9 @@ while (count > 0) {
     count--;                  
 }
 
+?address
 x = ;
 name = 'Jeff';
 print"Hello, World!";
-bool 12_months_old;
-str email@address;
+bool 12;
+str @address;

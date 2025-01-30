@@ -378,28 +378,28 @@ Statement 54 (Line 59): Increment
 
 	CURLY BRACE: ('}')
 
-Statement 55 (Line 62): Assignment
+Statement 55 (Line 63): Assignment
 	IDENTIFIER: ('x')
 	ASSIGNMENT OPERATOR: ('=')
-Error (Line 62): Expected a value, identifier, or nested expression
+Error (Line 63): Expected a value, identifier, or nested expression
 	SEMICOLON: (';')
 
-Statement 56 (Line 63): Assignment
+Statement 56 (Line 64): Assignment
 	IDENTIFIER: ('name')
 	ASSIGNMENT OPERATOR: ('=')
-Error (Line 63): Expected a value, identifier, or nested expression
-Error (Line 63): Expected SEMICOLON (';') after identifier
+Error (Line 64): Expected a value, identifier, or nested expression
+Error (Line 64): Expected SEMICOLON (';') after identifier
 
-Statement 57 (Line 64): Output
+Statement 57 (Line 65): Output
 	KEYWORD: ('print')
-Error (Line 64): Expected opening parenthesis '('
-Statement 58 (Line 65): Declaration
+Error (Line 65): Expected opening parenthesis '('
+Statement 58 (Line 66): Declaration
 	DATA TYPE: ('bool')
-Error (Line 65): Expected IDENTIFIER
-Error (Line 65): Expected SEMICOLON (';') after identifier
-
-Statement 59 (Line 66): Declaration
-	DATA TYPE: ('str')
-	IDENTIFIER: ('email')
+Error (Line 66): Expected IDENTIFIER
 Error (Line 66): Expected SEMICOLON (';') after identifier
+
+Statement 59 (Line 67): Declaration
+	DATA TYPE: ('int')
+Error (Line 67): Expected IDENTIFIER
+Error (Line 67): Expected SEMICOLON (';') after identifier
 

@@ -282,6 +282,21 @@ void lexicalAnalyzer(const char *input, FILE *file)
             printToken(currentToken, file);
         }
 
+        // Handle invalid characters like special characters (@, #, . etc)
+        if (strchr("@#.`?", input[i])) // If invalid character is found
+        {
+            // Mark the entire token as an error
+            currentToken.type = ERROR;
+            int j = 0;                                                                           // Start filling the token value
+            while (!isspace(input[i]) && input[i] != '\0' && !strchr("{};,()[].'\"'", input[i])) // Process until space or delimiter
+            {
+                currentToken.value[j++] = input[i++];
+            }
+            currentToken.value[j] = '\0';           // Null-terminate the token value
+            currentToken.line_number = line_number; // Set line number
+            printToken(currentToken, file);         // Print the token as an error
+        }
+
         // Handle identifiers, reserved words, keywords, and noise
         else if (isalpha(currentChar))
         {
@@ -1548,21 +1563,22 @@ void lexicalAnalyzer(const char *input, FILE *file)
             printToken(currentToken, file);
             i++;
         }
+
         // Handle unknown characters
         else
         {
-            while (!isspace(input[i]) && input[i] != '\0')
-            {
-                // Check if the character is an invalid character
-                if (strchr("@#.`?", input[i])) // Mark as error if character is invalid
-                {
-                    currentToken.type = ERROR;
-                    currentToken.line_number = line_number;
-                }
-                currentToken.value[j++] = input[i++];
-            }
-            currentToken.value[j] = '\0';
-            printToken(currentToken, file);
+            // while (!isspace(input[i]) && input[i] != '\0')
+            // {
+            //     // Check if the character is an invalid character
+            //     if (strchr("@#.`?", input[i])) // Mark as error if character is invalid
+            //     {
+            //         currentToken.type = ERROR;
+            //         currentToken.line_number = line_number;
+            //     }
+            //     currentToken.value[j++] = input[i++];
+            // }
+            // currentToken.value[j] = '\0';
+            // printToken(currentToken, file);
         }
     }
 }

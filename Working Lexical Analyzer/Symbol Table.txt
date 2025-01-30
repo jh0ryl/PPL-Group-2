@@ -260,19 +260,20 @@ count                IDENTIFIER      59
 --                   OPERATOR        59        
 ;                    DELIMITER       59        
 }                    DELIMITER       60        
-x                    IDENTIFIER      62        
-=                    OPERATOR        62        
-;                    DELIMITER       62        
-name                 IDENTIFIER      63        
+?address             ERROR           62        
+x                    IDENTIFIER      63        
 =                    OPERATOR        63        
-'Jeff'               ERROR           63        
 ;                    DELIMITER       63        
-print                KEYWORD         64        
-"Hello, World!"      STRING_LITERAL  64        
+name                 IDENTIFIER      64        
+=                    OPERATOR        64        
+'Jeff'               ERROR           64        
 ;                    DELIMITER       64        
-bool                 DATA_TYPE       65        
-12                   NUMBER          65        
-12_months_old;       NUMBER          65        
-str                  DATA_TYPE       66        
-email                IDENTIFIER      66        
-email@address;       ERROR           66        
+print                KEYWORD         65        
+"Hello, World!"      STRING_LITERAL  65        
+;                    DELIMITER       65        
+bool                 DATA_TYPE       66        
+12                   NUMBER          66        
+;                    DELIMITER       66        
+str                  DATA_TYPE       67        
+@address             ERROR           67        
+;                    DELIMITER       67        
